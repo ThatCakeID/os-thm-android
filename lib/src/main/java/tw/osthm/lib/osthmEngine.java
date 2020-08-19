@@ -1,6 +1,6 @@
 //NOTE: You shouldn't modify any codes in this engine yourself
 //      as it might will conflicts with other themes.
-package tw.osthm;
+package tw.osthm.lib;
 
 import android.app.Activity;
 import android.content.Context;
@@ -61,12 +61,12 @@ public class osthmEngine {
     }
 
     public void addTheme(Context mContext, String colorPrimary, String colorPrimaryText, String colorPrimaryDark,
-                            String statusbarIcon, String colorBackground, String colorBackgroundText,
-                            String colorButton, String colorButtonText, String shadow, String colorRipple,
-                            String colorHint, String colorPrimaryImage, String colorBackgroundImage,
-                            String colorPrimaryCard, String colorBackgroundCard, String colorPrimaryCardText,
-                            String colorBackgroundCardText, String colorPrimaryCardImage, String colorBackgroundCardImage,
-                            String themesname, String themesinfo, String themesauthor) throws Exception {
+                         String statusbarIcon, String colorBackground, String colorBackgroundText,
+                         String colorButton, String colorButtonText, String shadow, String colorRipple,
+                         String colorHint, String colorPrimaryImage, String colorBackgroundImage,
+                         String colorPrimaryCard, String colorBackgroundCard, String colorPrimaryCardText,
+                         String colorBackgroundCardText, String colorPrimaryCardImage, String colorBackgroundCardImage,
+                         String themesname, String themesinfo, String themesauthor) throws Exception {
         //Add new theme using given hex colors and generate new UUID
         addTheme(mContext, colorPrimary, colorPrimaryText, colorPrimaryDark, statusbarIcon, colorBackground,
                 colorBackgroundText, colorButton, colorButtonText, shadow, colorRipple, colorHint,
@@ -123,12 +123,12 @@ public class osthmEngine {
     }
 
     public void editTheme(Context mContext, String UUIDvar, String colorPrimary, String colorPrimaryText, String colorPrimaryDark,
-                         String statusbarIcon, String colorBackground, String colorBackgroundText,
-                         String colorButton, String colorButtonText, String shadow, String colorRipple,
-                         String colorHint, String colorPrimaryImage, String colorBackgroundImage,
-                         String colorPrimaryCard, String colorBackgroundCard, String colorPrimaryCardText,
-                         String colorBackgroundCardText, String colorPrimaryCardImage, String colorBackgroundCardImage,
-                         String themesname, String themesinfo, String themesauthor) throws Exception {
+                          String statusbarIcon, String colorBackground, String colorBackgroundText,
+                          String colorButton, String colorButtonText, String shadow, String colorRipple,
+                          String colorHint, String colorPrimaryImage, String colorBackgroundImage,
+                          String colorPrimaryCard, String colorBackgroundCard, String colorPrimaryCardText,
+                          String colorBackgroundCardText, String colorPrimaryCardImage, String colorBackgroundCardImage,
+                          String themesname, String themesinfo, String themesauthor) throws Exception {
         initializeData(mContext);
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = new Gson().fromJson(data.getString("themelists", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
