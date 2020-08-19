@@ -49,12 +49,13 @@ public class osthmEngine {
         return getThemeListPrivate();
     }
 
+    //TODO: Implement migrate old theme function
     public void migrateOldTheme(Context mContext, String UID) {
         //Migrate specified old theme to newer version
         initializeData(mContext);
     }
 
-    public void migrateAllOldTheme(Context mContext) {
+    public void migrateAllOldThemes(Context mContext) {
         //Migrate all old themes to newer version
         initializeData(mContext);
     }
@@ -85,12 +86,11 @@ public class osthmEngine {
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = new Gson().fromJson(data.getString("themelists", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
         }.getType());
-        for (int i = 0; i < metadataarray.size(); i++) {
+        for (int i = 0; i < metadataarray.size(); i++)
             indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
-        }
-        if (indexUUID.contains(UUIDvar) || UUIDvar == "default" || UUIDvar == "dark") {
+        if (indexUUID.contains(UUIDvar) || UUIDvar == "default" || UUIDvar == "dark")
             throw new osthmException("Theme with same UUID is exist!");
-        } else {
+        else {
             ArrayList<HashMap<String, Object>> themearray = new ArrayList<>();
             themearray.add((HashMap<String, Object>) new HashMap<String, Object>().put("colorPrimary", colorPrimary));
             themearray.get(0).put("colorPrimaryText", colorPrimaryText);
@@ -133,9 +133,8 @@ public class osthmEngine {
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = new Gson().fromJson(data.getString("themelists", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
         }.getType());
-        for (int i = 0; i < metadataarray.size(); i++) {
+        for (int i = 0; i < metadataarray.size(); i++)
             indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
-        }
         if (indexUUID.contains(UUIDvar)) {
             if (metadataarray.get(indexUUID.indexOf(UUIDvar)).get("os-thm-version") == Integer.toString(metadataVersion)) {
                 ArrayList<HashMap<String, Object>> themearray = new ArrayList<>();
@@ -166,9 +165,8 @@ public class osthmEngine {
                 metadataarray.get(indexUUID.indexOf(UUIDvar)).put("os-thm-version", Integer.toString(metadataVersion));
                 metadataarray.get(indexUUID.indexOf(UUIDvar)).put("uuid", UUIDvar);
                 data.edit().putString("themelists", new Gson().toJson(metadataarray)).apply();
-            } else {
-                throw new osthmException("Unsupported metadata version!");
-            }
+            } else
+                throw new osthmException("Incompatible metadata version!");
         } else {
             if (UUIDvar == "default" || UUIDvar == "dark")
                 throw new osthmException("You can't edit a default theme!");
@@ -181,26 +179,28 @@ public class osthmEngine {
         initializeData(mContext);
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
-        for (int i = 0; i < metadataarray.size(); i++) {
+        for (int i = 0; i < metadataarray.size(); i++)
             indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
-        }
         if (indexUUID.contains(UUIDvar)) {
             if (metadataarray.get(indexUUID.indexOf(UUIDvar)).get("os-thm-version") == Integer.toString(metadataVersion)) {
-
-                data.edit().putString("currentTheme", UUIDvar).apply();
-            }
-        } else {
+                HashMap<String, Object> thmjsn = new Gson().fromJson(data.getString("themelists", ""), new TypeToken<HashMap<String, Object>>() {
+                }.getType());
+                if (thmjsn.get("version") == Integer.toString(themesVersion))
+                    data.edit().putString("currentTheme", UUIDvar).apply();
+                else
+                    throw new osthmException("Incompatible theme version!");
+            } else
+                throw new osthmException("Incompatible theme metadata version!");
+        } else
             throw new osthmException("No matching theme with the given UUID!");
-        }
     }
 
     public HashMap<String, Object> getCurrentTheme(Context mContext) {
         initializeData(mContext);
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
-        for (int i = 0; i < metadataarray.size(); i++) {
+        for (int i = 0; i < metadataarray.size(); i++)
             indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
-        }
         ArrayList<HashMap<String, Object>> arraythm = new Gson().fromJson(metadataarray.get(indexUUID.indexOf(data.getString("currentTheme", ""))).get("themesjson").toString(), new TypeToken<ArrayList<HashMap<String, Object>>>() {
         }.getType());
         return arraythm.get(0);
@@ -211,16 +211,74 @@ public class osthmEngine {
         return data.getString("currentTheme", "");
     }
 
-    public void importThemes(Context mContext, String json) {
+    public void importThemes(Context mContext, String json) throws Exception {
         initializeData(mContext);
+        ArrayList<String> indexUUID = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> metadataarray = new Gson().fromJson(data.getString("themelists", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
+        }.getType());
+        for (int i = 0; i < metadataarray.size(); i++)
+            indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
+        ArrayList<HashMap<String, Object>> thmarray = new Gson().fromJson(json, new TypeToken<ArrayList<HashMap<String, Object>>>() {
+        }.getType());
+        if (thmarray.size() > 0) {
+            for (int i = 0; i < thmarray.size(); i++) {
+                if (indexUUID.contains(thmarray.get(i).get("uuid")) || thmarray.get(i).get("uuid") == "default" || thmarray.get(i).get("uuid") == "dark")
+                    throw new osthmException("Theme(s) can't be imported because the theme(s) are already exist!");
+                else {
+                    metadataarray.add(thmarray.get(i));
+                }
+            }
+            data.edit().putString("themelists", new Gson().toJson(metadataarray)).apply();
+        } else
+            throw new osthmException("This JSON things is empty, what do you hope for? ._.");
     }
 
-    public String exportThemes(Context mContext) {
-        initializeData(mContext);
-        return null;
+    public String exportThemes(Context mContext, ArrayList<String> UUIDvars) throws Exception {
+        if (UUIDvars.size() > 0) {
+            initializeData(mContext);
+            ArrayList<String> indexUUID = new ArrayList<>();
+            ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
+            for (int i = 0; i < metadataarray.size(); i++)
+                indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
+            ArrayList<HashMap<String, Object>> thmarray = new ArrayList<>();
+            for (int i = 0; i < UUIDvars.size(); i++) {
+                if (indexUUID.contains(UUIDvars.get(i))) {
+                    thmarray.add(metadataarray.get(indexUUID.indexOf(UUIDvars.get(i))));
+                } else
+                    throw new osthmException("Theme(s) aren't exists!");
+            }
+            return new Gson().toJson(thmarray);
+        } else
+            throw new osthmException("There is no UUID given, what do you hope for? ._.");
     }
 
-    public void removeTheme(Context mContext, String UUIDvar) {
+    public void removeTheme(Context mContext, String UUIDvar) throws Exception {
         initializeData(mContext);
+        ArrayList<String> indexUUID = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> metadataarray = new Gson().fromJson(data.getString("themelists", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
+        }.getType());
+        for (int i = 0; i < metadataarray.size(); i++)
+            indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
+        if (indexUUID.contains(UUIDvar)) {
+            if (data.getString("currentTheme", "") == UUIDvar)
+                throw new osthmException("Theme is in use!");
+            else {
+                metadataarray.remove(indexUUID.indexOf(UUIDvar));
+                data.edit().putString("themelists", new Gson().toJson(metadataarray)).apply();
+            }
+        } else {
+            if (UUIDvar == "default" || UUIDvar == "dark")
+                throw new osthmException("You can't delete a default theme!");
+            else
+                throw new osthmException("Theme with given UUID isn't exist!");
+        }
+    }
+
+    public void removeAllThemes(Context mContext) throws Exception {
+        initializeData(mContext);
+        if (data.getString("currentTheme", "") == "default" || data.getString("currentTheme", "") == "dark")
+            data.edit().putString("themelists", "[]").apply();
+        else
+            throw new osthmException("Theme is in use!");
     }
 }
