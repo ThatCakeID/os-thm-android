@@ -5,6 +5,8 @@ package tw.osthm.lib;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -65,15 +67,36 @@ public class osthmEngine {
     }
 
     //experimental incomplete codes ;-;
+    /*
     public String dbgMigrate(String json) {
         ArrayList<HashMap<String, Object>> metadataarrayjsn = new Gson().fromJson(json, new TypeToken<ArrayList<HashMap<String, Object>>>() {
         }.getType());
         ArrayList<HashMap<String, Object>> jsnthm = new Gson().fromJson(metadataarrayjsn.get(0).get("themesjson").toString(), new TypeToken<ArrayList<HashMap<String, Object>>>() {
         }.getType());
         ArrayList<HashMap<String, Object>> metadataarray = new ArrayList<>();
-        ArrayList<HashMap<String, Object>> themejson = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> themearray = new ArrayList<>();
+        themearray.add((HashMap<String, Object>) new HashMap<String, Object>().put("colorPrimary", Color.parseColor(jsnthm.get(0).get("colorPrimary").toString())));
+        themearray.get(0).put("colorPrimaryText", jsnthm.get(0).get("colorPrimaryText"));
+        themearray.get(0).put("colorPrimaryDark", jsnthm.get(0).get("colorPrimaryDark"));
+        themearray.get(0).put("statusbarIcon", jsnthm.get(0).get("statusbarIcon"));
+        themearray.get(0).put("colorBackground", colorBackground);
+        themearray.get(0).put("colorBackgroundText", colorBackgroundText);
+        themearray.get(0).put("colorButton", colorButton);
+        themearray.get(0).put("colorButtonText", colorButtonText);
+        themearray.get(0).put("shadow", shadow);
+        themearray.get(0).put("colorRipple", colorRipple);
+        themearray.get(0).put("colorHint", colorHint);
+        themearray.get(0).put("colorPrimaryImage", colorPrimaryImage);
+        themearray.get(0).put("colorBackgroundImage", colorBackgroundImage);
+        themearray.get(0).put("colorPrimaryCard", colorPrimaryCard);
+        themearray.get(0).put("colorBackgroundCard", colorBackgroundCard);
+        themearray.get(0).put("colorPrimaryCardText", colorPrimaryCardText);
+        themearray.get(0).put("colorBackgroundCardText", colorBackgroundCardText);
+        themearray.get(0).put("colorPrimaryCardImage", colorPrimaryCardImage);
+        themearray.get(0).put("colorBackgroundCardImage", colorBackgroundCardImage);
+        themearray.get(0).put("version", Integer.toString(themesVersion));
         return new Gson().toJson(metadataarray);
-    }
+    } */
     //end of experimental codes
 
     public void addTheme(Context mContext, int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
