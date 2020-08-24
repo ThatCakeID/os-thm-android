@@ -8,7 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ThemeManagerActivity extends AppCompatActivity {
     private ImageView image_back;
@@ -23,6 +29,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
     private TextView textview_create;
     private TextView textview_import;
     private boolean isOpen;
+    private RecyclerView gridrv1;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -45,9 +52,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (isOpen) {
-
                     textview_create.setVisibility(View.INVISIBLE);
                     textview_import.setVisibility(View.INVISIBLE);
                     fab2.startAnimation(fab_close);
@@ -57,8 +62,8 @@ public class ThemeManagerActivity extends AppCompatActivity {
                     fab1.setClickable(false);
                     isOpen = false;
                 } else {
-                    textview_create.startAnimation(fab_open);
-                    textview_import.startAnimation(fab_open);
+                    textview_create.setVisibility(View.VISIBLE);
+                    textview_import.setVisibility(View.VISIBLE);
                     fab2.startAnimation(fab_open);
                     fab1.startAnimation(fab_open);
                     fab.startAnimation(fab_clock);
@@ -69,6 +74,11 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
             }
         });
+        ArrayList<HashMap<String, Object>> testdata = new ArrayList<>();
+        for(int i = 0;i<10;i++)
+        testdata.add((HashMap<String, Object>) new HashMap<String, Object>().put("blabla", "blabla"));
+        gridrv1.setLayoutManager(new GridLayoutManager(this, 3));
+        gridrv1.setAdapter(new ThemeGridPreview(getApplicationContext(), testdata));
     }
 
     private void initializeViews() {
@@ -83,5 +93,6 @@ public class ThemeManagerActivity extends AppCompatActivity {
         fab_anticlock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlock);
         textview_create = findViewById(R.id.textview_create);
         textview_import = findViewById(R.id.textview_import);
+        gridrv1 = findViewById(R.id.gridrv1);
     }
 }
