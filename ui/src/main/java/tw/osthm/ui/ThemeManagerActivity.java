@@ -57,8 +57,8 @@ public class ThemeManagerActivity extends AppCompatActivity {
                     fab1.setClickable(false);
                     isOpen = false;
                 } else {
-                    textview_create.setVisibility(View.VISIBLE);
-                    textview_import.setVisibility(View.VISIBLE);
+                    textview_create.startAnimation(fab_open);
+                    textview_import.startAnimation(fab_open);
                     fab2.startAnimation(fab_open);
                     fab1.startAnimation(fab_open);
                     fab.startAnimation(fab_clock);
