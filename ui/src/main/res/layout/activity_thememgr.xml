@@ -51,16 +51,11 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/gridrv1"
+        <GridView
+            android:id="@+id/gridview1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="4dp"
-            android:paddingTop="4dp"
-            android:paddingRight="4dp"
-            android:paddingBottom="4dp" >
+            android:layout_height="match_parent" />
 
-        </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
     <RelativeLayout

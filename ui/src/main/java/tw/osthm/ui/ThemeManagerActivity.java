@@ -1,20 +1,15 @@
 package tw.osthm.ui;
 
-import android.os.Bundle;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.os.*;
+import android.view.*;
+import android.view.animation.*;
+import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class ThemeManagerActivity extends AppCompatActivity {
     private ImageView image_back;
@@ -29,7 +24,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
     private TextView textview_create;
     private TextView textview_import;
     private boolean isOpen;
-    private RecyclerView gridrv1;
+    private GridView gridview1;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -75,10 +70,9 @@ public class ThemeManagerActivity extends AppCompatActivity {
             }
         });
         ArrayList<HashMap<String, Object>> testdata = new ArrayList<>();
-        for(int i = 0;i<10;i++)
+        for(int i = 0;i<15;i++)
         testdata.add((HashMap<String, Object>) new HashMap<String, Object>().put("blabla", "blabla"));
-        gridrv1.setLayoutManager(new GridLayoutManager(this, 3));
-        gridrv1.setAdapter(new ThemeGridPreview(getApplicationContext(), testdata));
+        //gridview1.setAdapter(new ThemeGridPreview(getApplicationContext(), testdata));
     }
 
     private void initializeViews() {
@@ -93,6 +87,6 @@ public class ThemeManagerActivity extends AppCompatActivity {
         fab_anticlock = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_rotate_anticlock);
         textview_create = findViewById(R.id.textview_create);
         textview_import = findViewById(R.id.textview_import);
-        gridrv1 = findViewById(R.id.gridrv1);
+        gridview1 = findViewById(R.id.gridview1);
     }
 }
