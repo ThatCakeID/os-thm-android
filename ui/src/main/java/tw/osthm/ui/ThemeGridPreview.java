@@ -1,49 +1,44 @@
 package tw.osthm.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ThemeGridPreview extends RecyclerView.Adapter<ThemeGridPreview.ViewHolder> {
-    private LayoutInflater mInflater;
-    private ArrayList<HashMap<String, Object>> list;
+public class ThemeGridPreview extends BaseAdapter {
+    ArrayList<HashMap<String, Object>> list;
+    LayoutInflater inflater;
 
     public ThemeGridPreview(Context mContext, ArrayList<HashMap<String, Object>> list) {
-        mInflater = LayoutInflater.from(mContext);
+        inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.list = list;
     }
 
-    @NonNull
     @Override
-    public ThemeGridPreview.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.theme_preview, parent, false);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ThemeGridPreview.ViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textview_name;
+    @Override
+    public HashMap<String, Object> getItem(int i) {
+        return list.get(i);
+    }
 
-        ViewHolder(View itemView) {
-            super(itemView);
-            textview_name = itemView.findViewById(R.id.textview_name);
-        }
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @SuppressLint({"ViewHolder", "InflateParams"})
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        view = inflater.inflate(R.layout.theme_preview, null);
+        //TODO: (reminder) implement view things here
+        return view;
     }
 }

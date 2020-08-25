@@ -54,7 +54,13 @@
         <GridView
             android:id="@+id/gridview1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:columnWidth="118dp"
+            android:horizontalSpacing="2dp"
+            android:numColumns="auto_fit"
+            android:smoothScrollbar="true"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="2dp" />
 
     </LinearLayout>
 

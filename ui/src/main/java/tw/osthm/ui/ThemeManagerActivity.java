@@ -72,7 +72,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
         ArrayList<HashMap<String, Object>> testdata = new ArrayList<>();
         for(int i = 0;i<15;i++)
         testdata.add((HashMap<String, Object>) new HashMap<String, Object>().put("blabla", "blabla"));
-        //gridview1.setAdapter(new ThemeGridPreview(getApplicationContext(), testdata));
+        gridview1.setAdapter(new ThemeGridPreview(getApplicationContext(), testdata));
     }
 
     private void initializeViews() {
