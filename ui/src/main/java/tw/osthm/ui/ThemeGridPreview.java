@@ -37,7 +37,8 @@ public class ThemeGridPreview extends BaseAdapter {
     @SuppressLint({"ViewHolder", "InflateParams"})
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflater.inflate(R.layout.theme_preview, null);
+        if (view == null)
+            view = inflater.inflate(R.layout.theme_preview, null);
         //TODO: (reminder) implement view things here
         return view;
     }

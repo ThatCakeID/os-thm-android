@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#2196F3"
-            android:elevation="10dp"
+            android:elevation="5dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="8dp">
@@ -56,11 +56,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:columnWidth="118dp"
-            android:horizontalSpacing="2dp"
+            android:horizontalSpacing="1dp"
             android:numColumns="auto_fit"
+            android:padding="1dp"
             android:smoothScrollbar="true"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="2dp" />
+            android:verticalSpacing="1dp" />
 
     </LinearLayout>
 
