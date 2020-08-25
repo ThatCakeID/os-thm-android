@@ -6,6 +6,6 @@
     <string name="create_theme">Create New</string>
     <string name="import_theme">Import Themes</string>
     <string name="help_button">Help Button</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lorem_ipsum_long">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ut mauris id quam auctor vulputate eu vel dui. Phasellus at diam sem. Sed id augue sodales, tincidunt libero et, placerat neque. Nunc est risus, tempor sed ullamcorper vitae, lobortis eget libero. Aenean porta arcu vel sapien pretium pellentesque. Sed luctus fringilla interdum. Aenean euismod massa sit amet mi vehicula tempor. Vestibulum non imperdiet est. Quisque semper scelerisque eros, in pellentesque nibh fermentum tempor. Mauris volutpat euismod metus, sit amet tincidunt dolor iaculis eu. Vivamus libero augue, fringilla ac magna vitae, tristique ultrices nunc. Aliquam accumsan eleifend magna vitae porttitor. Sed ornare magna diam, in cursus leo ultricies at.</string>
 </resources>
