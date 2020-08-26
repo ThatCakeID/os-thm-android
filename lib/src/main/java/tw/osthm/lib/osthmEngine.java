@@ -10,65 +10,67 @@ import android.graphics.Color;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
 public class osthmEngine {
 
-    public int themesVersion = 3;
-    public int metadataVersion = 3;
-    private SharedPreferences data;
+    public static int themesVersion = 3;
+    public static int metadataVersion = 3;
+    private static SharedPreferences data;
 
-    private void initializeData(Context mContext) {
+    private static void initializeData(Context mContext) {
         //Initializes some data here
         data = mContext.getSharedPreferences("teamdata", Activity.MODE_PRIVATE);
         if (data.getString("themelists", "").equals("")) data.edit().putString("themelists", "[]").apply();
         if (data.getString("currentTheme", "").equals("")) data.edit().putString("currentTheme", "default").apply();
     }
 
-    private ArrayList<HashMap<String, Object>> getThemeListPrivate() {
+    private static ArrayList<HashMap<String, Object>> getThemeListPrivate() {
         //Get theme from sharedpreferences (private method)
         ArrayList<HashMap<String, Object>> metadataarray = new Gson().fromJson(data.getString("themelists", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
         }.getType());
-        metadataarray.add(0, (HashMap<String, Object>) new HashMap<String, Object>().put("themesname", "Vanilla"));
+        HashMap<String, Object> test = new HashMap<>();
+        test.put("themesname", "Vanilla");
+        metadataarray.add(0, test);
+        //metadataarray.add(0, (HashMap<String, Object>) new HashMap<String, Object>().put("themesname", "Vanilla"));
         metadataarray.get(0).put("themesjson", "[{\"colorPrimary\":\"#2196F3\",\"colorPrimaryDark\":\"#1769AA\",\"colorBackgroundText\":\"#000000\",\"colorBackground\":\"#FFFFFF\",\"colorButton\":\"#F50057\",\"shadow\":\"1\",\"colorHint\":\"#A8A8A8\",\"colorRipple\":\"#40000000\",\"colorPrimaryCardImage\":\"#000000\",\"version\":\"" + Integer.toString(themesVersion) + "\",\"colorPrimaryText\":\"#FFFFFF\",\"colorPrimaryImage\":\"#FFFFFF\",\"colorBackgroundImage\":\"#2196F3\",\"colorBackgroundCardText\":\"#000000\",\"statusbarIcon\":\"1\",\"colorBackgroundCard\":\"#FFFFFF\",\"colorButtonText\":\"#FFFFFF\",\"colorPrimaryCardText\":\"#000000\",\"colorPrimaryCard\":\"#FFFFFF\",\"colorBackgroundCardImage\":\"#000000\"}]");
         metadataarray.get(0).put("themesinfo", "The default style theme of os-thm");
         metadataarray.get(0).put("themesauthor", "リェンーゆく");
         metadataarray.get(0).put("os-thm-version", Integer.toString(metadataVersion));
         metadataarray.get(0).put("uuid", "default");
         metadataarray.get(0).put("theme-version", 1);
-        metadataarray.add(1, (HashMap<String, Object>) new HashMap<String, Object>().put("themesname", "Vanilla"));
+        /* metadataarray.add(1, (HashMap<String, Object>) new HashMap<String, Object>().put("themesname", "Vanilla"));
         metadataarray.get(1).put("themesjson", "[{\"colorPrimary\":\"#2196F3\",\"colorPrimaryDark\":\"#252525\",\"colorBackgroundText\":\"#FFFFFF\",\"colorBackground\":\"#252525\",\"colorButton\":\"#F50057\",\"shadow\":\"1\",\"colorHint\":\"#808080\",\"colorRipple\":\"#40FFFFFF\",\"colorPrimaryCardImage\":\"#98A0A8\",\"version\":\"" + Integer.toString(themesVersion) + "\",\"colorPrimaryText\":\"#FFFFFF\",\"colorPrimaryImage\":\"#FFFFFF\",\"colorBackgroundImage\":\"#2196F3\",\"colorBackgroundCardText\":\"#98A0A8\",\"statusbarIcon\":\"1\",\"colorBackgroundCard\":\"#404040\",\"colorButtonText\":\"#FFFFFF\",\"colorPrimaryCardText\":\"#98A0A8\",\"colorPrimaryCard\":\"#404040\",\"colorBackgroundCardImage\":\"#98A0A8\"}]");
         metadataarray.get(1).put("themesinfo", "A Material dark theme for os-thm");
         metadataarray.get(1).put("themesauthor", "thatcakepiece");
         metadataarray.get(1).put("os-thm-version", Integer.toString(metadataVersion));
         metadataarray.get(1).put("uuid", "dark");
-        metadataarray.get(1).put("theme-version", 1);
+        metadataarray.get(1).put("theme-version", 1); */
         return metadataarray;
     }
 
-    public ArrayList<HashMap<String, Object>> getThemeList(Context mContext) {
+    public static ArrayList<HashMap<String, Object>> getThemeList(Context mContext) {
         //Get theme from sharedpreferences (public method)
         initializeData(mContext);
         return getThemeListPrivate();
     }
 
     //TODO: Implement migrate old theme function
-    public void migrateOldTheme(Context mContext, String UID) {
+    public static void migrateOldTheme(Context mContext, String UID) {
         //Migrate specified old theme to newer version
         initializeData(mContext);
     }
 
-    public void migrateAllOldThemes(Context mContext) {
+    public static void migrateAllOldThemes(Context mContext) {
         //Migrate all old themes to newer version
         initializeData(mContext);
     }
 
     //experimental incomplete codes ;-;
     /*
-    public String dbgMigrate(String json) {
+    public static String dbgMigrate(String json) {
         ArrayList<HashMap<String, Object>> metadataarrayjsn = new Gson().fromJson(json, new TypeToken<ArrayList<HashMap<String, Object>>>() {
         }.getType());
         ArrayList<HashMap<String, Object>> jsnthm = new Gson().fromJson(metadataarrayjsn.get(0).get("themesjson").toString(), new TypeToken<ArrayList<HashMap<String, Object>>>() {
@@ -99,7 +101,7 @@ public class osthmEngine {
     } */
     //end of experimental codes
 
-    public void addTheme(Context mContext, int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
+    public static void addTheme(Context mContext, int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
                          int statusbarIcon, int colorBackground, int colorBackgroundText,
                          int colorButton, int colorButtonText, int shadow, int colorRipple,
                          int colorHint, int colorPrimaryImage, int colorBackgroundImage,
@@ -114,7 +116,7 @@ public class osthmEngine {
                 themesname, themesinfo, themesauthor, themeversion, UUID.randomUUID().toString());
     }
 
-    public void addTheme(Context mContext, int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
+    public static void addTheme(Context mContext, int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
                          int statusbarIcon, int colorBackground, int colorBackgroundText,
                          int colorButton, int colorButtonText, int shadow, int colorRipple,
                          int colorHint, int colorPrimaryImage, int colorBackgroundImage,
@@ -163,7 +165,7 @@ public class osthmEngine {
         }
     }
 
-    public void editTheme(Context mContext, String UUIDvar, int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
+    public static void editTheme(Context mContext, String UUIDvar, int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
                           int statusbarIcon, int colorBackground, int colorBackgroundText,
                           int colorButton, int colorButtonText, int shadow, int colorRipple,
                           int colorHint, int colorPrimaryImage, int colorBackgroundImage,
@@ -217,7 +219,7 @@ public class osthmEngine {
         }
     }
 
-    public void setCurrentTheme(Context mContext, String UUIDvar) throws Exception {
+    public static void setCurrentTheme(Context mContext, String UUIDvar) throws Exception {
         initializeData(mContext);
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
@@ -237,7 +239,7 @@ public class osthmEngine {
             throw new osthmException("No matching theme with the given UUID!");
     }
 
-    public HashMap<String, Object> getCurrentTheme(Context mContext) {
+    public static HashMap<String, Object> getCurrentTheme(Context mContext) {
         initializeData(mContext);
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
@@ -248,12 +250,12 @@ public class osthmEngine {
         return arraythm.get(0);
     }
 
-    public String getCurrentThemeUUID(Context mContext) {
+    public static String getCurrentThemeUUID(Context mContext) {
         initializeData(mContext);
         return data.getString("currentTheme", "");
     }
 
-    public void importThemes(Context mContext, String json) throws Exception {
+    public static void importThemes(Context mContext, String json) throws Exception {
         initializeData(mContext);
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = new Gson().fromJson(data.getString("themelists", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
@@ -278,7 +280,7 @@ public class osthmEngine {
             throw new osthmException("This JSON things is empty, what do you hope for? ._.");
     }
 
-    public String exportThemes(Context mContext, ArrayList<String> UUIDvars) throws Exception {
+    public static String exportThemes(Context mContext, ArrayList<String> UUIDvars) throws Exception {
         if (UUIDvars.size() > 0) {
             initializeData(mContext);
             ArrayList<String> indexUUID = new ArrayList<>();
@@ -297,7 +299,7 @@ public class osthmEngine {
             throw new osthmException("There is no UUID given, what do you hope for? ._.");
     }
 
-    public void removeTheme(Context mContext, String UUIDvar) throws Exception {
+    public static void removeTheme(Context mContext, String UUIDvar) throws Exception {
         initializeData(mContext);
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = new Gson().fromJson(data.getString("themelists", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
@@ -319,7 +321,7 @@ public class osthmEngine {
         }
     }
 
-    public void removeAllThemes(Context mContext) throws Exception {
+    public static void removeAllThemes(Context mContext) throws Exception {
         initializeData(mContext);
         if (data.getString("currentTheme", "") == "default" || data.getString("currentTheme", "") == "dark")
             data.edit().putString("themelists", "[]").apply();
