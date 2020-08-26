@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.*;
+import tw.osthm.lib.*;
 
 public class ThemeManagerActivity extends AppCompatActivity {
     private ImageView image_back;
@@ -69,10 +69,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
             }
         });
-        ArrayList<HashMap<String, Object>> testdata = new ArrayList<>();
-        for(int i = 0;i<15;i++)
-        testdata.add((HashMap<String, Object>) new HashMap<String, Object>().put("blabla", "blabla"));
-        gridview1.setAdapter(new ThemeGridPreview(getApplicationContext(), testdata));
+        gridview1.setAdapter(new ThemeGridPreview(getApplicationContext(), osthmEngine.getThemeList(getApplicationContext())));
     }
 
     private void initializeViews() {
