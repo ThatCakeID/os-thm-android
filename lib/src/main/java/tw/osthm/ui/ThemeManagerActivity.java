@@ -1,5 +1,6 @@
 package tw.osthm.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -71,6 +72,14 @@ public class ThemeManagerActivity extends AppCompatActivity {
                     isOpen = true;
                 }
 
+            }
+        });
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(), ThemeEditorActivity.class);
+                startActivity(intent);
             }
         });
         gridview1.setAdapter(new ThemeGridPreview(getApplicationContext(), osthmEngine.getThemeList(getApplicationContext())));
