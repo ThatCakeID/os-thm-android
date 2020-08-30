@@ -65,13 +65,15 @@ public class ThemeGridPreview extends BaseAdapter {
         textview_name.setText(list.get(i).get("themesname").toString());
         ArrayList<HashMap<String, Object>> thmarray = new Gson().fromJson(list.get(i).get("themesjson").toString(), new TypeToken<ArrayList<HashMap<String, Object>>>() {
         }.getType());
-        textview_name.setTextColor(Color.parseColor(thmarray.get(0).get("colorBackgroundText").toString()));
-        textview_title.setTextColor(Color.parseColor(thmarray.get(0).get("colorPrimaryText").toString()));
-        linear_base.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(thmarray.get(0).get("colorBackground").toString())));
-        linear_title.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(thmarray.get(0).get("colorPrimary").toString())));
-        imageview_fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(thmarray.get(0).get("colorButton").toString())));
-        imageview_fab.setColorFilter(Color.parseColor(thmarray.get(0).get("colorButtonText").toString()));
-        imageview_back.setColorFilter(Color.parseColor(thmarray.get(0).get("colorPrimaryImage").toString()));
+        /* disabled for a while
+        textview_name.setTextColor(thmarray.get(0).get("colorBackgroundText").toString());
+        textview_title.setTextColor(thmarray.get(0).get("colorPrimaryText").toString());
+        linear_base.setBackgroundTintList(ColorStateList.valueOf(thmarray.get(0).get("colorBackground").toString()));
+        linear_title.setBackgroundTintList(ColorStateList.valueOf(thmarray.get(0).get("colorPrimary").toString()));
+        imageview_fab.setBackgroundTintList(ColorStateList.valueOf(thmarray.get(0).get("colorButton").toString()));
+        imageview_fab.setColorFilter(thmarray.get(0).get("colorButtonText").toString());
+        imageview_back.setColorFilter(thmarray.get(0).get("colorPrimaryImage").toString());
+        */
         return view;
     }
 }

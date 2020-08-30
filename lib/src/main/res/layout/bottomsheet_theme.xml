@@ -68,7 +68,7 @@
                 <LinearLayout
                     android:id="@+id/linear18"
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="24dp"
                     android:background="#1769AA"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
