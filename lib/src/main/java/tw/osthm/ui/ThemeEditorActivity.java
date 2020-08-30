@@ -1,12 +1,10 @@
 package tw.osthm.ui;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 
@@ -22,12 +20,12 @@ public class ThemeEditorActivity extends AppCompatActivity {
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
      */
-    private ViewPager mPager;
+    private ViewPager2 mPager;
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.
      */
-    private PagerAdapter pagerAdapter;
+    private ScreenSlidePagerAdapter pagerAdapter;
 
 
     @Override
@@ -37,33 +35,34 @@ public class ThemeEditorActivity extends AppCompatActivity {
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = findViewById(R.id.viewPager_thmedit);
-        pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new ScreenSlidePagerAdapter(this);
         mPager.setAdapter(pagerAdapter);
 
     }
 
-    private static class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    private static class ScreenSlidePagerAdapter extends FragmentStateAdapter {
 
         private Fragment[] childFragments;
 
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
+        public ScreenSlidePagerAdapter(FragmentActivity fa) {
+            super(fa);
             childFragments = new Fragment[] {
                     new FragmentThmEdit1(), // 0
                     new FragmentThmEdit2(), // 1
-                    new FragmentThmEdit3(), // 2
+                    new FragmentThmEdit3() // 2
             };
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public Fragment createFragment(int position) {
             return childFragments[position];
         }
 
         @Override
-        public int getCount() {
+        public int getItemCount() {
             return childFragments.length;
         }
+
     }
 
 }
