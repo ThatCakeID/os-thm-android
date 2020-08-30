@@ -25,7 +25,7 @@
                 android:id="@+id/image_back"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/circle_ripple"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/back_button"
                 android:padding="6dp"
                 android:scaleType="centerInside"
@@ -46,7 +46,7 @@
                 android:id="@+id/image_help"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:background="@drawable/circle_ripple"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/help_button"
                 android:padding="6dp"
                 app:srcCompat="@drawable/ic_help_outline_white" />
