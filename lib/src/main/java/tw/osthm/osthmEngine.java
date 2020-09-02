@@ -301,7 +301,7 @@ public class osthmEngine {
         if (thmarray.size() > 0) {
             for (int i = 0; i < thmarray.size(); i++) {
                 if (indexUUID.contains(thmarray.get(i).get("uuid")) || isExistInDefaultTheme(thmarray.get(i).get("uuid").toString())) {
-                    if ((int)thmarray.get(i).get("theme-version") > (int)metadataarray.get(indexUUID.indexOf(thmarray.get(i).get("uuid"))).get("theme-version")  && !(thmarray.get(i).get("uuid") == "default" || thmarray.get(i).get("uuid") == "dark"))
+                    if ((int)thmarray.get(i).get("theme-version") > (int)metadataarray.get(indexUUID.indexOf(thmarray.get(i).get("uuid"))).get("theme-version")  && !isExistInDefaultTheme(thmarray.get(i).get("uuid").toString()))
                         metadataarray.set(indexUUID.indexOf(thmarray.get(i).get("uuid")), thmarray.get(i));
                     else
                         throw new osthmException("Theme(s) can't be imported because the theme(s) are already exist!");
@@ -357,7 +357,7 @@ public class osthmEngine {
 
     public static void removeAllThemes(Context mContext) throws Exception {
         initializeData(mContext);
-        if (data.getString("currentTheme", "") == "default" || data.getString("currentTheme", "") == "dark")
+        if (isExistInDefaultTheme(data.getString("currentTheme", "")))
             data.edit().putString("themelists", "[]").apply();
         else
             throw new osthmException("Theme is in use!");
