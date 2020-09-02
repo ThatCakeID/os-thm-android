@@ -19,6 +19,8 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 
 import tw.osthm.R;
 
+// This is my last commit, goodbye
+
 public class FragmentThmEdit1 extends Fragment implements ColorPickerDialogListener {
 
     SharedPreferences sp;
