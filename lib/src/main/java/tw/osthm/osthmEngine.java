@@ -27,20 +27,20 @@ public class osthmEngine {
         if (data.getString("themelists", "").equals("")) data.edit().putString("themelists", "[]").apply();
         if (data.getString("currentTheme", "").equals("")) data.edit().putString("currentTheme", "default").apply();
         defaultThemes = new ArrayList<>();
-        /* defaultThemes.add(0, addKeyToHashMap("themesname", "Vanilla"));
-        defaultThemes.get(0).put("themesjson", "[{\"colorPrimary\":\"#2196F3\",\"colorPrimaryDark\":\"#1769AA\",\"colorBackgroundText\":\"#000000\",\"colorBackground\":\"#FFFFFF\",\"colorButton\":\"#F50057\",\"shadow\":\"1\",\"colorHint\":\"#A8A8A8\",\"colorRipple\":\"#40000000\",\"colorPrimaryCardImage\":\"#000000\",\"version\":\"" + Integer.toString(themesVersion) + "\",\"colorPrimaryText\":\"#FFFFFF\",\"colorPrimaryImage\":\"#FFFFFF\",\"colorBackgroundImage\":\"#2196F3\",\"colorBackgroundCardText\":\"#000000\",\"statusbarIcon\":\"1\",\"colorBackgroundCard\":\"#FFFFFF\",\"colorButtonText\":\"#FFFFFF\",\"colorPrimaryCardText\":\"#000000\",\"colorPrimaryCard\":\"#FFFFFF\",\"colorBackgroundCardImage\":\"#000000\"}]");
+        defaultThemes.add(0, addKeyToHashMap("themesname", "Vanilla"));
+        defaultThemes.get(0).put("themesjson", "[{\"colorPrimary\":-14575885,\"colorBackgroundCardTint\":-16777216,\"colorPrimaryDark\":-15242838,\"colorBackgroundText\":-16777216,\"colorBackground\":-1,\"shadow\":1,\"colorPrimaryTint\":-1,\"colorHint\":-5723992,\"colorStatusbarTint\":1,\"version\":\"" + Integer.toString(themesVersion) + "\",\"colorPrimaryCardTint\":-16777216,\"colorAccent\":-720809,\"colorPrimaryText\":-1,\"colorBackgroundCardText\":-16777216,\"colorBackgroundTint\":-14575885,\"colorControlHighlight\":1073741824,\"colorAccentText\":-1,\"colorBackgroundCard\":-1,\"colorPrimaryCardText\":-16777216,\"colorPrimaryCard\":-1}]");
         defaultThemes.get(0).put("themesinfo", "The default style theme of os-thm");
         defaultThemes.get(0).put("themesauthor", "リェンーゆく");
         defaultThemes.get(0).put("os-thm-version", Integer.toString(metadataVersion));
         defaultThemes.get(0).put("uuid", "default");
-        defaultThemes.get(0).put("theme-version", 1);
+        defaultThemes.get(0).put("theme-version", 2);
         defaultThemes.add(1, addKeyToHashMap("themesname", "Dark"));
-        defaultThemes.get(1).put("themesjson", "[{\"colorPrimary\":\"#2196F3\",\"colorPrimaryDark\":\"#252525\",\"colorBackgroundText\":\"#FFFFFF\",\"colorBackground\":\"#252525\",\"colorButton\":\"#F50057\",\"shadow\":\"1\",\"colorHint\":\"#808080\",\"colorRipple\":\"#40FFFFFF\",\"colorPrimaryCardImage\":\"#98A0A8\",\"version\":\"" + Integer.toString(themesVersion) + "\",\"colorPrimaryText\":\"#FFFFFF\",\"colorPrimaryImage\":\"#FFFFFF\",\"colorBackgroundImage\":\"#2196F3\",\"colorBackgroundCardText\":\"#98A0A8\",\"statusbarIcon\":\"1\",\"colorBackgroundCard\":\"#404040\",\"colorButtonText\":\"#FFFFFF\",\"colorPrimaryCardText\":\"#98A0A8\",\"colorPrimaryCard\":\"#404040\",\"colorBackgroundCardImage\":\"#98A0A8\"}]");
+        defaultThemes.get(1).put("themesjson", "[{\"colorPrimary\":-14575885,\"colorBackgroundCardTint\":-6774616,\"colorPrimaryDark\":-14342875,\"colorBackgroundText\":-1,\"colorBackground\":-14342875,\"shadow\":1,\"colorPrimaryTint\":-1,\"colorHint\":-8355712,\"colorStatusbarTint\":1,\"version\":\"" + Integer.toString(themesVersion) + "\",\"colorPrimaryCardTint\":-6774616,\"colorAccent\":-720809,\"colorPrimaryText\":-1,\"colorBackgroundCardText\":-6774616,\"colorBackgroundTint\":-14575885,\"colorControlHighlight\":1090519039,\"colorAccentText\":-1,\"colorBackgroundCard\":-12566464,\"colorPrimaryCardText\":-6774616,\"colorPrimaryCard\":-12566464}]");
         defaultThemes.get(1).put("themesinfo", "A Material dark theme for os-thm");
         defaultThemes.get(1).put("themesauthor", "thatcakepiece");
         defaultThemes.get(1).put("os-thm-version", Integer.toString(metadataVersion));
         defaultThemes.get(1).put("uuid", "dark");
-        defaultThemes.get(1).put("theme-version", 1); */
+        defaultThemes.get(1).put("theme-version", 3);
     }
 
     private static ArrayList<HashMap<String, Object>> getThemeListPrivate() {
@@ -83,7 +83,7 @@ public class osthmEngine {
         newShinyFancyTheme.get(0).put("colorStatusbarTint", Integer.valueOf(oldTheme.get(0).get("statusbarIcon").toString()));
         newShinyFancyTheme.get(0).put("colorBackground", Color.parseColor(oldTheme.get(0).get("colorBackground").toString()));
         newShinyFancyTheme.get(0).put("colorAccent", Color.parseColor(oldTheme.get(0).get("colorButton").toString()));
-        newShinyFancyTheme.get(0).put("shadow", Color.parseColor(oldTheme.get(0).get("shadow").toString()));
+        newShinyFancyTheme.get(0).put("shadow", Integer.valueOf(oldTheme.get(0).get("shadow").toString()));
         newShinyFancyTheme.get(0).put("colorControlHighlight", Color.parseColor(oldTheme.get(0).get("colorRipple").toString()));
         newShinyFancyTheme.get(0).put("colorHint", Color.parseColor(oldTheme.get(0).get("colorHint").toString()));
         if (oldTheme.get(0).containsKey("version")) {
@@ -120,8 +120,8 @@ public class osthmEngine {
         }
         newShinyFancyTheme.get(0).put("version", Integer.toString(themesVersion));
         metadataarray.get(position).put("themesjson", new Gson().toJson(newShinyFancyTheme));
-        if (metadataarray.get(position).containsKey("os-thm-version")) {
-            metadataarray.get(position).put("themesinfo", "Migrated from theme v1");
+        if (!metadataarray.get(position).containsKey("os-thm-version")) {
+            metadataarray.get(position).put("themesinfo", "Migrated from older theme");
             metadataarray.get(position).put("themesauthor", "os-thm");
         }
         metadataarray.get(position).put("os-thm-version", Integer.toString(metadataVersion));
@@ -273,13 +273,13 @@ public class osthmEngine {
             throw new osthmException("No matching theme with the given UUID!");
     }
 
-    public static HashMap<String, Object> getCurrentTheme(Context mContext) {
+    public static HashMap<String, Integer> getCurrentTheme(Context mContext) {
         initializeData(mContext);
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
         for (int i = 0; i < metadataarray.size(); i++)
             indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
-        ArrayList<HashMap<String, Object>> arraythm = new Gson().fromJson(metadataarray.get(indexUUID.indexOf(data.getString("currentTheme", ""))).get("themesjson").toString(), new TypeToken<ArrayList<HashMap<String, Object>>>() {
+        ArrayList<HashMap<String, Integer>> arraythm = new Gson().fromJson(metadataarray.get(indexUUID.indexOf(data.getString("currentTheme", ""))).get("themesjson").toString(), new TypeToken<ArrayList<HashMap<String, Integer>>>() {
         }.getType());
         return arraythm.get(0);
     }

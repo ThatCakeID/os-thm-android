@@ -3,7 +3,6 @@ package tw.osthm.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,17 +62,15 @@ public class ThemeGridPreview extends BaseAdapter {
         textview_title = view.findViewById(R.id.textview_title);
 
         textview_name.setText(list.get(i).get("themesname").toString());
-        ArrayList<HashMap<String, Object>> thmarray = new Gson().fromJson(list.get(i).get("themesjson").toString(), new TypeToken<ArrayList<HashMap<String, Object>>>() {
+        ArrayList<HashMap<String, Integer>> thmarray = new Gson().fromJson(list.get(i).get("themesjson").toString(), new TypeToken<ArrayList<HashMap<String, Integer>>>() {
         }.getType());
-        /* disabled for a while
-        textview_name.setTextColor(thmarray.get(0).get("colorBackgroundText").toString());
-        textview_title.setTextColor(thmarray.get(0).get("colorPrimaryText").toString());
-        linear_base.setBackgroundTintList(ColorStateList.valueOf(thmarray.get(0).get("colorBackground").toString()));
-        linear_title.setBackgroundTintList(ColorStateList.valueOf(thmarray.get(0).get("colorPrimary").toString()));
-        imageview_fab.setBackgroundTintList(ColorStateList.valueOf(thmarray.get(0).get("colorButton").toString()));
-        imageview_fab.setColorFilter(thmarray.get(0).get("colorButtonText").toString());
-        imageview_back.setColorFilter(thmarray.get(0).get("colorPrimaryImage").toString());
-        */
+        textview_name.setTextColor(thmarray.get(0).get("colorBackgroundText"));
+        textview_title.setTextColor(thmarray.get(0).get("colorPrimaryText"));
+        linear_base.setBackgroundTintList(ColorStateList.valueOf(thmarray.get(0).get("colorBackground")));
+        linear_title.setBackgroundTintList(ColorStateList.valueOf(thmarray.get(0).get("colorPrimary")));
+        imageview_fab.setBackgroundTintList(ColorStateList.valueOf(thmarray.get(0).get("colorAccent")));
+        imageview_fab.setColorFilter(thmarray.get(0).get("colorAccentText"));
+        imageview_back.setColorFilter(thmarray.get(0).get("colorPrimaryTint"));
         return view;
     }
 }
