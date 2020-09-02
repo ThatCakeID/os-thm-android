@@ -30,7 +30,7 @@ public class osthmEngine {
         //Get theme from sharedpreferences (private method)
         ArrayList<HashMap<String, Object>> metadataarray = new Gson().fromJson(data.getString("themelists", ""), new TypeToken<ArrayList<HashMap<String, Object>>>() {
         }.getType());
-        metadataarray.add(0, addKeyToHashMap("themesname", "Vanilla"));
+        /* metadataarray.add(0, addKeyToHashMap("themesname", "Vanilla"));
         metadataarray.get(0).put("themesjson", "[{\"colorPrimary\":\"#2196F3\",\"colorPrimaryDark\":\"#1769AA\",\"colorBackgroundText\":\"#000000\",\"colorBackground\":\"#FFFFFF\",\"colorButton\":\"#F50057\",\"shadow\":\"1\",\"colorHint\":\"#A8A8A8\",\"colorRipple\":\"#40000000\",\"colorPrimaryCardImage\":\"#000000\",\"version\":\"" + Integer.toString(themesVersion) + "\",\"colorPrimaryText\":\"#FFFFFF\",\"colorPrimaryImage\":\"#FFFFFF\",\"colorBackgroundImage\":\"#2196F3\",\"colorBackgroundCardText\":\"#000000\",\"statusbarIcon\":\"1\",\"colorBackgroundCard\":\"#FFFFFF\",\"colorButtonText\":\"#FFFFFF\",\"colorPrimaryCardText\":\"#000000\",\"colorPrimaryCard\":\"#FFFFFF\",\"colorBackgroundCardImage\":\"#000000\"}]");
         metadataarray.get(0).put("themesinfo", "The default style theme of os-thm");
         metadataarray.get(0).put("themesauthor", "リェンーゆく");
@@ -43,7 +43,7 @@ public class osthmEngine {
         metadataarray.get(1).put("themesauthor", "thatcakepiece");
         metadataarray.get(1).put("os-thm-version", Integer.toString(metadataVersion));
         metadataarray.get(1).put("uuid", "dark");
-        metadataarray.get(1).put("theme-version", 1);
+        metadataarray.get(1).put("theme-version", 1); */
         return metadataarray;
     }
 
