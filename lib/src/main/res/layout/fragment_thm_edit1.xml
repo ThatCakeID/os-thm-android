@@ -14,11 +14,12 @@
             android:id="@+id/gridLayout"
             android:layout_width="0dp"
             android:layout_height="120dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+            app:layout_constraintBottom_toTopOf="@+id/color_accent_fragment1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/color_primary_fragment1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimary"
@@ -65,6 +66,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/color_primary_dark_fragment1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@color/colorPrimaryDark"
@@ -115,7 +117,7 @@
         </androidx.gridlayout.widget.GridLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+            android:id="@+id/color_accent_fragment1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
@@ -182,7 +184,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView21">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout2"
+                android:id="@+id/status_bar_fragment1"
                 android:layout_width="0dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="1dp"
@@ -236,16 +238,17 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/app_bar_fragment1"
                 android:layout_width="0dp"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary"
                 android:elevation="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+                app:layout_constraintTop_toBottomOf="@+id/status_bar_fragment1">
 
                 <TextView
-                    android:id="@+id/textView19"
+                    android:id="@+id/app_bar_title_fragment1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
@@ -261,7 +264,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton"
+                android:id="@+id/fab_fragment1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
