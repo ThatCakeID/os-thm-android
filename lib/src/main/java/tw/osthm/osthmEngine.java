@@ -213,7 +213,7 @@ public class osthmEngine {
         for (int i = 0; i < metadataarray.size(); i++)
             indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
         if (indexUUID.contains(UUIDvar)) {
-            if (metadataarray.get(indexUUID.indexOf(UUIDvar)).get("os-thm-version") == metadataVersion) {
+            if ((int)metadataarray.get(indexUUID.indexOf(UUIDvar)).get("os-thm-version") == metadataVersion) {
                 ArrayList<HashMap<String, Integer>> themearray = new ArrayList<>();
                 themearray.add(addKeyToIntHashMap("colorPrimary", colorPrimary));
                 themearray.get(0).put("colorPrimaryText", colorPrimaryText);
@@ -260,7 +260,7 @@ public class osthmEngine {
         for (int i = 0; i < metadataarray.size(); i++)
             indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
         if (indexUUID.contains(UUIDvar)) {
-            if (metadataarray.get(indexUUID.indexOf(UUIDvar)).get("os-thm-version") == metadataVersion) {
+            if ((int)metadataarray.get(indexUUID.indexOf(UUIDvar)).get("os-thm-version") == metadataVersion) {
                 HashMap<String, Integer> thmjsn = new Gson().fromJson(data.getString("themelists", ""), new TypeToken<HashMap<String, Integer>>() {
                 }.getType());
                 if (thmjsn.get("version") == themesVersion)
