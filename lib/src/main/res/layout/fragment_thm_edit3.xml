@@ -18,6 +18,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="24dp"
+            android:background="#FFFFFF"
             android:elevation="5dp"
             app:layout_constraintBottom_toTopOf="@+id/pick_color_fragment3"
             app:layout_constraintEnd_toEndOf="parent"
