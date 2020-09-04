@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
                 android:fontFamily="@font/googlesans"
-                android:text="Lorem Ipsum"
+                android:text="@string/app_name"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
