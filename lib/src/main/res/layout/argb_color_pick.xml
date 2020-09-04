@@ -1,0 +1,302 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_colpick"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/bg_result"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal"
+        android:padding="8dp" />
+
+    <LinearLayout
+        android:id="@+id/linear3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/text_hastag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesans"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="#"
+            android:textColor="#767676"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edit_hex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/googlesans"
+            android:hint="AARRGGBB"
+            android:imeOptions="actionDone"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+            android:singleLine="true"
+            android:text="FFFFFF"
+            android:textColor="#000000"
+            android:textColorHint="#607D8B"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:id="@+id/text_a"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:fontFamily="@font/googlesansbold"
+            android:gravity="center_horizontal"
+            android:text="A"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textview2"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:alpha="0.5"
+            android:background="#000000"
+            android:padding="8dp"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+
+        <SeekBar
+            android:id="@+id/seek_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="255"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:progressTint="#808080" />
+
+        <TextView
+            android:id="@+id/textn_a"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:fontFamily="@font/googlesansbold"
+            android:gravity="right|center_vertical"
+            android:text="0"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:id="@+id/text_r"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesansbold"
+            android:gravity="center_horizontal"
+            android:text="R"
+            android:textColor="#FF0000"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/red_swatch"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#FF0000"
+            android:padding="8dp"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+
+        <SeekBar
+            android:id="@+id/seek_r"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="255"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:progressTint="#FF0000" />
+
+        <TextView
+            android:id="@+id/textn_r"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesansbold"
+            android:gravity="right|center_vertical"
+            android:text="0"
+            android:textColor="#FF0000"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:id="@+id/text_g"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesansbold"
+            android:gravity="center_horizontal"
+            android:text="G"
+            android:textColor="#00FF00"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/green_swatch"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#00FF00"
+            android:padding="8dp"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+
+        <SeekBar
+            android:id="@+id/seek_g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="255"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:progressTint="#00FF00" />
+
+        <TextView
+            android:id="@+id/textn_g"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesansbold"
+            android:gravity="right|center_vertical"
+            android:text="0"
+            android:textColor="#00FF00"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:id="@+id/text_b"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesansbold"
+            android:gravity="center_horizontal"
+            android:text="B"
+            android:textColor="#0000FF"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/blue_swatch"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#0000FF"
+            android:padding="8dp"
+            android:textColor="#000000"
+            android:textSize="12sp" />
+
+        <SeekBar
+            android:id="@+id/seek_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="255"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:progressTint="#0000FF" />
+
+        <TextView
+            android:id="@+id/textn_b"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesansbold"
+            android:gravity="right|center_vertical"
+            android:text="0"
+            android:textColor="#0000FF"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear10"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_plhwarna"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/googlesans"
+            android:paddingLeft="8dp"
+            android:text="ARGB Color Picker"
+            android:textColor="#000000"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/text_axhyre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/googlesans"
+            android:gravity="right"
+            android:paddingRight="8dp"
+            android:text="Layout by \@thatcakepiece"
+            android:textColor="#000000"
+            android:textSize="10sp" />
+    </LinearLayout>
+</LinearLayout>

@@ -10,14 +10,14 @@ import android.widget.Button;
 import tw.osthm.ui.ThemeManagerActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private Button button;
+    private Button button1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeViews();
-        button.setOnClickListener(new View.OnClickListener() {
+        button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
@@ -28,6 +28,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        button = findViewById(R.id.button1);
+        button1 = findViewById(R.id.button1);
     }
 }

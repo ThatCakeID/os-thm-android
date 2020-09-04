@@ -19,7 +19,8 @@ import tw.osthm.R;
 public class ThemeEditorActivity extends AppCompatActivity {
     private ViewPager2 mPager;
     private ScreenSlidePagerAdapter pagerAdapter;
-    private ImageView imageView;
+    private ImageView image_back;
+    private ImageView image_save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,17 +29,24 @@ public class ThemeEditorActivity extends AppCompatActivity {
         initializeViews();
         pagerAdapter = new ScreenSlidePagerAdapter(this);
         mPager.setAdapter(pagerAdapter);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        image_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+        image_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
 
     private void initializeViews() {
         mPager = findViewById(R.id.viewPager_thmedit);
-        imageView = findViewById(R.id.imageView);
+        image_back = findViewById(R.id.image_back);
+        image_save = findViewById(R.id.image_save);
     }
 
     private static class ScreenSlidePagerAdapter extends FragmentStateAdapter {
