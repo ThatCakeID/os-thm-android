@@ -22,12 +22,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+// TODO: RYENYUKU TOLONG YAH, KOREKSI JAVADOC AING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+/**
+ * <h1>os-thm Engine</h1>
+ * os-thm Engine is a framework for themes, android developers
+ * can easily add os-thm integration to their apps easily, and
+ * blah blah blah TODO: RYENYUKU PLEASE WRITE SOMETHING HERE I CAN ONLY SPEAK INDONESIA
+ * <p>
+ *
+ * @author  ThatCakeID Team
+ * @version 3.0
+ * @since   2020
+ */
+
 public class osthmEngine {
 
     public static int themesVersion = 3;
     public static int metadataVersion = 3;
     private static SharedPreferences data;
     private static ArrayList<HashMap<String, Object>> defaultThemes;
+
+    /**
+     * This method is used to initialize SharedPreferences and Other
+     * @param mContext Context used to get Private themes trough SharedPreferences
+     */
 
     private static void initializeData(Context mContext) {
         data = mContext.getSharedPreferences("teamdata", Activity.MODE_PRIVATE);
@@ -53,8 +72,12 @@ public class osthmEngine {
         defaultThemes.get(1).put("os-thm-version", metadataVersion);
         defaultThemes.get(1).put("uuid", "dark");
         defaultThemes.get(1).put("theme-version", 3);
-
     }
+
+    /**
+     * This method is used to get private Themes trough SharedPreferences
+     * @return PrivateThemes
+     */
 
     private static ArrayList<HashMap<String, Object>> getThemeListPrivate() {
         // Get theme from SharedPreferences (private method)
@@ -67,15 +90,29 @@ public class osthmEngine {
         return metadataarray;
     }
 
+    /**
+     *
+     * @param themeUUID Theme UUID
+     * @return Does theme exist in the default theme
+     */
     private static boolean isExistInDefaultTheme(String themeUUID) {
         boolean isExist = false;
 
         for (HashMap<String, Object> theme: defaultThemes)
-            if (theme.containsKey("uuid"))
+            if (theme.containsKey("uuid")) {
                 isExist = true;
+                break;
+            }
 
         return isExist;
     }
+
+    /**
+     * This method is used to Convert older version theme of os-thm
+     * into the current os-thm versio
+     * @param metadataarray Old Theme
+     * @return Converted Theme (Usable Theme)
+     */
 
     private static HashMap<String, Object> migrateOlderThemePrivate(HashMap<String, Object> metadataarray) {
         ArrayList<HashMap<String, Object>> oldTheme =
@@ -152,6 +189,12 @@ public class osthmEngine {
         return null;
     }
 
+    /**
+     * This method is used to get List of Themes
+     * @param mContext Context
+     * @return List Of Themes
+     */
+
     public static ArrayList<HashMap<String, Object>> getThemeList(Context mContext) {
         // Get theme from sharedpreferences (public method)
         initializeData(mContext);
@@ -159,16 +202,46 @@ public class osthmEngine {
         return getThemeListPrivate();
     }
 
+    // Unfinished
     public static void migrateOldTheme(Context mContext, String UUIDvar) {
         // Migrate specified old theme to newer version
         initializeData(mContext);
     }
 
+    // Unfinished
     public static void migrateAllOldThemes(Context mContext) {
         // Migrate all old themes to newer version
-
         initializeData(mContext);
     }
+
+    /**
+     * This method is used to add theme into the theme list, and generate a random uuid
+     * @param mContext Context
+     * @param colorPrimary Primary Color
+     * @param colorPrimaryText Primary Text Color
+     * @param colorPrimaryDark Primary Dark Color
+     * @param colorStatusbarTint Statusbar Color
+     * @param colorBackground Background color for root
+     * @param colorBackgroundText Background color for text
+     * @param colorAccent Color Accent
+     * @param colorAccentText Color Accent for text
+     * @param shadow Is shadow enabled
+     * @param colorControlHighlight Color on highlight
+     * @param colorHint Color Hint for EditText
+     * @param colorPrimaryTint Imageview tint color
+     * @param colorBackgroundTint Background Tint color
+     * @param colorPrimaryCard Card Color
+     * @param colorBackgroundCard Card Background Color
+     * @param colorPrimaryCardText Color for Text on card
+     * @param colorBackgroundCardText Color for Text Background on card
+     * @param colorPrimaryCardTint Tint for imageview on card
+     * @param colorBackgroundCardTint Background color for card tint
+     * @param themesname Theme name
+     * @param themesinfo Theme info/ description
+     * @param themesauthor Theme Author
+     * @param themeversion Theme version
+     * @throws osthmException Os-Thm Exception
+     */
 
     public static void addTheme(Context mContext,           int colorPrimary,           int colorPrimaryText,   int colorPrimaryDark,
                                 int colorStatusbarTint,     int colorBackground,        int colorBackgroundText,
@@ -178,7 +251,7 @@ public class osthmEngine {
                                 int colorBackgroundCardText,int colorPrimaryCardTint,   int colorBackgroundCardTint,
 
                                 String themesname,          String themesinfo,
-                                String themesauthor,        int themeversion            ) throws Exception {
+                                String themesauthor,        int themeversion            ) throws osthmException {
         // Add new theme using given hex colors and generate new UUID
 
         addTheme(mContext, colorPrimary, colorPrimaryText, colorPrimaryDark, colorStatusbarTint, colorBackground,
@@ -188,6 +261,36 @@ public class osthmEngine {
                 themesname, themesinfo, themesauthor, themeversion, UUID.randomUUID().toString());
     }
 
+    /**
+     * This method is used to add theme into the theme list
+     * @param mContext Context
+     * @param colorPrimary Primary Color
+     * @param colorPrimaryText Primary Text Color
+     * @param colorPrimaryDark Primary Dark Color
+     * @param colorStatusbarTint Statusbar Color
+     * @param colorBackground Background color for root
+     * @param colorBackgroundText Background color for text
+     * @param colorAccent Color Accent
+     * @param colorAccentText Color Accent for text
+     * @param shadow Is shadow enabled
+     * @param colorControlHighlight Color on highlight
+     * @param colorHint Color Hint for EditText
+     * @param colorPrimaryTint Imageview tint color
+     * @param colorBackgroundTint Background Tint color
+     * @param colorPrimaryCard Card Color
+     * @param colorBackgroundCard Card Background Color
+     * @param colorPrimaryCardText Color for Text on card
+     * @param colorBackgroundCardText Color for Text Background on card
+     * @param colorPrimaryCardTint Tint for imageview on card
+     * @param colorBackgroundCardTint Background color for card tint
+     * @param themesname Theme name
+     * @param themesinfo Theme info/ description
+     * @param themesauthor Theme Author
+     * @param themeversion Theme version
+     * @param UUIDvar UUID for the Theme
+     * @throws osthmException Os-Thm Exception
+     */
+
     public static void addTheme(Context mContext,           int colorPrimary,           int colorPrimaryText,   int colorPrimaryDark,
                                 int colorStatusbarTint,     int colorBackground,        int colorBackgroundText,
                                 int colorAccent,            int colorAccentText,        int shadow,             int colorControlHighlight,
@@ -196,7 +299,7 @@ public class osthmEngine {
                                 int colorBackgroundCardText,int colorPrimaryCardTint,   int colorBackgroundCardTint,
 
                                 String themesname,  String themesinfo,      String themesauthor,
-                                int themeversion,   String UUIDvar                              ) throws Exception {
+                                int themeversion,   String UUIDvar                              ) throws osthmException {
 
         initializeData(mContext);
         ArrayList<String> indexUUID = new ArrayList<>();
@@ -247,6 +350,35 @@ public class osthmEngine {
         }
     }
 
+    /**
+     * This method is used to edit theme in the theme list, and generate a random uuid
+     * @param mContext Context
+     * @param colorPrimary Primary Color
+     * @param colorPrimaryText Primary Text Color
+     * @param colorPrimaryDark Primary Dark Color
+     * @param colorStatusbarTint Statusbar Color
+     * @param colorBackground Background color for root
+     * @param colorBackgroundText Background color for text
+     * @param colorAccent Color Accent
+     * @param colorAccentText Color Accent for text
+     * @param shadow Is shadow enabled
+     * @param colorControlHighlight Color on highlight
+     * @param colorHint Color Hint for EditText
+     * @param colorPrimaryTint Imageview tint color
+     * @param colorBackgroundTint Background Tint color
+     * @param colorPrimaryCard Card Color
+     * @param colorBackgroundCard Card Background Color
+     * @param colorPrimaryCardText Color for Text on card
+     * @param colorBackgroundCardText Color for Text Background on card
+     * @param colorPrimaryCardTint Tint for imageview on card
+     * @param colorBackgroundCardTint Background color for card tint
+     * @param themesname Theme name
+     * @param themesinfo Theme info/ description
+     * @param themesauthor Theme Author
+     * @param themeversion Theme version
+     * @throws osthmException Os-Thm Exception
+     */
+
     public static void editTheme(Context mContext,           int colorPrimary,           int colorPrimaryText,   int colorPrimaryDark,
                                  int colorStatusbarTint,     int colorBackground,        int colorBackgroundText,
                                  int colorAccent,            int colorAccentText,        int shadow,             int colorControlHighlight,
@@ -255,7 +387,7 @@ public class osthmEngine {
                                  int colorBackgroundCardText,int colorPrimaryCardTint,   int colorBackgroundCardTint,
 
                                  String themesname,  String themesinfo,      String themesauthor,
-                                 int themeversion,   String UUIDvar                              ) throws Exception {
+                                 int themeversion,   String UUIDvar                              ) throws osthmException {
         initializeData(mContext);
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = new Gson().fromJson(
@@ -307,7 +439,15 @@ public class osthmEngine {
         }
     }
 
-    public static void setCurrentTheme(Context mContext, String UUIDvar) throws Exception {
+    /**
+     * This method is used to set The current theme
+     * using from its UUID
+     * @param mContext Context
+     * @param UUIDvar Theme UUID
+     * @throws osthmException osThmException
+     */
+
+    public static void setCurrentTheme(Context mContext, String UUIDvar) throws osthmException {
         initializeData(mContext);
 
         ArrayList<String> indexUUID = new ArrayList<>();
@@ -334,6 +474,12 @@ public class osthmEngine {
             throw new osthmException("No matching theme with the given UUID!");
     }
 
+    /**
+     * This method is used to get the current theme
+     * @param mContext Context
+     * @return Theme
+     */
+
     public static HashMap<String, Integer> getCurrentTheme(Context mContext) {
         initializeData(mContext);
 
@@ -352,13 +498,27 @@ public class osthmEngine {
         return arraythm.get(0);
     }
 
+    /**
+     * This method is used to get the current theme UUID
+     * @param mContext Context
+     * @return String Current theme UUID
+     */
+
     public static String getCurrentThemeUUID(Context mContext) {
         initializeData(mContext);
 
         return data.getString("currentTheme", "");
     }
 
-    public static void importThemes(Context mContext, String json) throws Exception {
+    /**
+     * This method is used to import Theme and load
+     * the theme to SharedPreferences
+     * @param mContext Context
+     * @param json Theme in string JSON
+     * @throws osthmException osThmException
+     */
+
+    public static void importThemes(Context mContext, String json) throws osthmException {
         initializeData(mContext);
 
         ArrayList<String> indexUUID = new ArrayList<>();
@@ -419,7 +579,15 @@ public class osthmEngine {
         }
     }
 
-    public static String exportThemes(Context mContext, ArrayList<String> UUIDvars) throws Exception {
+    /**
+     * This method is used to export Theme as String JSON
+     * @param mContext Context
+     * @param UUIDvars TODO: RYENYUKU WRITE THIS, IDK HOW IT WORKS
+     * @return String JSON a given Theme
+     * @throws osthmException osthmException
+     */
+
+    public static String exportThemes(Context mContext, ArrayList<String> UUIDvars) throws osthmException {
         if (UUIDvars.size() > 0) {
             initializeData(mContext);
 
@@ -443,7 +611,14 @@ public class osthmEngine {
         }
     }
 
-    public static void removeTheme(Context mContext, String UUIDvar) throws Exception {
+    /**
+     * This method removes a theme specified by the given UUID
+     * @param mContext Context
+     * @param UUIDvar UUID of a theme that will be deleted
+     * @throws osthmException osthmException
+     */
+
+    public static void removeTheme(Context mContext, String UUIDvar) throws osthmException {
         initializeData(mContext);
 
         ArrayList<String> indexUUID = new ArrayList<>();
@@ -470,6 +645,12 @@ public class osthmEngine {
         }
     }
 
+    /**
+     * This method will clear all of your themes
+     * @param mContext Context
+     * @throws osthmException osthmException
+     */
+
     public static void removeAllThemes(Context mContext) throws Exception {
         initializeData(mContext);
 
@@ -479,11 +660,29 @@ public class osthmEngine {
             throw new osthmException("Theme is in use!");
     }
 
+    /**
+     * This method returns a HashMap containing
+     * the given key and object. Used as Util in
+     * osthm
+     * @param key Key
+     * @param value Value
+     * @return HashMap containing the given key and value
+     */
+
     private static HashMap<String, Object> addKeyToHashMap(String key, Object value) {
         HashMap<String, Object> hashmap = new HashMap<>();
         hashmap.put(key, value);
         return hashmap;
     }
+
+    /**
+     * This method returns a HashMap containing
+     * the given key and int. Used as Util in
+     * osthm
+     * @param key Key
+     * @param value Value as int
+     * @return HashMap containing the given key and int
+     */
 
     private static HashMap<String, Integer> addKeyToIntHashMap(String key, Integer value) {
         HashMap<String, Integer> hashmap = new HashMap<>();
