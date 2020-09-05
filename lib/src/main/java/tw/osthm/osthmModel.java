@@ -8,8 +8,8 @@ import com.google.gson.reflect.TypeToken;
 import java.util.HashMap;
 
 /**
- * <h1>Theme colors object module</h1>
- * This theme object module is used to
+ * <h1>Theme colors object model</h1>
+ * This theme object model is used to
  * represent a theme colors in an object
  *
  * @author ThatCakeID Team
@@ -17,7 +17,7 @@ import java.util.HashMap;
  * @version 1.0
  */
 
-public class osthmModule {
+public class osthmModel {
     Context mContext;
     public int colorPrimary;
     public int colorPrimaryText;
@@ -39,7 +39,7 @@ public class osthmModule {
     public int colorPrimaryCardTint;
     public int colorBackgroundCardTint;
 
-    public osthmModule(Context mContext) {
+    public osthmModel(Context mContext) {
         this.mContext = mContext;
         HashMap<String, Integer> json_data = osthmEngine.getCurrentTheme(mContext);
 
@@ -51,7 +51,7 @@ public class osthmModule {
      * @param mContext Context
      * @param json_string JSON as String
      */
-    public osthmModule(Context mContext, String json_string) {
+    public osthmModel(Context mContext, String json_string) {
         this.mContext = mContext;
         HashMap<String, Integer> json_data = new Gson().fromJson(
                 json_string, new TypeToken<HashMap<String, Object>>() {}.getType()
@@ -65,7 +65,7 @@ public class osthmModule {
      * @param mContext Context
      * @param data Theme Data
      */
-    public osthmModule(Context mContext, HashMap<String, Integer> data) {
+    public osthmModel(Context mContext, HashMap<String, Integer> data) {
         this.mContext = mContext;
 
         this.setData(data);
