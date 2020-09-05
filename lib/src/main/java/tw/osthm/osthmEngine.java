@@ -2,8 +2,8 @@
  * Copyright ThatCakeID 2020
  *
  * Contributors:
- *  - Ryenyuku <insert ur email here lol> 2020 - present
- *  - Iyxan23 <nurihsanalghifari@gmail.com> 2020 - present
+ *  - リェンーゆく (ryenyuku) <teamworks1732@gmail.com> 2017 - present
+ *  - Iyxan23 <nurihsanalghifari@gmail.com> 2019 - present
  *
  * NOTE: You shouldn't modify any codes in this engine yourself
  * as it might will conflicts with other themes.
@@ -22,18 +22,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-// TODO: RYENYUKU TOLONG YAH, KOREKSI JAVADOC AING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 /**
  * <h1>os-thm Engine</h1>
- * os-thm Engine is a framework for themes, android developers
- * can easily add os-thm integration to their apps easily, and
- * blah blah blah TODO: RYENYUKU PLEASE WRITE SOMETHING HERE I CAN ONLY SPEAK INDONESIA
+ * os-thm Engine is a theme engine library for
+ * creating, using, and managing os-thm theme
+ * module file format
  * <p>
  *
  * @author  ThatCakeID Team
  * @version 3.0
- * @since   2020
+ * @since   2019
  */
 
 public class osthmEngine {
@@ -44,8 +42,8 @@ public class osthmEngine {
     private static ArrayList<HashMap<String, Object>> defaultThemes;
 
     /**
-     * This method is used to initialize SharedPreferences and Other
-     * @param mContext Context used to get Private themes trough SharedPreferences
+     * This method is used to initialize components used by the library
+     * @param mContext Context used to initialize components that needs Context
      */
 
     private static void initializeData(Context mContext) {
@@ -75,8 +73,8 @@ public class osthmEngine {
     }
 
     /**
-     * This method is used to get private Themes trough SharedPreferences
-     * @return PrivateThemes
+     * This method is used to get list of themes, private method
+     * @return ListOfThemes
      */
 
     private static ArrayList<HashMap<String, Object>> getThemeListPrivate() {
@@ -91,8 +89,8 @@ public class osthmEngine {
     }
 
     /**
-     *
-     * @param themeUUID Theme UUID
+     * This method used to check if the requested theme UUID is exist in the defaultThemes entry
+     * @param themeUUID Requested Theme UUID
      * @return Does theme exist in the default theme
      */
     private static boolean isExistInDefaultTheme(String themeUUID) {
@@ -108,8 +106,8 @@ public class osthmEngine {
     }
 
     /**
-     * This method is used to Convert older version theme of os-thm
-     * into the current os-thm versio
+     * This method is used to convert older version theme of os-thm from v2 and lower
+     * into the current os-thm version
      * @param metadataarray Old Theme
      * @return Converted Theme (Usable Theme)
      */
@@ -190,7 +188,7 @@ public class osthmEngine {
     }
 
     /**
-     * This method is used to get List of Themes
+     * This method is used to get list of themes, public method
      * @param mContext Context
      * @return List Of Themes
      */
@@ -351,7 +349,7 @@ public class osthmEngine {
     }
 
     /**
-     * This method is used to edit theme in the theme list, and generate a random uuid
+     * This method is used to edit theme
      * @param mContext Context
      * @param colorPrimary Primary Color
      * @param colorPrimaryText Primary Text Color
@@ -376,6 +374,7 @@ public class osthmEngine {
      * @param themesinfo Theme info/ description
      * @param themesauthor Theme Author
      * @param themeversion Theme version
+     * @param UUIDvar Requested Theme UUID that you want to edit
      * @throws osthmException Os-Thm Exception
      */
 
@@ -440,8 +439,8 @@ public class osthmEngine {
     }
 
     /**
-     * This method is used to set The current theme
-     * using from its UUID
+     * This method is used to apply current theme
+     * using from the requested UUID
      * @param mContext Context
      * @param UUIDvar Theme UUID
      * @throws osthmException osThmException
@@ -477,7 +476,7 @@ public class osthmEngine {
     /**
      * This method is used to get the current theme
      * @param mContext Context
-     * @return Theme
+     * @return CurrentTheme
      */
 
     public static HashMap<String, Integer> getCurrentTheme(Context mContext) {
@@ -501,7 +500,7 @@ public class osthmEngine {
     /**
      * This method is used to get the current theme UUID
      * @param mContext Context
-     * @return String Current theme UUID
+     * @return String of the current theme UUID
      */
 
     public static String getCurrentThemeUUID(Context mContext) {
@@ -511,8 +510,8 @@ public class osthmEngine {
     }
 
     /**
-     * This method is used to import Theme and load
-     * the theme to SharedPreferences
+     * This method is used to import
+     * theme and save it
      * @param mContext Context
      * @param json Theme in string JSON
      * @throws osthmException osThmException
@@ -580,10 +579,10 @@ public class osthmEngine {
     }
 
     /**
-     * This method is used to export Theme as String JSON
+     * This method is used to export themes as JSON string
      * @param mContext Context
-     * @param UUIDvars TODO: RYENYUKU WRITE THIS, IDK HOW IT WORKS
-     * @return String JSON a given Theme
+     * @param UUIDvars List of themes UUID that you want to export
+     * @return Exported theme as JSON format
      * @throws osthmException osthmException
      */
 
