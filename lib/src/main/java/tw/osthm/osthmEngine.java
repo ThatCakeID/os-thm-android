@@ -36,7 +36,6 @@ import java.util.UUID;
 
 public class osthmEngine {
 
-    public static int themesVersion = 3;
     public static int metadataVersion = 3;
     private static SharedPreferences data;
     private static ArrayList<HashMap<String, Object>> defaultThemes;
@@ -55,6 +54,7 @@ public class osthmEngine {
         if (data.getString("currentTheme", "").equals(""))
             data.edit().putString("currentTheme", "default").apply();
 
+        /*
         defaultThemes = new ArrayList<>();
         defaultThemes.add(0, addKeyToHashMap("themesname", "Vanilla"));
         defaultThemes.get(0).put("themesjson", "[{\"colorPrimary\":-14575885,\"colorBackgroundCardTint\":-16777216,\"colorPrimaryDark\":-15242838,\"colorBackgroundText\":-16777216,\"colorBackground\":-1,\"shadow\":1,\"colorPrimaryTint\":-1,\"colorHint\":-5723992,\"colorStatusbarTint\":1,\"version\":" + Integer.toString(themesVersion) + ",\"colorPrimaryCardTint\":-16777216,\"colorAccent\":-720809,\"colorPrimaryText\":-1,\"colorBackgroundCardText\":-16777216,\"colorBackgroundTint\":-14575885,\"colorControlHighlight\":1073741824,\"colorAccentText\":-1,\"colorBackgroundCard\":-1,\"colorPrimaryCardText\":-16777216,\"colorPrimaryCard\":-1}]");
@@ -70,6 +70,7 @@ public class osthmEngine {
         defaultThemes.get(1).put("os-thm-version", metadataVersion);
         defaultThemes.get(1).put("uuid", "dark");
         defaultThemes.get(1).put("theme-version", 3);
+         */
     }
 
     /**
@@ -128,7 +129,7 @@ public class osthmEngine {
         newShinyFancyTheme.get(0).put("colorControlHighlight", Color.parseColor(oldTheme.get(0).get("colorRipple").toString()));
         newShinyFancyTheme.get(0).put("colorHint", Color.parseColor(oldTheme.get(0).get("colorHint").toString()));
 
-        if (oldTheme.get(0).containsKey("version")) {
+        if (metadataarray.containsKey("os-thm-version")) {
             newShinyFancyTheme.get(0).put("colorPrimaryTint", Color.parseColor(oldTheme.get(0).get("colorPrimaryImage").toString()));
             newShinyFancyTheme.get(0).put("colorBackgroundTint", Color.parseColor(oldTheme.get(0).get("colorBackgroundImage").toString()));
             newShinyFancyTheme.get(0).put("colorPrimaryCard", Color.parseColor(oldTheme.get(0).get("colorPrimaryCard").toString()));
@@ -168,14 +169,12 @@ public class osthmEngine {
             newShinyFancyTheme.get(0).put("colorAccentText", 0xFFFFFFFF);
         }
 
-        newShinyFancyTheme.get(0).put("version", themesVersion);
-        metadataarray.put("themesjson", new Gson().toJson(newShinyFancyTheme));
-
         if (!metadataarray.containsKey("os-thm-version")) {
             metadataarray.put("themesinfo", "Migrated from theme v1");
             metadataarray.put("themesauthor", "os-thm");
         }
 
+        metadataarray.put("themesjson", newShinyFancyTheme);
         metadataarray.put("os-thm-version", metadataVersion);
         metadataarray.put("uuid", UUID.randomUUID().toString());
         metadataarray.put("theme-version", 1);
@@ -333,11 +332,10 @@ public class osthmEngine {
             themearray.get(0).put("colorBackgroundCardText",        colorBackgroundCardText );
             themearray.get(0).put("colorPrimaryCardTint",           colorPrimaryCardTint    );
             themearray.get(0).put("colorBackgroundCardTint",        colorBackgroundCardTint );
-            themearray.get(0).put("version", themesVersion);
 
             metadataarray.add(addKeyToHashMap("themesname", themesname));
 
-            metadataarray.get(metadataarray.size() - 1).put("themesjson", new Gson().toJson(themearray));
+            metadataarray.get(metadataarray.size() - 1).put("themesjson", themearray);
             metadataarray.get(metadataarray.size() - 1).put("themesinfo",       themesinfo          );
             metadataarray.get(metadataarray.size() - 1).put("themesauthor",     themesauthor        );
             metadataarray.get(metadataarray.size() - 1).put("os-thm-version",   metadataVersion     );
@@ -419,9 +417,8 @@ public class osthmEngine {
                 themearray.get(0).put("colorBackgroundCardText",        colorBackgroundCardText     );
                 themearray.get(0).put("colorPrimaryCardTint",           colorPrimaryCardTint        );
                 themearray.get(0).put("colorBackgroundCardTint",        colorBackgroundCardTint     );
-                themearray.get(0).put("version", themesVersion);
                 metadataarray.get(indexUUID.indexOf(UUIDvar)).put("themesname", themesname);
-                metadataarray.get(indexUUID.indexOf(UUIDvar)).put("themesjson", new Gson().toJson(themearray));
+                metadataarray.get(indexUUID.indexOf(UUIDvar)).put("themesjson", themearray);
                 metadataarray.get(indexUUID.indexOf(UUIDvar)).put("themesinfo", themesinfo);
                 metadataarray.get(indexUUID.indexOf(UUIDvar)).put("themesauthor", themesauthor);
                 metadataarray.get(indexUUID.indexOf(UUIDvar)).put("os-thm-version", metadataVersion);
@@ -457,16 +454,7 @@ public class osthmEngine {
 
         if (indexUUID.contains(UUIDvar)) {
             if ((int) metadataarray.get(indexUUID.indexOf(UUIDvar)).get("os-thm-version") == metadataVersion) {
-
-                HashMap<String, Integer> thmjsn = new Gson().fromJson(
-                        data.getString("themelists", ""),
-                        new TypeToken<HashMap<String, Integer>>() {}.getType());
-
-                if (thmjsn.get("version") == themesVersion)
-                    data.edit().putString("currentTheme", UUIDvar).apply();
-
-                else
-                    throw new osthmException("Incompatible theme version!");
+                data.edit().putString("currentTheme", UUIDvar).apply();
             } else
                 throw new osthmException("Incompatible theme metadata version!");
         } else
@@ -488,13 +476,8 @@ public class osthmEngine {
         for (int i = 0; i < metadataarray.size(); i++)
             indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
 
-        ArrayList<HashMap<String, Integer>> arraythm = new Gson().fromJson(
-                metadataarray.get(indexUUID.indexOf(data.getString("currentTheme", "")))
-                             .get("themesjson").toString(),
-
-                new TypeToken<ArrayList<HashMap<String, Integer>>>() {}.getType());
-
-        return arraythm.get(0);
+        return (HashMap<String, Integer>) metadataarray
+                .get(indexUUID.indexOf(data.getString("currentTheme", ""))).get("themesjson");
     }
 
     /**
@@ -541,18 +524,6 @@ public class osthmEngine {
                         } else {
                             if ((int) theme.get("os-thm-version") < metadataVersion) {
                                 theme.putAll(migrateOldThemePrivate(theme));
-                            } else {
-                                ArrayList<HashMap<String, Object>> parsedthmjsn = new Gson().fromJson(theme.get("themesjson").toString(), new TypeToken<ArrayList<HashMap<String, Object>>>() {
-                                }.getType());
-                                if (parsedthmjsn.get(0).containsKey("version"))
-                                    if (parsedthmjsn.get(0).get("version") instanceof Integer) {
-                                        if ((int) parsedthmjsn.get(0).get("version") > themesVersion) {
-                                            throw new osthmException("Sorry, this theme version is newer than the current theme engine can handle.");
-                                        } else if ((int) parsedthmjsn.get(0).get("version") < themesVersion)
-                                            theme.putAll(migrateOldThemePrivate(theme));
-                                        else
-                                            theme.putAll(migrateOlderThemePrivate(theme));
-                                    }
                             }
                         }
                     } else {
