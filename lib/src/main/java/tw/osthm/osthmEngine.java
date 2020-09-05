@@ -54,8 +54,8 @@ public class osthmEngine {
         if (data.getString("currentTheme", "").equals(""))
             data.edit().putString("currentTheme", "default").apply();
 
-        /*
         defaultThemes = new ArrayList<>();
+        /*
         defaultThemes.add(0, addKeyToHashMap("themesname", "Vanilla"));
         defaultThemes.get(0).put("themesjson", "[{\"colorPrimary\":-14575885,\"colorBackgroundCardTint\":-16777216,\"colorPrimaryDark\":-15242838,\"colorBackgroundText\":-16777216,\"colorBackground\":-1,\"shadow\":1,\"colorPrimaryTint\":-1,\"colorHint\":-5723992,\"colorStatusbarTint\":1,\"version\":" + Integer.toString(themesVersion) + ",\"colorPrimaryCardTint\":-16777216,\"colorAccent\":-720809,\"colorPrimaryText\":-1,\"colorBackgroundCardText\":-16777216,\"colorBackgroundTint\":-14575885,\"colorControlHighlight\":1073741824,\"colorAccentText\":-1,\"colorBackgroundCard\":-1,\"colorPrimaryCardText\":-16777216,\"colorPrimaryCard\":-1}]");
         defaultThemes.get(0).put("themesinfo", "The default style theme of os-thm");
