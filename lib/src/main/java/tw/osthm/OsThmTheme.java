@@ -17,7 +17,7 @@ import java.util.HashMap;
  * @version 1.0
  */
 
-public class osthmModel {
+public class OsThmTheme {
     Context mContext;
     public int colorPrimary;
     public int colorPrimaryText;
@@ -39,7 +39,7 @@ public class osthmModel {
     public int colorPrimaryCardTint;
     public int colorBackgroundCardTint;
 
-    public osthmModel(Context mContext) {
+    public OsThmTheme(Context mContext) {
         this.mContext = mContext;
         HashMap<String, Integer> json_data = osthmEngine.getCurrentTheme(mContext);
 
@@ -51,7 +51,7 @@ public class osthmModel {
      * @param mContext Context
      * @param json_string JSON as String
      */
-    public osthmModel(Context mContext, String json_string) {
+    public OsThmTheme(Context mContext, String json_string) {
         this.mContext = mContext;
         HashMap<String, Integer> json_data = new Gson().fromJson(
                 json_string, new TypeToken<HashMap<String, Object>>() {}.getType()
@@ -65,7 +65,7 @@ public class osthmModel {
      * @param mContext Context
      * @param data Theme Data
      */
-    public osthmModel(Context mContext, HashMap<String, Integer> data) {
+    public OsThmTheme(Context mContext, HashMap<String, Integer> data) {
         this.mContext = mContext;
 
         this.setData(data);
