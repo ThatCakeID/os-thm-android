@@ -35,80 +35,21 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="#FFFFFF"
-                android:elevation="10dp"
+                android:elevation="5dp"
                 app:layout_constraintBottom_toTopOf="@+id/constraintLayout7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView17">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout6"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:id="@+id/imageView16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_access_alarm_white"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView23"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/textView20"
-                        app:tint="@color/colorAccent" />
-
-                    <TextView
-                        android:id="@+id/textView20"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:fontFamily="@font/googlesans"
-                        android:text="Lorem Ipsum dor sir amet"
-                        android:textColor="#000000"
-                        app:layout_constraintBottom_toTopOf="@+id/textView23"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageView16"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/textView23"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:fontFamily="@font/googlesans"
-                        android:text="Lorem Ipsum dor sir amet"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/textView20"
-                        app:layout_constraintStart_toStartOf="@+id/textView20"
-                        app:layout_constraintTop_toBottomOf="@+id/textView20" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="?android:attr/listDivider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout6" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout8"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/imageView18"
@@ -117,11 +58,11 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"
-                        android:src="@drawable/ic_close_white_24dp"
+                        android:src="@drawable/ic_close_white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:tint="@color/colorAccent" />
+                        app:tint="#000000" />
 
                     <TextView
                         android:id="@+id/textView22"
@@ -166,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
                     android:fontFamily="@font/googlesans"
-                    android:text="07:00 AM"
+                    android:text="07:30"
                     android:textColor="#FFFFFF"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -238,29 +179,30 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <ImageView
-                    android:id="@+id/imageView19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:src="@drawable/ic_close_white_24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
                     android:background="#FFFFFF"
-                    android:elevation="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView19"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView19"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:src="@drawable/ic_close_white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textView24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="#000000" />
 
                     <TextView
                         android:id="@+id/textView24"
@@ -270,12 +212,13 @@
                         android:layout_marginEnd="8dp"
                         android:ellipsize="marquee"
                         android:fontFamily="@font/googlesans"
+                        android:marqueeRepeatLimit="marquee_forever"
                         android:singleLine="true"
-                        android:text="Now Playing: Rick Astley - Never Gonna Give You Up on ZryteZene"
+                        android:text="Now Playing: Nulbarich - Lost Game on ZryteZene"
                         android:textColor="#000000"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/imageView19"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -290,7 +233,7 @@
                 android:src="@drawable/ic_palette_white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
-                app:tint="#000000" />
+                app:tint="#2196F3" />
 
             <ImageView
                 android:id="@+id/imageView20"
@@ -300,7 +243,8 @@
                 android:src="@drawable/ic_android"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView17"
                 app:layout_constraintStart_toEndOf="@+id/imageView17"
-                app:layout_constraintTop_toTopOf="@+id/imageView17" />
+                app:layout_constraintTop_toTopOf="@+id/imageView17"
+                app:tint="#2196F3" />
 
             <ImageView
                 android:id="@+id/imageView21"
@@ -311,18 +255,18 @@
                 app:layout_constraintBottom_toBottomOf="@+id/imageView20"
                 app:layout_constraintStart_toEndOf="@+id/imageView20"
                 app:layout_constraintTop_toTopOf="@+id/imageView20"
-                app:tint="#000000" />
+                app:tint="#2196F3" />
 
             <ImageView
                 android:id="@+id/imageView22"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:src="@drawable/ic_baseline_cloud_24"
+                android:src="@drawable/ic_baseline_cloud"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView21"
                 app:layout_constraintStart_toEndOf="@+id/imageView21"
                 app:layout_constraintTop_toTopOf="@+id/imageView21"
-                app:tint="#000000" />
+                app:tint="#2196F3" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -338,6 +282,109 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <androidx.gridlayout.widget.GridLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/gridLayout4">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#000000"
+                    app:layout_columnWeight="1">
+
+                    <TextView
+                        android:id="@+id/textView26"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/googlesansbold"
+                        android:text="#000000"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/googlesans"
+                        android:text="colorPrimaryCardText"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/imageView2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textView26" />
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:src="@drawable/ic_colorize_white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#000000"
+                    app:layout_columnWeight="1">
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/googlesansbold"
+                        android:text="#000000"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView23"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/googlesans"
+                        android:text="colorBackgroundCardText"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/imageView16"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textView20" />
+
+                    <ImageView
+                        android:id="@+id/imageView16"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:src="@drawable/ic_colorize_white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.gridlayout.widget.GridLayout>
+
+            <androidx.gridlayout.widget.GridLayout
                 android:id="@+id/gridLayout4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -348,8 +395,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#FAFAFA"
-                    android:elevation="3dp"
+                    android:background="#FFFFFF"
                     app:layout_columnWeight="1">
 
                     <TextView
@@ -359,7 +405,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/googlesans"
-                        android:text="appBarCardBackgroundColor"
+                        android:text="colorPrimaryCard"
                         android:textColor="#000000"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -398,8 +444,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:elevation="5dp"
+                    android:background="#000000"
                     app:layout_columnWeight="1">
 
                     <TextView
@@ -409,8 +454,8 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/googlesans"
-                        android:text="appBarCardImageColor"
-                        android:textColor="#000000"
+                        android:text="colorPrimaryCardTint"
+                        android:textColor="#FFFFFF"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageView134_"
@@ -425,8 +470,8 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/googlesansbold"
-                        android:text="#FFFFFF"
-                        android:textColor="#000000"
+                        android:text="#000000"
+                        android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toTopOf="@+id/textView8_"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -441,8 +486,7 @@
                         android:layout_marginBottom="8dp"
                         android:src="@drawable/ic_colorize_white"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:tint="#000000" />
+                        app:layout_constraintEnd_toEndOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.gridlayout.widget.GridLayout>
 
@@ -457,8 +501,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#FAFAFA"
-                    android:elevation="3dp"
+                    android:background="#FFFFFF"
                     app:layout_columnWeight="1">
 
                     <TextView
@@ -468,7 +511,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/googlesans"
-                        android:text="cardBackgroundColor"
+                        android:text="colorBackgroundCard"
                         android:textColor="#000000"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -507,8 +550,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
-                    android:elevation="5dp"
+                    android:background="#000000"
                     app:layout_columnWeight="1">
 
                     <TextView
@@ -518,7 +560,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/googlesans"
-                        android:text="cardImageColor"
+                        android:text="colorBackgroundCardTint"
                         android:textColor="#FFFFFF"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -534,7 +576,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/googlesansbold"
-                        android:text="#C0L0RACCENT"
+                        android:text="#000000"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toTopOf="@+id/textViewtextcolor"
@@ -550,8 +592,7 @@
                         android:layout_marginBottom="8dp"
                         android:src="@drawable/ic_colorize_white"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:tint="#FFFFFF" />
+                        app:layout_constraintEnd_toEndOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.gridlayout.widget.GridLayout>
 
@@ -566,8 +607,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#FAFAFA"
-                    android:elevation="3dp"
+                    android:background="#FFFFFF"
                     app:layout_columnWeight="1">
 
                     <TextView
@@ -577,7 +617,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/googlesans"
-                        android:text="appBarImageColor"
+                        android:text="colorPrimaryTint"
                         android:textColor="#000000"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -616,8 +656,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#000000"
-                    android:elevation="5dp"
+                    android:background="#2196F3"
                     app:layout_columnWeight="1">
 
                     <TextView
@@ -627,7 +666,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
                         android:fontFamily="@font/googlesans"
-                        android:text="imageColor"
+                        android:text="colorBackgroundTint"
                         android:textColor="#FFFFFF"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -643,7 +682,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:fontFamily="@font/googlesansbold"
-                        android:text="#000000"
+                        android:text="#2196F3"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toTopOf="@+id/textView8"
@@ -659,8 +698,7 @@
                         android:layout_marginBottom="8dp"
                         android:src="@drawable/ic_colorize_white"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:tint="#FFFFFF" />
+                        app:layout_constraintEnd_toEndOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.gridlayout.widget.GridLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

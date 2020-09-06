@@ -183,7 +183,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#000000"
-                android:translationZ="3dp"
                 app:layout_columnWeight="1">
 
                 <TextView
@@ -232,7 +231,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
-                android:translationZ="2dp"
                 app:layout_columnWeight="1">
 
                 <TextView
@@ -414,7 +412,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="8dp"
                     android:fontFamily="@font/googlesans"
                     android:text="colorPrimaryText"
                     android:textColor="#000000"
@@ -456,7 +454,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
-                android:translationZ="1dp"
                 app:layout_columnWeight="1">
 
                 <TextView
@@ -532,7 +529,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="@font/googlesans"
                 android:text="colorHint"
                 android:textColor="#FFFFFF"
