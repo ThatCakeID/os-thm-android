@@ -1,8 +1,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.FragmentThmEdit2">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:fontFamily="@font/googlesans"
-                android:text="07:00 AM"
+                android:text="07:30"
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -192,6 +193,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/googlesans"
+                    android:singleLine="true"
                     android:text="colorBackgroundText"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
@@ -208,6 +210,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/googlesansbold"
+                    android:singleLine="true"
                     android:text="#000000"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
@@ -240,6 +243,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/googlesans"
+                    android:singleLine="true"
                     android:text="colorBackground"
                     android:textColor="#000000"
                     android:textSize="12sp"
@@ -257,6 +261,7 @@
                     android:layout_marginEnd="16dp"
 
                     android:fontFamily="@font/googlesansbold"
+                    android:singleLine="true"
                     android:text="#FFFFFF"
                     android:textColor="#000000"
                     android:textSize="18sp"
@@ -295,6 +300,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/googlesans"
+                android:singleLine="true"
                 android:text="colorStatusbarTint"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -387,6 +393,7 @@
             android:layout_marginEnd="16dp"
             android:checked="true"
             android:fontFamily="@font/googlesans"
+            android:singleLine="true"
             android:text="Enable Shadow Effects"
             android:textColor="#808080"
             app:layout_constraintEnd_toEndOf="parent"
@@ -414,6 +421,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/googlesans"
+                    android:singleLine="true"
                     android:text="colorPrimaryText"
                     android:textColor="#000000"
                     android:textSize="12sp"
@@ -430,6 +438,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/googlesansbold"
+                    android:singleLine="true"
                     android:text="#FFFFFF"
                     android:textColor="#000000"
                     android:textSize="18sp"
@@ -463,6 +472,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/googlesans"
+                    android:singleLine="true"
                     android:text="colorAccentText"
                     android:textColor="#000000"
                     android:textSize="12sp"
@@ -479,6 +489,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/googlesansbold"
+                    android:singleLine="true"
                     android:text="#FFFFFF"
                     android:textColor="#000000"
                     android:textSize="18sp"
@@ -500,55 +511,113 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.gridlayout.widget.GridLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/gridLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#808080"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/gridLayout2">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:fontFamily="@font/googlesansbold"
-                android:text="#808080"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:background="#808080"
+                app:layout_columnWeight="1">
 
-            <TextView
-                android:id="@+id/textView25"
-                android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/googlesansbold"
+                    android:singleLine="true"
+                    android:text="#808080"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView25"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/googlesans"
+                    android:singleLine="true"
+                    android:text="colorHint"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/imageView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_colorize_white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/googlesans"
-                android:text="colorHint"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/imageView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView" />
+                android:background="#40000000"
+                app:layout_columnWeight="1">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_colorize_white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/textView28"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/googlesansbold"
+                    android:singleLine="true"
+                    android:text="#40000000"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView29"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="@font/googlesans"
+                    android:singleLine="true"
+                    android:text="colorControlHighlight"
+                    android:textColor="#000000"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/imageView25"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView28" />
+
+                <ImageView
+                    android:id="@+id/imageView25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_colorize_white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:tint="#000000" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.gridlayout.widget.GridLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
