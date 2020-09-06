@@ -27,4 +27,8 @@ public class FragmentThmEdit3 extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_thm_edit3, container, false);
     }
+
+    public void refreshViews() {
+
+    }
 }

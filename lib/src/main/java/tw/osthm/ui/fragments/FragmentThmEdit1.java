@@ -2,16 +2,18 @@ package tw.osthm.ui.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
 
-import android.print.PrinterId;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
@@ -19,22 +21,32 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 
 import tw.osthm.R;
 
-public class FragmentThmEdit1 extends Fragment implements ColorPickerDialogListener {
+public class FragmentThmEdit1 extends Fragment {
 
-    SharedPreferences sp;
-    int primary;         // Color Primary
-    int primary_dark;    // Color Primary Dark
-    int accent;          // Color Accent
+    private SharedPreferences sp;
 
-    // Dialog IDs for recognizing what dialog is which
-    private static final int DIALOG_COLOR_PRIMARY       = 1;
-    private static final int DIALOG_COLOR_PRIMARY_DARK  = 2;
-    private static final int DIALOG_COLOR_ACCENT        = 3;
+    //Color cards
+    private ConstraintLayout constraint_colorPrimary, constraint_colorPrimaryDark, constraint_colorAccent;
 
-    // Demo views
-    FloatingActionButton    fab_demo    ;
-    ConstraintLayout        status_bar  ;
-    ConstraintLayout        app_bar     ;
+    //---- Color card texts and images ----
+    //colorPrimary
+    private TextView text_colorPrimary, text_clr_colorPrimary;
+    private ImageView image_colorPrimary;
+
+    //colorPrimaryDark
+    private TextView text_colorPrimaryDark, text_clr_colorPrimaryDark;
+    private ImageView image_colorPrimaryDark;
+
+    //colorAccent
+    private TextView text_colorAccent, text_clr_colorAccent;
+    private ImageView image_colorAccent;
+    //-------------------------------------
+
+    //Preview
+    private ConstraintLayout view_colorPrimary, view_colorPrimaryDark, view_colorBackground;
+    private FloatingActionButton fab;
+    private TextView view_colorPrimaryText, text_clock;
+    private ImageView view_colorStatusbarTint1, view_colorStatusbarTint2, view_colorStatusbarTint3;
 
     public FragmentThmEdit1() {
         // Required empty public constructor
@@ -45,77 +57,82 @@ public class FragmentThmEdit1 extends Fragment implements ColorPickerDialogListe
         super.onCreate(savedInstanceState);
         // The SharedPreference we're using
         sp = getActivity().getSharedPreferences("colordata", Context.MODE_PRIVATE);
+    }
 
-        // Check if user has tweaked anything here
-        if (sp.getBoolean("changedFragment1", false)) {
-            primary         =   sp.getInt("colorPrimary",       getResources().getColor(R.color.colorPrimary));
-            primary_dark    =   sp.getInt("colorPrimaryDark",   getResources().getColor(R.color.colorPrimaryDark));
-            accent          =   sp.getInt("colorAccent",        getResources().getColor(R.color.colorAccent));
-        }
+    private void initializeViews(View root) {
+        //Initialize color cards
+        constraint_colorPrimary = root.findViewById(R.id.constraint_colorPrimary);
+        constraint_colorPrimaryDark = root.findViewById(R.id.constraint_colorPrimaryDark);
+        constraint_colorAccent = root.findViewById(R.id.constraint_colorAccent);
+
+        //Initialize color card texts and images
+        text_colorPrimary = root.findViewById(R.id.text_colorPrimary);
+        text_clr_colorPrimary = root.findViewById(R.id.text_clr_colorPrimary);
+        image_colorPrimary = root.findViewById(R.id.image_colorPrimary);
+
+        text_colorPrimaryDark = root.findViewById(R.id.text_colorPrimaryDark);
+        text_clr_colorPrimaryDark = root.findViewById(R.id.text_clr_colorPrimaryDark);
+        image_colorPrimaryDark = root.findViewById(R.id.image_colorPrimaryDark);
+
+        text_colorAccent = root.findViewById(R.id.text_colorAccent);
+        text_clr_colorAccent = root.findViewById(R.id.text_clr_colorAccent);
+        image_colorAccent = root.findViewById(R.id.image_colorAccent);
+        //----------------------------------------
+
+        //Initialize preview
+        view_colorPrimary = root.findViewById(R.id.view_colorPrimary);
+        view_colorPrimaryDark = root.findViewById(R.id.view_colorPrimaryDark);
+        view_colorBackground = root.findViewById(R.id.view_colorBackground);
+        fab = root.findViewById(R.id.fab);
+        view_colorPrimaryText = root.findViewById(R.id.view_colorPrimaryText);
+        text_clock = root.findViewById(R.id.text_clock);
+        view_colorStatusbarTint1 = root.findViewById(R.id.view_colorStatusbarTint1);
+        view_colorStatusbarTint2 = root.findViewById(R.id.view_colorStatusbarTint2);
+        view_colorStatusbarTint3 = root.findViewById(R.id.view_colorStatusbarTint3);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Check if user has tweaked anything here
-        if (sp.getBoolean("changedFragment1", false)) {
-            primary         =   sp.getInt("colorPrimary",       getResources().getColor(R.color.colorPrimary));
-            primary_dark    =   sp.getInt("colorPrimaryDark",   getResources().getColor(R.color.colorPrimaryDark));
-            accent          =   sp.getInt("colorAccent",        getResources().getColor(R.color.colorAccent));
-        }
-
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_thm_edit1, container, false);
 
-        // Init views
+        //Initialize views
+        initializeViews(root);
 
-        // Buttons/ Pickers
-        View color_primary = root.findViewById(R.id.color_primary_fragment1);
-        View color_primary_dark = root.findViewById(R.id.color_primary_dark_fragment1);
-        View color_accent = root.findViewById(R.id.color_accent_fragment1);
-
-        // Demo views
-        fab_demo = root.findViewById(R.id.fab_fragment1);
-        status_bar = root.findViewById(R.id.status_bar_fragment1);
-        app_bar = root.findViewById(R.id.app_bar_fragment1);
+        //Refresh the views, coz why not
+        //refreshViews();
 
         // Set onClickListeners
-        color_primary.setOnClickListener(new View.OnClickListener() {
+        constraint_colorPrimary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ColorPickerDialog.newBuilder()
-                        .setDialogType(ColorPickerDialog.TYPE_CUSTOM)
-                        .setAllowPresets(false)
-                        .setDialogId(DIALOG_COLOR_PRIMARY)
-                        .setColor(primary)
-                        .setShowAlphaSlider(false)
+                        .setDialogId(0)
+                        .setColor(sp.getInt("colorPrimary", -14575885))
+                        .setShowAlphaSlider(true)
                         .show(getActivity());
             }
         });
 
-        color_primary_dark.setOnClickListener(new View.OnClickListener() {
+        constraint_colorPrimaryDark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ColorPickerDialog.newBuilder()
-                        .setDialogType(ColorPickerDialog.TYPE_CUSTOM)
-                        .setAllowPresets(false)
-                        .setDialogId(DIALOG_COLOR_PRIMARY_DARK)
-                        .setColor(primary_dark)
-                        .setShowAlphaSlider(false)
+                        .setDialogId(1)
+                        .setColor(sp.getInt("colorPrimaryDark", -15242838))
+                        .setShowAlphaSlider(true)
                         .show(getActivity());
             }
         });
 
-        color_accent.setOnClickListener(new View.OnClickListener() {
+        constraint_colorAccent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ColorPickerDialog.newBuilder()
-                        .setDialogType(ColorPickerDialog.TYPE_CUSTOM)
-                        .setAllowPresets(false)
-                        .setDialogId(DIALOG_COLOR_ACCENT)
-                        .setColor(accent)
-                        .setShowAlphaSlider(false)
+                        .setDialogId(2)
+                        .setColor(sp.getInt("colorAccent", -720809))
+                        .setShowAlphaSlider(true)
                         .show(getActivity());
             }
         });
@@ -123,38 +140,62 @@ public class FragmentThmEdit1 extends Fragment implements ColorPickerDialogListe
         return root;
     }
 
-    @Override
-    public void onColorSelected(int dialogId, int color) {
-        // Update the demo view
-        fab_demo    .setBackgroundColor(color);
-        status_bar  .setBackgroundColor(color);
-        app_bar     .setBackgroundColor(color);
+    public void refreshViews() {
+        constraint_colorPrimary.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
+        constraint_colorPrimaryDark.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
+        constraint_colorAccent.setBackgroundColor(sp.getInt("colorAccent", -720809));
 
-        // When color is selected, set the variables to the color selected
-        switch (dialogId) {
-            case DIALOG_COLOR_PRIMARY:
-                primary = color;
-                break;
-            case DIALOG_COLOR_PRIMARY_DARK:
-                primary_dark = color;
-                break;
-            case DIALOG_COLOR_ACCENT:
-                accent = color;
-                break;
-            default:
+        if (ColorUtils.calculateLuminance(sp.getInt("colorPrimary", -14575885)) < 0.5) {
+            text_colorPrimary.setTextColor(0xFFFFFFFF);
+            text_clr_colorPrimary.setTextColor(0xFFFFFFFF);
+            image_colorPrimary.setColorFilter(0xFFFFFFFF);
+        } else {
+            text_colorPrimary.setTextColor(0xFF000000);
+            text_clr_colorPrimary.setTextColor(0xFF000000);
+            image_colorPrimary.setColorFilter(0xFF000000);
         }
 
-        // Save the colors to SharedPreferences
-        sp.edit()
-                .putBoolean("changedFragment1", true)   // To check if user has done any changes to this fragment or not
-                .putInt("colorPrimary", primary)
-                .putInt("colorPrimaryDark", primary_dark)
-                .putInt("colorAccent", accent)
-                .apply();
-    }
+        if (ColorUtils.calculateLuminance(sp.getInt("colorPrimaryDark", -15242838)) < 0.5) {
+            text_colorPrimaryDark.setTextColor(0xFFFFFFFF);
+            text_clr_colorPrimaryDark.setTextColor(0xFFFFFFFF);
+            image_colorPrimaryDark.setColorFilter(0xFFFFFFFF);
+        } else {
+            text_colorPrimaryDark.setTextColor(0xFF000000);
+            text_clr_colorPrimaryDark.setTextColor(0xFF000000);
+            image_colorPrimaryDark.setColorFilter(0xFF000000);
+        }
 
-    @Override
-    public void onDialogDismissed(int dialogId) {
-        // Do nothing
+        if (ColorUtils.calculateLuminance(sp.getInt("colorAccent", -720809)) < 0.5) {
+            text_colorAccent.setTextColor(0xFFFFFFFF);
+            text_clr_colorAccent.setTextColor(0xFFFFFFFF);
+            image_colorAccent.setColorFilter(0xFFFFFFFF);
+        } else {
+            text_colorAccent.setTextColor(0xFF000000);
+            text_clr_colorAccent.setTextColor(0xFF000000);
+            image_colorAccent.setColorFilter(0xFF000000);
+        }
+
+        fab.setBackgroundTintList(ColorStateList.valueOf(sp.getInt("colorAccent", -720809)));
+        fab.setRippleColor(sp.getInt("colorControlHighlight", 1073741824));
+        fab.setColorFilter(sp.getInt("colorAccentText", -1));
+        view_colorPrimary.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
+        view_colorPrimaryDark.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
+        view_colorPrimaryText.setTextColor(sp.getInt("colorPrimaryText", -1));
+        if (sp.getInt("shadow", 1) == 1)
+            view_colorPrimary.setElevation(5f);
+        else
+            view_colorPrimary.setElevation(0f);
+        view_colorBackground.setBackgroundColor(sp.getInt("colorBackground", -1));
+        if (sp.getInt("colorStatusbarTint", 1) == 1) {
+            text_clock.setTextColor(0xFFFFFFFF);
+            view_colorStatusbarTint1.setColorFilter(0xFFFFFFFF);
+            view_colorStatusbarTint2.setColorFilter(0xFFFFFFFF);
+            view_colorStatusbarTint3.setColorFilter(0xFFFFFFFF);
+        } else {
+            text_clock.setTextColor(0xFF000000);
+            view_colorStatusbarTint1.setColorFilter(0xFF000000);
+            view_colorStatusbarTint2.setColorFilter(0xFF000000);
+            view_colorStatusbarTint3.setColorFilter(0xFF000000);
+        }
     }
 }

@@ -19,7 +19,7 @@
             android:id="@+id/constraint_colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
+            android:background="#2196F3"
             android:translationZ="2dp"
             app:layout_columnWeight="1">
 
@@ -67,7 +67,7 @@
             android:id="@+id/constraint_colorPrimaryDark"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
+            android:background="#1769AA"
             android:translationZ="1dp"
             app:layout_columnWeight="1">
 
@@ -127,7 +127,7 @@
             android:id="@+id/constraint_colorAccent"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"
+            android:background="#F50057"
             android:translationZ="2dp"
             app:layout_columnWeight="1">
 
@@ -194,7 +194,7 @@
             android:layout_width="0dp"
             android:layout_height="24dp"
             android:layout_marginTop="1dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="#1769AA"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -247,7 +247,7 @@
             android:id="@+id/view_colorPrimary"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
+            android:background="#2196F3"
             android:elevation="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
