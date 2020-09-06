@@ -118,55 +118,55 @@ public class osthmEngine {
                 new Gson().fromJson(metadataarray.get("themesjson").toString(),
                                    new TypeToken<ArrayList<HashMap<String, Object>>>() {}.getType());
 
-        ArrayList<HashMap<String, Integer>> newShinyFancyTheme = new ArrayList<>();
+        HashMap<String, Integer> newShinyFancyTheme = new HashMap<>();
 
-        newShinyFancyTheme.add(addKeyToIntHashMap("colorPrimary", Color.parseColor(oldTheme.get(0).get("colorPrimary").toString())));
-        newShinyFancyTheme.get(0).put("colorPrimaryDark", Color.parseColor(oldTheme.get(0).get("colorPrimaryDark").toString()));
-        newShinyFancyTheme.get(0).put("colorStatusbarTint", Integer.valueOf(oldTheme.get(0).get("statusbarIcon").toString()));
-        newShinyFancyTheme.get(0).put("colorBackground", Color.parseColor(oldTheme.get(0).get("colorBackground").toString()));
-        newShinyFancyTheme.get(0).put("colorAccent", Color.parseColor(oldTheme.get(0).get("colorButton").toString()));
-        newShinyFancyTheme.get(0).put("shadow", Integer.valueOf(oldTheme.get(0).get("shadow").toString()));
-        newShinyFancyTheme.get(0).put("colorControlHighlight", Color.parseColor(oldTheme.get(0).get("colorRipple").toString()));
-        newShinyFancyTheme.get(0).put("colorHint", Color.parseColor(oldTheme.get(0).get("colorHint").toString()));
+        newShinyFancyTheme.put("colorPrimary", Color.parseColor(oldTheme.get(0).get("colorPrimary").toString()));
+        newShinyFancyTheme.put("colorPrimaryDark", Color.parseColor(oldTheme.get(0).get("colorPrimaryDark").toString()));
+        newShinyFancyTheme.put("colorStatusbarTint", Integer.valueOf(oldTheme.get(0).get("statusbarIcon").toString()));
+        newShinyFancyTheme.put("colorBackground", Color.parseColor(oldTheme.get(0).get("colorBackground").toString()));
+        newShinyFancyTheme.put("colorAccent", Color.parseColor(oldTheme.get(0).get("colorButton").toString()));
+        newShinyFancyTheme.put("shadow", Integer.valueOf(oldTheme.get(0).get("shadow").toString()));
+        newShinyFancyTheme.put("colorControlHighlight", Color.parseColor(oldTheme.get(0).get("colorRipple").toString()));
+        newShinyFancyTheme.put("colorHint", Color.parseColor(oldTheme.get(0).get("colorHint").toString()));
 
         if (metadataarray.containsKey("os-thm-version")) {
-            newShinyFancyTheme.get(0).put("colorPrimaryTint", Color.parseColor(oldTheme.get(0).get("colorPrimaryImage").toString()));
-            newShinyFancyTheme.get(0).put("colorBackgroundTint", Color.parseColor(oldTheme.get(0).get("colorBackgroundImage").toString()));
-            newShinyFancyTheme.get(0).put("colorPrimaryCard", Color.parseColor(oldTheme.get(0).get("colorPrimaryCard").toString()));
-            newShinyFancyTheme.get(0).put("colorBackgroundCard", Color.parseColor(oldTheme.get(0).get("colorBackgroundCard").toString()));
-            newShinyFancyTheme.get(0).put("colorPrimaryCardText", Color.parseColor(oldTheme.get(0).get("colorPrimaryCardText").toString()));
-            newShinyFancyTheme.get(0).put("colorBackgroundCardText", Color.parseColor(oldTheme.get(0).get("colorBackgroundCardText").toString()));
-            newShinyFancyTheme.get(0).put("colorPrimaryCardTint", Color.parseColor(oldTheme.get(0).get("colorPrimaryCardImage").toString()));
-            newShinyFancyTheme.get(0).put("colorBackgroundCardTint", Color.parseColor(oldTheme.get(0).get("colorBackgroundCardImage").toString()));
-            newShinyFancyTheme.get(0).put("colorPrimaryText", Color.parseColor(oldTheme.get(0).get("colorPrimaryText").toString()));
-            newShinyFancyTheme.get(0).put("colorBackgroundText", Color.parseColor(oldTheme.get(0).get("colorBackgroundText").toString()));
-            newShinyFancyTheme.get(0).put("colorAccentText", Color.parseColor(oldTheme.get(0).get("colorButtonText").toString()));
+            newShinyFancyTheme.put("colorPrimaryTint", Color.parseColor(oldTheme.get(0).get("colorPrimaryImage").toString()));
+            newShinyFancyTheme.put("colorBackgroundTint", Color.parseColor(oldTheme.get(0).get("colorBackgroundImage").toString()));
+            newShinyFancyTheme.put("colorPrimaryCard", Color.parseColor(oldTheme.get(0).get("colorPrimaryCard").toString()));
+            newShinyFancyTheme.put("colorBackgroundCard", Color.parseColor(oldTheme.get(0).get("colorBackgroundCard").toString()));
+            newShinyFancyTheme.put("colorPrimaryCardText", Color.parseColor(oldTheme.get(0).get("colorPrimaryCardText").toString()));
+            newShinyFancyTheme.put("colorBackgroundCardText", Color.parseColor(oldTheme.get(0).get("colorBackgroundCardText").toString()));
+            newShinyFancyTheme.put("colorPrimaryCardTint", Color.parseColor(oldTheme.get(0).get("colorPrimaryCardImage").toString()));
+            newShinyFancyTheme.put("colorBackgroundCardTint", Color.parseColor(oldTheme.get(0).get("colorBackgroundCardImage").toString()));
+            newShinyFancyTheme.put("colorPrimaryText", Color.parseColor(oldTheme.get(0).get("colorPrimaryText").toString()));
+            newShinyFancyTheme.put("colorBackgroundText", Color.parseColor(oldTheme.get(0).get("colorBackgroundText").toString()));
+            newShinyFancyTheme.put("colorAccentText", Color.parseColor(oldTheme.get(0).get("colorButtonText").toString()));
         } else {
-            newShinyFancyTheme.get(0).put("colorPrimaryTint", 0xFFFFFFFF);
-            newShinyFancyTheme.get(0).put("colorBackgroundTint", 0xFF2196F3);
-            newShinyFancyTheme.get(0).put("colorPrimaryCard", 0xFFFFFFFF);
-            newShinyFancyTheme.get(0).put("colorBackgroundCard", 0xFFFFFFFF);
-            newShinyFancyTheme.get(0).put("colorPrimaryCardText", 0xFF000000);
-            newShinyFancyTheme.get(0).put("colorBackgroundCardText", 0xFF000000);
-            newShinyFancyTheme.get(0).put("colorPrimaryCardTint", 0xFF000000);
-            newShinyFancyTheme.get(0).put("colorBackgroundCardTint", 0xFF000000);
+            newShinyFancyTheme.put("colorPrimaryTint", 0xFFFFFFFF);
+            newShinyFancyTheme.put("colorBackgroundTint", 0xFF2196F3);
+            newShinyFancyTheme.put("colorPrimaryCard", 0xFFFFFFFF);
+            newShinyFancyTheme.put("colorBackgroundCard", 0xFFFFFFFF);
+            newShinyFancyTheme.put("colorPrimaryCardText", 0xFF000000);
+            newShinyFancyTheme.put("colorBackgroundCardText", 0xFF000000);
+            newShinyFancyTheme.put("colorPrimaryCardTint", 0xFF000000);
+            newShinyFancyTheme.put("colorBackgroundCardTint", 0xFF000000);
 
             if (oldTheme.get(0).get("colorPrimaryText") == "1")
-                newShinyFancyTheme.get(0).put("colorPrimaryText", 0xFFFFFFFF);
+                newShinyFancyTheme.put("colorPrimaryText", 0xFFFFFFFF);
             else
-                newShinyFancyTheme.get(0).put("colorPrimaryText", 0xFF000000);
+                newShinyFancyTheme.put("colorPrimaryText", 0xFF000000);
 
             if (oldTheme.get(0).get("colorBackgroundText") == "1")
-                newShinyFancyTheme.get(0).put("colorBackgroundText", 0xFFFFFFFF);
+                newShinyFancyTheme.put("colorBackgroundText", 0xFFFFFFFF);
             else
-                newShinyFancyTheme.get(0).put("colorBackgroundText", 0xFF000000);
+                newShinyFancyTheme.put("colorBackgroundText", 0xFF000000);
 
             if (oldTheme.get(0).get("colorButtonText") == "1")
-                newShinyFancyTheme.get(0).put("colorAccentText", 0xFFFFFFFF);
+                newShinyFancyTheme.put("colorAccentText", 0xFFFFFFFF);
             else
-                newShinyFancyTheme.get(0).put("colorAccentText", 0xFF000000);
+                newShinyFancyTheme.put("colorAccentText", 0xFF000000);
 
-            newShinyFancyTheme.get(0).put("colorAccentText", 0xFFFFFFFF);
+            newShinyFancyTheme.put("colorAccentText", 0xFFFFFFFF);
         }
 
         if (!metadataarray.containsKey("os-thm-version")) {
@@ -310,28 +310,27 @@ public class osthmEngine {
         if (indexUUID.contains(UUIDvar) || isExistInDefaultTheme(UUIDvar))
             throw new osthmException("Theme with same UUID is exist!");
         else {
-            ArrayList<HashMap<String, Integer>> themearray = new ArrayList<>();
+            HashMap<String, Integer> themearray = new HashMap<>();
 
-            themearray.add(addKeyToIntHashMap("colorPrimary",       colorPrimary)           );
-
-            themearray.get(0).put("colorPrimaryText",               colorPrimaryText        );
-            themearray.get(0).put("colorPrimaryDark",               colorPrimaryDark        );
-            themearray.get(0).put("colorStatusbarTint",             colorStatusbarTint      );
-            themearray.get(0).put("colorBackground",                colorBackground         );
-            themearray.get(0).put("colorBackgroundText",            colorBackgroundText     );
-            themearray.get(0).put("colorAccent",                    colorAccent             );
-            themearray.get(0).put("colorAccentText",                colorAccentText         );
-            themearray.get(0).put("shadow",                         shadow                  );
-            themearray.get(0).put("colorControlHighlight",          colorControlHighlight   );
-            themearray.get(0).put("colorHint",                      colorHint               );
-            themearray.get(0).put("colorPrimaryTint",               colorPrimaryTint        );
-            themearray.get(0).put("colorBackgroundTint",            colorBackgroundTint     );
-            themearray.get(0).put("colorPrimaryCard",               colorPrimaryCard        );
-            themearray.get(0).put("colorBackgroundCard",            colorBackgroundCard     );
-            themearray.get(0).put("colorPrimaryCardText",           colorPrimaryCardText    );
-            themearray.get(0).put("colorBackgroundCardText",        colorBackgroundCardText );
-            themearray.get(0).put("colorPrimaryCardTint",           colorPrimaryCardTint    );
-            themearray.get(0).put("colorBackgroundCardTint",        colorBackgroundCardTint );
+            themearray.put("colorPrimary",                   colorPrimary            );
+            themearray.put("colorPrimaryText",               colorPrimaryText        );
+            themearray.put("colorPrimaryDark",               colorPrimaryDark        );
+            themearray.put("colorStatusbarTint",             colorStatusbarTint      );
+            themearray.put("colorBackground",                colorBackground         );
+            themearray.put("colorBackgroundText",            colorBackgroundText     );
+            themearray.put("colorAccent",                    colorAccent             );
+            themearray.put("colorAccentText",                colorAccentText         );
+            themearray.put("shadow",                         shadow                  );
+            themearray.put("colorControlHighlight",          colorControlHighlight   );
+            themearray.put("colorHint",                      colorHint               );
+            themearray.put("colorPrimaryTint",               colorPrimaryTint        );
+            themearray.put("colorBackgroundTint",            colorBackgroundTint     );
+            themearray.put("colorPrimaryCard",               colorPrimaryCard        );
+            themearray.put("colorBackgroundCard",            colorBackgroundCard     );
+            themearray.put("colorPrimaryCardText",           colorPrimaryCardText    );
+            themearray.put("colorBackgroundCardText",        colorBackgroundCardText );
+            themearray.put("colorPrimaryCardTint",           colorPrimaryCardTint    );
+            themearray.put("colorBackgroundCardTint",        colorBackgroundCardTint );
 
             metadataarray.add(addKeyToHashMap("themesname", themesname));
 
@@ -396,27 +395,28 @@ public class osthmEngine {
 
         if (indexUUID.contains(UUIDvar)) {
             if ((int) metadataarray.get(indexUUID.indexOf(UUIDvar)).get("os-thm-version") == metadataVersion) {
-                ArrayList<HashMap<String, Integer>> themearray = new ArrayList<>();
+                HashMap<String, Integer> themearray = new HashMap<>();
 
-                themearray.add(addKeyToIntHashMap("colorPrimary",       colorPrimary               ));
-                themearray.get(0).put("colorPrimaryText",               colorPrimaryText            );
-                themearray.get(0).put("colorPrimaryDark",               colorPrimaryDark            );
-                themearray.get(0).put("colorStatusbarTint",             colorStatusbarTint          );
-                themearray.get(0).put("colorBackground",                colorBackground             );
-                themearray.get(0).put("colorBackgroundText",            colorBackgroundText         );
-                themearray.get(0).put("colorAccent",                    colorAccent                 );
-                themearray.get(0).put("colorAccentText",                colorAccentText             );
-                themearray.get(0).put("shadow",                         shadow                      );
-                themearray.get(0).put("colorControlHighlight",          colorControlHighlight       );
-                themearray.get(0).put("colorHint",                      colorHint                   );
-                themearray.get(0).put("colorPrimaryTint",               colorPrimaryTint            );
-                themearray.get(0).put("colorBackgroundTint",            colorBackgroundTint         );
-                themearray.get(0).put("colorPrimaryCard",               colorPrimaryCard            );
-                themearray.get(0).put("colorBackgroundCard",            colorBackgroundCard         );
-                themearray.get(0).put("colorPrimaryCardText",           colorPrimaryCardText        );
-                themearray.get(0).put("colorBackgroundCardText",        colorBackgroundCardText     );
-                themearray.get(0).put("colorPrimaryCardTint",           colorPrimaryCardTint        );
-                themearray.get(0).put("colorBackgroundCardTint",        colorBackgroundCardTint     );
+                themearray.put("colorPrimary",                   colorPrimary            );
+                themearray.put("colorPrimaryText",               colorPrimaryText        );
+                themearray.put("colorPrimaryDark",               colorPrimaryDark        );
+                themearray.put("colorStatusbarTint",             colorStatusbarTint      );
+                themearray.put("colorBackground",                colorBackground         );
+                themearray.put("colorBackgroundText",            colorBackgroundText     );
+                themearray.put("colorAccent",                    colorAccent             );
+                themearray.put("colorAccentText",                colorAccentText         );
+                themearray.put("shadow",                         shadow                  );
+                themearray.put("colorControlHighlight",          colorControlHighlight   );
+                themearray.put("colorHint",                      colorHint               );
+                themearray.put("colorPrimaryTint",               colorPrimaryTint        );
+                themearray.put("colorBackgroundTint",            colorBackgroundTint     );
+                themearray.put("colorPrimaryCard",               colorPrimaryCard        );
+                themearray.put("colorBackgroundCard",            colorBackgroundCard     );
+                themearray.put("colorPrimaryCardText",           colorPrimaryCardText    );
+                themearray.put("colorBackgroundCardText",        colorBackgroundCardText );
+                themearray.put("colorPrimaryCardTint",           colorPrimaryCardTint    );
+                themearray.put("colorBackgroundCardTint",        colorBackgroundCardTint );
+
                 metadataarray.get(indexUUID.indexOf(UUIDvar)).put("themesname", themesname);
                 metadataarray.get(indexUUID.indexOf(UUIDvar)).put("themesjson", themearray);
                 metadataarray.get(indexUUID.indexOf(UUIDvar)).put("themesinfo", themesinfo);
@@ -641,21 +641,6 @@ public class osthmEngine {
 
     private static HashMap<String, Object> addKeyToHashMap(String key, Object value) {
         HashMap<String, Object> hashmap = new HashMap<>();
-        hashmap.put(key, value);
-        return hashmap;
-    }
-
-    /**
-     * This method returns a HashMap containing
-     * the given key and int. Used as Util in
-     * osthm
-     * @param key Key
-     * @param value Value as int
-     * @return HashMap containing the given key and int
-     */
-
-    private static HashMap<String, Integer> addKeyToIntHashMap(String key, Integer value) {
-        HashMap<String, Integer> hashmap = new HashMap<>();
         hashmap.put(key, value);
         return hashmap;
     }
