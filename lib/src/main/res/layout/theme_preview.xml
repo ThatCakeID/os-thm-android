@@ -69,6 +69,7 @@
             android:layout_gravity="right"
             android:layout_margin="8dp"
             android:background="@drawable/circle_background"
+            android:backgroundTint="#F50057"
             android:elevation="5dp"
             android:padding="6dp"
             android:scaleType="centerInside"

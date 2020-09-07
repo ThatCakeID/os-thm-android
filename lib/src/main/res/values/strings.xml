@@ -6,4 +6,5 @@
     <string name="create_theme">Create New</string>
     <string name="import_theme">Import Themes</string>
     <string name="help_button">Help Button</string>
+    <string name="editing_theme">Editing a theme..</string>
 </resources>

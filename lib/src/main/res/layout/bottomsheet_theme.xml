@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#FFFFFF"
-        android:elevation="10dp"
+        android:elevation="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="8dp">
@@ -23,7 +23,7 @@
             android:layout_height="35dp"
             android:padding="6dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_close_white_24dp"
+            app:srcCompat="@drawable/ic_close_white"
             app:tint="#808080" />
 
         <LinearLayout
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:background="#FAFAFA"
-                android:elevation="25dp"
+                android:elevation="5dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -128,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="#2196F3"
-                    android:elevation="10dp"
+                    android:elevation="5dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="8dp">
@@ -174,7 +174,8 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/circle_background"
-                    android:elevation="10dp"
+                    android:backgroundTint="#F50057"
+                    android:elevation="5dp"
                     android:padding="14dp"
                     android:scaleType="centerInside"
                     app:srcCompat="@drawable/ic_add_white" />
