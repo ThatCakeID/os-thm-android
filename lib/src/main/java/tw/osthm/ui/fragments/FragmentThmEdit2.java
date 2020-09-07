@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,18 +16,33 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 
 import tw.osthm.R;
 
+import static tw.osthm.ui.ThemeEditorActivity.COLOR_ACCENT_TEXT_DIALOG_ID;
+import static tw.osthm.ui.ThemeEditorActivity.COLOR_BACKGROUND_DIALOG_ID;
+import static tw.osthm.ui.ThemeEditorActivity.COLOR_BACKGROUND_TEXT_DIALOG_ID;
+import static tw.osthm.ui.ThemeEditorActivity.COLOR_CONTROL_HIGHLIGHT_DIALOG_ID;
+import static tw.osthm.ui.ThemeEditorActivity.COLOR_HINT_DIALOG_ID;
 import static tw.osthm.ui.ThemeEditorActivity.COLOR_PRIMARY_DIALOG_ID;
+import static tw.osthm.ui.ThemeEditorActivity.COLOR_PRIMARY_TEXT_DIALOG_ID;
 
 public class FragmentThmEdit2 extends Fragment {
 
     // Color Cards
-    private ConstraintLayout constraint_color_background_text, constraint_color_background, constraint_color_primary_text, constraint_color_accent_text, constraint_color_hint, constraint_color_control_highlight;
+    private ConstraintLayout    constraint_color_background_text, constraint_color_background   , constraint_color_primary_text , constraint_color_accent_text  , constraint_color_hint , constraint_color_control_highlight;
 
     // Color Texts
-    private TextView text_color_background_text, text_color_background, text_color_primary_text, text_color_accent_text, text_color_hint, text_color_control_highlight;
+    private TextView            text_color_background_text      , text_color_background         , text_color_primary_text       , text_color_accent_text        , text_color_hint       , text_color_control_highlight      ;
 
     // Pick Color Icon
-    private ImageView image_color_background_text, image_color_background, image_color_primary_text, image_color_accent_text, image_color_hint, image_color_control_highlight;
+    private ImageView           image_color_background_text     , image_color_background        , image_color_primary_text      , image_color_accent_text       , image_color_hint      , image_color_control_highlight     ;
+
+    // Enable Shadow
+    private CheckBox enable_shadow;
+
+    // Statusbar tint
+    private ConstraintLayout constraint_black;
+    private ConstraintLayout constraint_white;
+    private ImageView selected_black;
+    private ImageView selected_white;
 
     // Other variables
     SharedPreferences sp;
@@ -35,6 +51,14 @@ public class FragmentThmEdit2 extends Fragment {
     private ConstraintLayout color_primary_app_bar;
     private ConstraintLayout color_primary_dark_status_bar;
     private View statusbar_icon1, statusbar_icon2, statusbar_icon3, statusbar_text;
+    
+    // Default Colors
+    private final int default_color_background_text = -16777216;
+    private final int default_color_background = -1;
+    private final int default_color_primary_text = -1;
+    private final int default_color_accent_text = -1;
+    private final int default_color_hint = -5723992;
+    private final int default_color_control_highlight = 1073741824;
 
     public FragmentThmEdit2() {
         // Required empty public constructor
@@ -76,14 +100,39 @@ public class FragmentThmEdit2 extends Fragment {
         image_color_hint = root.findViewById(R.id.image_colorHint);
         image_color_control_highlight = root.findViewById(R.id.image_colorControlHighlight);
 
+        // Other
+        enable_shadow = root.findViewById(R.id.enable_shadow);
+
+        constraint_white = root.findViewById(R.id.statusbar_tint_white);
+        constraint_black = root.findViewById(R.id.statusbar_tint_black);
+        selected_white = root.findViewById(R.id.statusbar_tint_white_check);
+        selected_black = root.findViewById(R.id.statusbar_tint_black_check);
+
+        // Statusbar thingy
+        constraint_white.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sp.edit().putInt("shadow", 1).apply();
+                refreshViews();
+            }
+        });
+
+        constraint_black.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sp.edit().putInt("shadow", -1).apply();
+                refreshViews();
+            }
+        });
+
 
         // Put OnClickListeners
         constraint_color_background_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ColorPickerDialog.newBuilder()
-                        .setDialogId(COLOR_PRIMARY_DIALOG_ID)
-                        .setColor(sp.getInt("colorPrimary", -14575885))
+                        .setDialogId(COLOR_BACKGROUND_TEXT_DIALOG_ID)
+                        .setColor(sp.getInt("colorBackgroundText", default_color_background_text))
                         .setShowAlphaSlider(true)
                         .show(getActivity());
             }
@@ -92,8 +141,8 @@ public class FragmentThmEdit2 extends Fragment {
             @Override
             public void onClick(View view) {
                 ColorPickerDialog.newBuilder()
-                        .setDialogId(COLOR_PRIMARY_DIALOG_ID)
-                        .setColor(sp.getInt("colorPrimary", -14575885))
+                        .setDialogId(COLOR_BACKGROUND_DIALOG_ID)
+                        .setColor(sp.getInt("colorBackground", default_color_background))
                         .setShowAlphaSlider(true)
                         .show(getActivity());
             }
@@ -102,8 +151,8 @@ public class FragmentThmEdit2 extends Fragment {
             @Override
             public void onClick(View view) {
                 ColorPickerDialog.newBuilder()
-                        .setDialogId(COLOR_PRIMARY_DIALOG_ID)
-                        .setColor(sp.getInt("colorPrimary", -14575885))
+                        .setDialogId(COLOR_PRIMARY_TEXT_DIALOG_ID)
+                        .setColor(sp.getInt("colorPrimaryText", default_color_primary_text))
                         .setShowAlphaSlider(true)
                         .show(getActivity());
             }
@@ -112,8 +161,8 @@ public class FragmentThmEdit2 extends Fragment {
             @Override
             public void onClick(View view) {
                 ColorPickerDialog.newBuilder()
-                        .setDialogId(COLOR_PRIMARY_DIALOG_ID)
-                        .setColor(sp.getInt("colorPrimary", -14575885))
+                        .setDialogId(COLOR_ACCENT_TEXT_DIALOG_ID)
+                        .setColor(sp.getInt("colorAccentText", default_color_accent_text))
                         .setShowAlphaSlider(true)
                         .show(getActivity());
             }
@@ -122,8 +171,8 @@ public class FragmentThmEdit2 extends Fragment {
             @Override
             public void onClick(View view) {
                 ColorPickerDialog.newBuilder()
-                        .setDialogId(COLOR_PRIMARY_DIALOG_ID)
-                        .setColor(sp.getInt("colorPrimary", -14575885))
+                        .setDialogId(COLOR_HINT_DIALOG_ID)
+                        .setColor(sp.getInt("colorHint", default_color_hint))
                         .setShowAlphaSlider(true)
                         .show(getActivity());
             }
@@ -132,8 +181,8 @@ public class FragmentThmEdit2 extends Fragment {
             @Override
             public void onClick(View view) {
                 ColorPickerDialog.newBuilder()
-                        .setDialogId(COLOR_PRIMARY_DIALOG_ID)
-                        .setColor(sp.getInt("colorPrimary", -14575885))
+                        .setDialogId(COLOR_CONTROL_HIGHLIGHT_DIALOG_ID)
+                        .setColor(sp.getInt("colorControlHighlight", default_color_control_highlight))
                         .setShowAlphaSlider(true)
                         .show(getActivity());
             }
@@ -143,6 +192,22 @@ public class FragmentThmEdit2 extends Fragment {
     }
 
     public void refreshViews() {
+        constraint_color_background_text.setBackgroundColor(sp.getInt("", default_color_background_text));
+        constraint_color_background.setBackgroundColor(sp.getInt("", default_color_background));
+        constraint_color_primary_text.setBackgroundColor(sp.getInt("", default_color_primary_text));
+        constraint_color_accent_text.setBackgroundColor(sp.getInt("", default_color_accent_text));
+        constraint_color_hint.setBackgroundColor(sp.getInt("", default_color_hint));
+        constraint_color_control_highlight.setBackgroundColor(sp.getInt("", default_color_control_highlight));
 
+        // Check if statusbar tint is 1
+        if (sp.getInt("colorStatusbarTint", 1) == 1) {
+            // white
+            selected_white.setVisibility(View.VISIBLE);
+            selected_black.setVisibility(View.GONE);
+        } else {
+            // Black
+            selected_white.setVisibility(View.GONE);
+            selected_black.setVisibility(View.VISIBLE);
+        }
     }
 }

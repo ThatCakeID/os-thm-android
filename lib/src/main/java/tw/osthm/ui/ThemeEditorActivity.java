@@ -85,6 +85,29 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                 .putInt("colorBackgroundCard", -1).putInt("colorPrimaryCardText", -16777216)
                 .putInt("colorBackgroundCardText", -16777216).putInt("colorPrimaryCardTint", -16777216)
                 .putInt("colorBackgroundCardTint", -16777216).apply();
+        /*
+         * Default colors (more readable than the code above):
+         * colorPrimary:            -14575885
+         * colorPrimaryText:        -1
+         * colorPrimaryDark:        -15242838
+         * colorStatusbarTint:       1
+         * colorBackground:         -1
+         * colorBackgroundText:     -16777216
+         * colorAccent:             -720809
+         * colorAccentText:         -1
+         * shadow:                   1
+         * colorControlHighlight:    1073741824
+         * colorHint:               -5723992
+         * colorPrimaryTint:        -1
+         * colorBackgroundTint:     -14575885
+         * colorPrimaryCard:        -1
+         * colorBackgroundCard:     -1
+         * colorPrimaryCardText:    -16777216
+         * colorBackgroundCardText: -16777216
+         * colorPrimaryCardTint:    -16777216
+         * colorBackgroundCardTint: -16777216
+         */
+        
     }
 
     @Override
