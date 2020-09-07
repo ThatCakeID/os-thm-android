@@ -22,6 +22,8 @@ import tw.osthm.osthmEngine;
 
 import tw.osthm.R;
 
+import static tw.osthm.ui.ThemeEditorActivity.*;
+
 public class FragmentThmEdit1 extends Fragment {
 
     private SharedPreferences sp;
@@ -109,7 +111,7 @@ public class FragmentThmEdit1 extends Fragment {
             @Override
             public void onClick(View view) {
                 ColorPickerDialog.newBuilder()
-                        .setDialogId(0)
+                        .setDialogId(COLOR_PRIMARY_DIALOG_ID)
                         .setColor(sp.getInt("colorPrimary", -14575885))
                         .setShowAlphaSlider(true)
                         .show(getActivity());
@@ -120,7 +122,7 @@ public class FragmentThmEdit1 extends Fragment {
             @Override
             public void onClick(View view) {
                 ColorPickerDialog.newBuilder()
-                        .setDialogId(1)
+                        .setDialogId(COLOR_PRIMARY_DARK_DIALOG_ID)
                         .setColor(sp.getInt("colorPrimaryDark", -15242838))
                         .setShowAlphaSlider(true)
                         .show(getActivity());
@@ -131,7 +133,7 @@ public class FragmentThmEdit1 extends Fragment {
             @Override
             public void onClick(View view) {
                 ColorPickerDialog.newBuilder()
-                        .setDialogId(2)
+                        .setDialogId(COLOR_ACCENT_DIALOG_ID)
                         .setColor(sp.getInt("colorAccent", -720809))
                         .setShowAlphaSlider(true)
                         .show(getActivity());
@@ -197,14 +199,18 @@ public class FragmentThmEdit1 extends Fragment {
         fab.setBackgroundTintList(ColorStateList.valueOf(sp.getInt("colorAccent", -720809)));
         fab.setRippleColor(sp.getInt("colorControlHighlight", 1073741824));
         fab.setColorFilter(sp.getInt("colorAccentText", -1));
+
         view_colorPrimary.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
         view_colorPrimaryDark.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
         view_colorPrimaryText.setTextColor(sp.getInt("colorPrimaryText", -1));
+
         if (sp.getInt("shadow", 1) == 1)
             view_colorPrimary.setElevation(5f);
         else
             view_colorPrimary.setElevation(0f);
+
         view_colorBackground.setBackgroundColor(sp.getInt("colorBackground", -1));
+
         if (sp.getInt("colorStatusbarTint", 1) == 1) {
             text_clock.setTextColor(0xFFFFFFFF);
             view_colorStatusbarTint1.setColorFilter(0xFFFFFFFF);

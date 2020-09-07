@@ -1,24 +1,23 @@
 package tw.osthm.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 
+import tw.osthm.R;
 import tw.osthm.ui.fragments.FragmentThmEdit1;
 import tw.osthm.ui.fragments.FragmentThmEdit2;
 import tw.osthm.ui.fragments.FragmentThmEdit3;
-
-import tw.osthm.R;
 
 public class ThemeEditorActivity extends AppCompatActivity implements ColorPickerDialogListener {
     private ViewPager2 mPager;
@@ -29,6 +28,19 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     private static FragmentThmEdit1 fragment1;
     private static FragmentThmEdit2 fragment2;
     private static FragmentThmEdit3 fragment3;
+
+    // FRAGMENT 1
+    public static final int COLOR_PRIMARY_DIALOG_ID = 0;
+    public static final int COLOR_PRIMARY_DARK_DIALOG_ID = 1;
+    public static final int COLOR_ACCENT_DIALOG_ID = 2;
+
+    // FRAGMENT 2
+    public static final int COLOR_BACKGROUND_TEXT_DIALOG_ID = 3;
+    public static final int COLOR_BACKGROUND_DIALOG_ID = 4;
+    public static final int COLOR_PRIMARY_TEXT_DIALOG_ID = 5;
+    public static final int COLOR_ACCENT_TEXT_DIALOG_ID = 6;
+    public static final int COLOR_HINT_DIALOG_ID = 7;
+    public static final int COLOR_CONTROL_HIGHLIGHT_DIALOG_ID = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,18 +89,50 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
 
     @Override
     public void onColorSelected(int dialogId, int color) {
-        switch(dialogId) {
-            case 0:
-                //colorPrimary
+        switch (dialogId) {
+            case COLOR_PRIMARY_DIALOG_ID:
+                // colorPrimary
                 sp.edit().putInt("colorPrimary", color).apply();
                 break;
-            case 1:
-                //colorPrimaryDark
+
+            case COLOR_PRIMARY_DARK_DIALOG_ID:
+                // colorPrimaryDark
                 sp.edit().putInt("colorPrimaryDark", color).apply();
                 break;
-            case 2:
-                //colorAccent
+
+            case COLOR_ACCENT_DIALOG_ID:
+                // colorAccent
                 sp.edit().putInt("colorAccent", color).apply();
+                break;
+
+            case COLOR_BACKGROUND_TEXT_DIALOG_ID:
+                // colorBackgroundText
+                sp.edit().putInt("colorBackgroundText", color).apply();
+                break;
+
+            case COLOR_BACKGROUND_DIALOG_ID:
+                // colorBackground
+                sp.edit().putInt("colorBackground", color).apply();
+                break;
+
+            case COLOR_PRIMARY_TEXT_DIALOG_ID:
+                // colorPrimaryText
+                sp.edit().putInt("colorPrimaryText", color).apply();
+                break;
+
+            case COLOR_ACCENT_TEXT_DIALOG_ID:
+                // colorAccentText
+                sp.edit().putInt("colorAccentText", color).apply();
+                break;
+
+            case COLOR_HINT_DIALOG_ID:
+                // colorHint
+                sp.edit().putInt("colorHint", color).apply();
+                break;
+
+            case COLOR_CONTROL_HIGHLIGHT_DIALOG_ID:
+                // colorControlHighlight
+                sp.edit().putInt("colorControlHighlight", color).apply();
                 break;
         }
         fragment1.refreshViews();
@@ -107,7 +151,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
 
         public ScreenSlidePagerAdapter(FragmentActivity fa) {
             super(fa);
-            childFragments = new Fragment[] {
+            childFragments = new Fragment[]{
                     fragment1, // 0
                     fragment2, // 1
                     fragment3 // 2
