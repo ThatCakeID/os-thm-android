@@ -5,7 +5,7 @@ A library for using, making, managing, exporting & importing os-thm themes.
 
 <hr/>
 
-Current stable version: v2.0 (Not Public)
+Current stable version: v2.0 (Only for Sketchware, and we lost them)
 
 Current development version: v3.0a
 
@@ -17,4 +17,4 @@ Coming soon!
 
 ### Branches:
  - master: Current latest and stable version of os-thm-android.
- - dev: Current branch with newest features and bug patches and is developing.
+ - dev: Current canary branch with newest features, bug patches, and still in development state.
