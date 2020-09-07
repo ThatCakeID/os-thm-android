@@ -3,6 +3,7 @@ package tw.osthm.ui.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -17,7 +18,7 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
-import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
+import tw.osthm.osthmEngine;
 
 import tw.osthm.R;
 
@@ -101,7 +102,7 @@ public class FragmentThmEdit1 extends Fragment {
         initializeViews(root);
 
         //Refresh the views, coz why not
-        //refreshViews();
+        refreshViews();
 
         // Set onClickListeners
         constraint_colorPrimary.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +145,24 @@ public class FragmentThmEdit1 extends Fragment {
         constraint_colorPrimary.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
         constraint_colorPrimaryDark.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
         constraint_colorAccent.setBackgroundColor(sp.getInt("colorAccent", -720809));
+
+        text_colorPrimary.setText(osthmEngine.argbToHex(Color.alpha(
+                sp.getInt("colorPrimary", -14575885)), Color.red(
+                sp.getInt("colorPrimary", -14575885)), Color.green(
+                sp.getInt("colorPrimary", -14575885)), Color.blue(
+                sp.getInt("colorPrimary", -14575885))));
+
+        text_colorPrimaryDark.setText(osthmEngine.argbToHex(Color.alpha(
+                sp.getInt("colorPrimaryDark", -15242838)), Color.red(
+                sp.getInt("colorPrimaryDark", -15242838)), Color.green(
+                sp.getInt("colorPrimaryDark", -15242838)), Color.blue(
+                sp.getInt("colorPrimaryDark", -15242838))));
+
+        text_colorAccent.setText(osthmEngine.argbToHex(Color.alpha(
+                sp.getInt("colorAccent", -720809)), Color.red(
+                sp.getInt("colorAccent", -720809)), Color.green(
+                sp.getInt("colorAccent", -720809)), Color.blue(
+                sp.getInt("colorAccent", -720809))));
 
         if (ColorUtils.calculateLuminance(sp.getInt("colorPrimary", -14575885)) < 0.5) {
             text_colorPrimary.setTextColor(0xFFFFFFFF);

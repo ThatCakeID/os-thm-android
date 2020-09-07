@@ -644,4 +644,23 @@ public class osthmEngine {
         hashmap.put(key, value);
         return hashmap;
     }
+
+    /**
+     * This method returns converts ARGB colors to HEX code
+     * from given ARGB Integer value. Used as Util in
+     * osthm
+     * @param a Alpha color value
+     * @param r Red color value
+     * @param g Green color value
+     * @param b Blue color value
+     * @return String containing hex color code
+     */
+
+    public static String argbToHex(int a, int r, int g, int b) {
+        if (a != 255) {
+            return String.format("#%02x%02x%02x%02x", a, r, g, b).toUpperCase();
+        } else {
+            return String.format("#%02x%02x%02x", r, g, b).toUpperCase();
+        }
+    }
 }
