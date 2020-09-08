@@ -27,22 +27,21 @@ import static tw.osthm.ui.ThemeEditorActivity.COLOR_BACKGROUND_DIALOG_ID;
 import static tw.osthm.ui.ThemeEditorActivity.COLOR_BACKGROUND_TEXT_DIALOG_ID;
 import static tw.osthm.ui.ThemeEditorActivity.COLOR_CONTROL_HIGHLIGHT_DIALOG_ID;
 import static tw.osthm.ui.ThemeEditorActivity.COLOR_HINT_DIALOG_ID;
-import static tw.osthm.ui.ThemeEditorActivity.COLOR_PRIMARY_DIALOG_ID;
 import static tw.osthm.ui.ThemeEditorActivity.COLOR_PRIMARY_TEXT_DIALOG_ID;
 
 public class FragmentThmEdit2 extends Fragment {
 
     // Color Cards
-    private ConstraintLayout    constraint_color_background_text, constraint_color_background   , constraint_color_primary_text , constraint_color_accent_text  , constraint_color_hint , constraint_color_control_highlight;
+    private ConstraintLayout constraint_color_background_text, constraint_color_background, constraint_color_primary_text, constraint_color_accent_text, constraint_color_hint, constraint_color_control_highlight;
 
     // Color Texts
-    private TextView            text_color_background_text      , text_color_background         , text_color_primary_text       , text_color_accent_text        , text_color_hint       , text_color_control_highlight      ;
-    
+    private TextView text_color_background_text, text_color_background, text_color_primary_text, text_color_accent_text, text_color_hint, text_color_control_highlight;
+
     // Subtitles
-    private TextView            sub_color_background_text       , sub_color_background          , sub_color_primary_text         , sub_color_accent_text         , sub_color_hint        , sub_color_control_highlight       ;
+    private TextView sub_color_background_text, sub_color_background, sub_color_primary_text, sub_color_accent_text, sub_color_hint, sub_color_control_highlight;
 
     // Pick Color Icon
-    private ImageView           image_color_background_text     , image_color_background        , image_color_primary_text      , image_color_accent_text       , image_color_hint      , image_color_control_highlight     ;
+    private ImageView image_color_background_text, image_color_background, image_color_primary_text, image_color_accent_text, image_color_hint, image_color_control_highlight;
 
     // Enable Shadow
     private CheckBox enable_shadow;
@@ -66,7 +65,7 @@ public class FragmentThmEdit2 extends Fragment {
     private TextView statusbar_text;
     private FloatingActionButton fab;
     private TextView app_bar_title;
-    
+
     // Default Colors
     private final int default_color_background_text = -16777216;
     private final int default_color_background = -1;
@@ -106,7 +105,7 @@ public class FragmentThmEdit2 extends Fragment {
         text_color_accent_text = root.findViewById(R.id.text_colorAccentText);
         text_color_hint = root.findViewById(R.id.text_colorHint);
         text_color_control_highlight = root.findViewById(R.id.text_colorControlHighlight);
-        
+
         // Subtitles
         sub_color_background_text = root.findViewById(R.id.text_clr_colorBackgroundText);
         sub_color_background = root.findViewById(R.id.text_clr_colorBackground);
@@ -152,7 +151,8 @@ public class FragmentThmEdit2 extends Fragment {
             @Override
             public void onClick(View view) {
                 sp.edit().putInt("colorStatusbarTint", 1).apply();
-                refreshViews();
+                // refreshViews(); calling refresh everything to refresh a single thing is inefficient
+                refreshStatusbarTint();
             }
         });
 
@@ -160,7 +160,8 @@ public class FragmentThmEdit2 extends Fragment {
             @Override
             public void onClick(View view) {
                 sp.edit().putInt("colorStatusbarTint", -1).apply();
-                refreshViews();
+                // refreshViews(); calling refresh everything to refresh a single thing is inefficient
+                refreshStatusbarTint();
             }
         });
 
@@ -169,7 +170,8 @@ public class FragmentThmEdit2 extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 sp.edit().putInt("shadow", b ? 1 : -1).apply();
-                refreshViews();
+                // refreshViews(); calling refresh everything to refresh a single thing is inefficient
+                refreshShadow();
             }
         });
 
@@ -259,105 +261,23 @@ public class FragmentThmEdit2 extends Fragment {
         }
 
         // Set TextView to the current picked hex color
-        text_color_background_text.setText(osthmEngine.argbToHex(Color.alpha(
-                sp.getInt("colorBackgroundText", default_color_background_text)), Color.red(
-                sp.getInt("colorBackgroundText", default_color_background_text)), Color.green(
-                sp.getInt("colorBackgroundText", default_color_background_text)), Color.blue(
-                sp.getInt("colorBackgroundText", default_color_background_text))));
+        setTextViewHex(text_color_background_text, sp.getInt("colorBackgroundText", default_color_background_text));
+        setTextViewHex(text_color_background, sp.getInt("colorBackground", default_color_background));
+        setTextViewHex(text_color_primary_text, sp.getInt("colorPrimaryText", default_color_primary_text));
+        setTextViewHex(text_color_accent_text, sp.getInt("colorAccentText", default_color_accent_text));
+        setTextViewHex(text_color_hint, sp.getInt("colorHint", default_color_hint));
+        setTextViewHex(text_color_control_highlight, sp.getInt("colorControlHighlight", default_color_control_highlight));
 
-        text_color_background.setText(osthmEngine.argbToHex(Color.alpha(
-                sp.getInt("colorBackground", default_color_background)), Color.red(
-                sp.getInt("colorBackground", default_color_background)), Color.green(
-                sp.getInt("colorBackground", default_color_background)), Color.blue(
-                sp.getInt("colorBackground", default_color_background))));
-
-        text_color_primary_text.setText(osthmEngine.argbToHex(Color.alpha(
-                sp.getInt("colorPrimaryText", default_color_primary_text)), Color.red(
-                sp.getInt("colorPrimaryText", default_color_primary_text)), Color.green(
-                sp.getInt("colorPrimaryText", default_color_primary_text)), Color.blue(
-                sp.getInt("colorPrimaryText", default_color_primary_text))));
-
-        text_color_accent_text.setText(osthmEngine.argbToHex(Color.alpha(
-                sp.getInt("colorAccentText", default_color_accent_text)), Color.red(
-                sp.getInt("colorAccentText", default_color_accent_text)), Color.green(
-                sp.getInt("colorAccentText", default_color_accent_text)), Color.blue(
-                sp.getInt("colorAccentText", default_color_accent_text))));
-
-        text_color_hint.setText(osthmEngine.argbToHex(Color.alpha(
-                sp.getInt("colorHint", default_color_hint)), Color.red(
-                sp.getInt("colorHint", default_color_hint)), Color.green(
-                sp.getInt("colorHint", default_color_hint)), Color.blue(
-                sp.getInt("colorHint", default_color_hint))));
-
-        text_color_control_highlight.setText(osthmEngine.argbToHex(Color.alpha(
-                sp.getInt("colorControlHighlight", default_color_control_highlight)), Color.red(
-                sp.getInt("colorControlHighlight", default_color_control_highlight)), Color.green(
-                sp.getInt("colorControlHighlight", default_color_control_highlight)), Color.blue(
-                sp.getInt("colorControlHighlight", default_color_control_highlight))));
-        
         // Set TextView and ImageView color
-        if (ColorUtils.calculateLuminance(sp.getInt("colorBackgroundText", default_color_background_text)) < 0.5) {
-            text_color_background_text  .setTextColor(0xFFFFFFFF);
-            sub_color_background_text   .setTextColor(0xFFFFFFFF);
-            image_color_background_text .setColorFilter(0xFFFFFFFF);
-        } else {
-            text_color_background_text  .setTextColor(0xFF000000);
-            sub_color_background_text   .setTextColor(0xFF000000);
-            image_color_background_text .setColorFilter(0xFF000000);
-        }
-
-        if (ColorUtils.calculateLuminance(sp.getInt("colorBackground", default_color_background)) < 0.5) {
-            text_color_background  .setTextColor(0xFFFFFFFF);
-            sub_color_background   .setTextColor(0xFFFFFFFF);
-            image_color_background .setColorFilter(0xFFFFFFFF);
-        } else {
-            text_color_background  .setTextColor(0xFF000000);
-            sub_color_background   .setTextColor(0xFF000000);
-            image_color_background .setColorFilter(0xFF000000);
-        }
-
-        if (ColorUtils.calculateLuminance(sp.getInt("colorPrimaryText", default_color_primary_text)) < 0.5) {
-            text_color_primary_text  .setTextColor(0xFFFFFFFF);
-            sub_color_primary_text   .setTextColor(0xFFFFFFFF);
-            image_color_primary_text .setColorFilter(0xFFFFFFFF);
-        } else {
-            text_color_primary_text  .setTextColor(0xFF000000);
-            sub_color_primary_text   .setTextColor(0xFF000000);
-            image_color_primary_text .setColorFilter(0xFF000000);
-        }
-
-        if (ColorUtils.calculateLuminance(sp.getInt("colorAccentText", default_color_accent_text)) < 0.5) {
-            text_color_accent_text  .setTextColor(0xFFFFFFFF);
-            sub_color_accent_text   .setTextColor(0xFFFFFFFF);
-            image_color_accent_text .setColorFilter(0xFFFFFFFF);
-        } else {
-            text_color_accent_text  .setTextColor(0xFF000000);
-            sub_color_accent_text   .setTextColor(0xFF000000);
-            image_color_accent_text .setColorFilter(0xFF000000);
-        }
-
-        if (ColorUtils.calculateLuminance(sp.getInt("colorHint", default_color_hint)) < 0.5) {
-            text_color_hint  .setTextColor(0xFFFFFFFF);
-            sub_color_hint   .setTextColor(0xFFFFFFFF);
-            image_color_hint .setColorFilter(0xFFFFFFFF);
-        } else {
-            text_color_hint  .setTextColor(0xFF000000);
-            sub_color_hint   .setTextColor(0xFF000000);
-            image_color_hint .setColorFilter(0xFF000000);
-        }
-
-        if (ColorUtils.calculateLuminance(sp.getInt("colorControlHighlight", default_color_control_highlight)) < 0.5) {
-            text_color_control_highlight  .setTextColor(0xFFFFFFFF);
-            sub_color_control_highlight   .setTextColor(0xFFFFFFFF);
-            image_color_control_highlight .setColorFilter(0xFFFFFFFF);
-        } else {
-            text_color_control_highlight  .setTextColor(0xFF000000);
-            sub_color_control_highlight   .setTextColor(0xFF000000);
-            image_color_control_highlight .setColorFilter(0xFF000000);
-        }
-
+        setTextViewImageViewColorReverseLuminance(sp.getInt("colorBackgroundText", default_color_background_text), text_color_background_text, sub_color_background_text, image_color_background_text);
+        setTextViewImageViewColorReverseLuminance(sp.getInt("colorBackgroundText", default_color_background_text), text_color_background_text, sub_color_background_text, image_color_background_text);
+        setTextViewImageViewColorReverseLuminance(sp.getInt("colorBackground", default_color_background), text_color_background, sub_color_background, image_color_background);
+        setTextViewImageViewColorReverseLuminance(sp.getInt("colorPrimaryText", default_color_primary_text), text_color_primary_text, sub_color_primary_text, image_color_primary_text);
+        setTextViewImageViewColorReverseLuminance(sp.getInt("colorAccentText", default_color_accent_text), text_color_accent_text, sub_color_accent_text, image_color_accent_text);
+        setTextViewImageViewColorReverseLuminance(sp.getInt("colorHint", default_color_hint), text_color_hint, sub_color_hint, image_color_hint);
+        setTextViewImageViewColorReverseLuminance(sp.getInt("colorControlHighlight", default_color_control_highlight), text_color_control_highlight, sub_color_control_highlight, image_color_control_highlight);
         // Change demo view
-        // Local changes
+        // Local changes ===========================================================================
 
         // colorControlHighlight
         fab.setRippleColor(sp.getInt("colorControlHighlight", default_color_control_highlight));
@@ -369,6 +289,25 @@ public class FragmentThmEdit2 extends Fragment {
         background.setBackgroundColor(sp.getInt("colorBackground", -1));
 
         // colorStatusbarTint
+        refreshStatusbarTint();
+
+        // shadow
+        refreshShadow();
+
+        // Other changes ===========================================================================
+        fab.setBackgroundTintList(ColorStateList.valueOf(sp.getInt("colorAccent", -720809)));
+        color_primary_app_bar.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
+        color_primary_dark_status_bar.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
+        app_bar_title.setTextColor(sp.getInt("colorPrimaryText", -1));
+    }
+
+    private void refreshShadow() {
+        float shadow = sp.getInt("shadow", 1) == 1 ? 5f : 0f;
+        color_primary_app_bar.setElevation(shadow);
+        fab.setElevation(shadow);
+    }
+
+    private void refreshStatusbarTint() {
         if (sp.getInt("colorStatusbarTint", 1) == 1) {
             statusbar_text.setTextColor(0xFFFFFFFF);
             statusbar_icon1.setColorFilter(0xFFFFFFFF);
@@ -380,16 +319,35 @@ public class FragmentThmEdit2 extends Fragment {
             statusbar_icon2.setColorFilter(0xFF000000);
             statusbar_icon3.setColorFilter(0xFF000000);
         }
+    }
 
-        if (sp.getInt("shadow", 1) == 1)
-            color_primary_app_bar.setElevation(5f);
-        else
-            color_primary_app_bar.setElevation(0f);
+    // Utilities
+    private void setTextViewHex(TextView textview, int color) {
+        textview.setText(
+                osthmEngine.argbToHex(
+                        Color.alpha(color),
+                        Color.red(color),
+                        Color.green(color),
+                        Color.blue(color))
+        );
+    }
 
-        // Other changes
-        fab.setBackgroundTintList(ColorStateList.valueOf(sp.getInt("colorAccent", -720809)));
-        color_primary_app_bar.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
-        color_primary_dark_status_bar.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
-        app_bar_title.setTextColor(sp.getInt("colorPrimaryText", -1));
+    private void setTextViewImageViewColorReverseLuminance(int color, TextView header, TextView subtitle, ImageView eyedropper) {
+        boolean isColorDark = ColorUtils.calculateLuminance(color) < 0.5;
+        header.setTextColor(isColorDark ? 0xFFFFFFFF : 0xFF000000);
+        subtitle.setTextColor(isColorDark ? 0xFFFFFFFF : 0xFF000000);
+        eyedropper.setColorFilter(isColorDark ? 0xFFFFFFFF : 0xFF000000);
+
+        /* Easy-to-understand version
+        if (ColorUtils.calculateLuminance(color) < 0.5) {
+            header  .setTextColor(0xFFFFFFFF);
+            subtitle   .setTextColor(0xFFFFFFFF);
+            eyedropper .setColorFilter(0xFFFFFFFF);
+        } else {
+            header  .setTextColor(0xFF000000);
+            subtitle   .setTextColor(0xFF000000);
+            eyedropper .setColorFilter(0xFF000000);
+        }
+         */
     }
 }
