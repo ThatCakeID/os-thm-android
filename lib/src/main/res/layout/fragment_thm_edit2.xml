@@ -34,17 +34,17 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/statusbar_icon_fragment2_1"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_signal_wifi_4_bar_white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textView17"
+                app:layout_constraintEnd_toStartOf="@+id/statusbar_text_fragment2_2"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/statusbar_text_fragment2_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -56,17 +56,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView7"
+                android:id="@+id/statusbar_icon_fragment2_3"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginEnd="5dp"
                 android:src="@drawable/ic_signal_cellular_4_bar_white"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                app:layout_constraintEnd_toStartOf="@+id/imageView5"
-                app:layout_constraintTop_toTopOf="@+id/imageView5" />
+                app:layout_constraintBottom_toBottomOf="@+id/statusbar_icon_fragment2_1"
+                app:layout_constraintEnd_toStartOf="@+id/statusbar_icon_fragment2_1"
+                app:layout_constraintTop_toTopOf="@+id/statusbar_icon_fragment2_1" />
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/statusbar_icon_fragment2_4"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="3dp"

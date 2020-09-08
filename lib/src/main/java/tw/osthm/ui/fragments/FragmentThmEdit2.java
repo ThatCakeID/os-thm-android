@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 
 import tw.osthm.R;
@@ -57,7 +59,13 @@ public class FragmentThmEdit2 extends Fragment {
     // Demo Views
     private ConstraintLayout color_primary_app_bar;
     private ConstraintLayout color_primary_dark_status_bar;
-    private View statusbar_icon1, statusbar_icon2, statusbar_icon3, statusbar_text;
+    private ConstraintLayout fake_edit_text_accent;
+    private ConstraintLayout background;
+    private TextView fake_edit_text_hint, text_demo;
+    private ImageView statusbar_icon1, statusbar_icon2, statusbar_icon3;
+    private TextView statusbar_text;
+    private FloatingActionButton fab;
+    private TextView app_bar_title;
     
     // Default Colors
     private final int default_color_background_text = -16777216;
@@ -115,6 +123,20 @@ public class FragmentThmEdit2 extends Fragment {
         image_color_hint = root.findViewById(R.id.image_colorHint);
         image_color_control_highlight = root.findViewById(R.id.image_colorControlHighlight);
 
+        // Demo views
+        color_primary_app_bar = root.findViewById(R.id.view_colorPrimary);
+        color_primary_dark_status_bar = root.findViewById(R.id.view_colorPrimaryDark);
+        statusbar_icon1 = root.findViewById(R.id.statusbar_icon_fragment2_1);
+        statusbar_text = root.findViewById(R.id.statusbar_text_fragment2_2);
+        statusbar_icon2 = root.findViewById(R.id.statusbar_icon_fragment2_3);
+        statusbar_icon3 = root.findViewById(R.id.statusbar_icon_fragment2_4);
+        fab = root.findViewById(R.id.fab);
+        text_demo = root.findViewById(R.id.view_colorBackgroundText);
+        fake_edit_text_accent = root.findViewById(R.id.view_colorAccentET);
+        fake_edit_text_hint = root.findViewById(R.id.view_colorHint);
+        app_bar_title = root.findViewById(R.id.view_colorPrimaryText);
+        background = root.findViewById(R.id.view_colorBackground);
+
         // Other
         enable_shadow = root.findViewById(R.id.enable_shadow);
 
@@ -129,7 +151,7 @@ public class FragmentThmEdit2 extends Fragment {
         constraint_white.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sp.edit().putInt("shadow", 1).apply();
+                sp.edit().putInt("colorStatusbarTint", 1).apply();
                 refreshViews();
             }
         });
@@ -137,7 +159,16 @@ public class FragmentThmEdit2 extends Fragment {
         constraint_black.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sp.edit().putInt("shadow", -1).apply();
+                sp.edit().putInt("colorStatusbarTint", -1).apply();
+                refreshViews();
+            }
+        });
+
+        // Enable shadow
+        enable_shadow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                sp.edit().putInt("shadow", b ? 1 : -1).apply();
                 refreshViews();
             }
         });
@@ -325,32 +356,40 @@ public class FragmentThmEdit2 extends Fragment {
             image_color_control_highlight .setColorFilter(0xFF000000);
         }
 
+        // Change demo view
+        // Local changes
 
-//        fab.setBackgroundTintList(ColorStateList.valueOf(sp.getInt("colorAccent", -720809)));
-//        fab.setRippleColor(sp.getInt("colorControlHighlight", 1073741824));
-//        fab.setColorFilter(sp.getInt("colorAccentText", -1));
-//
-//        view_colorPrimary.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
-//        view_colorPrimaryDark.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
-//        view_colorPrimaryText.setTextColor(sp.getInt("colorPrimaryText", -1));
-//
-//        if (sp.getInt("shadow", 1) == 1)
-//            view_colorPrimary.setElevation(5f);
-//        else
-//            view_colorPrimary.setElevation(0f);
-//
-//        view_colorBackground.setBackgroundColor(sp.getInt("colorBackground", -1));
-//
-//        if (sp.getInt("colorStatusbarTint", 1) == 1) {
-//            text_clock.setTextColor(0xFFFFFFFF);
-//            view_colorStatusbarTint1.setColorFilter(0xFFFFFFFF);
-//            view_colorStatusbarTint2.setColorFilter(0xFFFFFFFF);
-//            view_colorStatusbarTint3.setColorFilter(0xFFFFFFFF);
-//        } else {
-//            text_clock.setTextColor(0xFF000000);
-//            view_colorStatusbarTint1.setColorFilter(0xFF000000);
-//            view_colorStatusbarTint2.setColorFilter(0xFF000000);
-//            view_colorStatusbarTint3.setColorFilter(0xFF000000);
-//        }
+        // colorControlHighlight
+        fab.setRippleColor(sp.getInt("colorControlHighlight", default_color_control_highlight));
+
+        // colorAccentText
+        fab.setColorFilter(sp.getInt("colorAccentText", default_color_accent_text));
+
+        // colorBackground
+        background.setBackgroundColor(sp.getInt("colorBackground", -1));
+
+        // colorStatusbarTint
+        if (sp.getInt("colorStatusbarTint", 1) == 1) {
+            statusbar_text.setTextColor(0xFFFFFFFF);
+            statusbar_icon1.setColorFilter(0xFFFFFFFF);
+            statusbar_icon2.setColorFilter(0xFFFFFFFF);
+            statusbar_icon3.setColorFilter(0xFFFFFFFF);
+        } else {
+            statusbar_text.setTextColor(0xFF000000);
+            statusbar_icon1.setColorFilter(0xFF000000);
+            statusbar_icon2.setColorFilter(0xFF000000);
+            statusbar_icon3.setColorFilter(0xFF000000);
+        }
+
+        if (sp.getInt("shadow", 1) == 1)
+            color_primary_app_bar.setElevation(5f);
+        else
+            color_primary_app_bar.setElevation(0f);
+
+        // Other changes
+        fab.setBackgroundTintList(ColorStateList.valueOf(sp.getInt("colorAccent", -720809)));
+        color_primary_app_bar.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
+        color_primary_dark_status_bar.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
+        app_bar_title.setTextColor(sp.getInt("colorPrimaryText", -1));
     }
 }
