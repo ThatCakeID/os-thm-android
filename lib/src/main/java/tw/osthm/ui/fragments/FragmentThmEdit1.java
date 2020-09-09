@@ -148,53 +148,16 @@ public class FragmentThmEdit1 extends Fragment {
         constraint_colorPrimaryDark.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
         constraint_colorAccent.setBackgroundColor(sp.getInt("colorAccent", -720809));
 
-        text_colorPrimary.setText(osthmEngine.argbToHex(Color.alpha(
-                sp.getInt("colorPrimary", -14575885)), Color.red(
-                sp.getInt("colorPrimary", -14575885)), Color.green(
-                sp.getInt("colorPrimary", -14575885)), Color.blue(
-                sp.getInt("colorPrimary", -14575885))));
+        text_colorPrimary.setText(osthmEngine.colorToHex(sp.getInt("colorPrimary", -14575885)));
+        text_colorPrimaryDark.setText(osthmEngine.colorToHex(sp.getInt("colorPrimaryDark", -15242838)));
+        text_colorAccent.setText(osthmEngine.colorToHex(sp.getInt("colorAccent", -720809)));
 
-        text_colorPrimaryDark.setText(osthmEngine.argbToHex(Color.alpha(
-                sp.getInt("colorPrimaryDark", -15242838)), Color.red(
-                sp.getInt("colorPrimaryDark", -15242838)), Color.green(
-                sp.getInt("colorPrimaryDark", -15242838)), Color.blue(
-                sp.getInt("colorPrimaryDark", -15242838))));
-
-        text_colorAccent.setText(osthmEngine.argbToHex(Color.alpha(
-                sp.getInt("colorAccent", -720809)), Color.red(
-                sp.getInt("colorAccent", -720809)), Color.green(
-                sp.getInt("colorAccent", -720809)), Color.blue(
-                sp.getInt("colorAccent", -720809))));
-
-        if (ColorUtils.calculateLuminance(sp.getInt("colorPrimary", -14575885)) < 0.5) {
-            text_colorPrimary.setTextColor(0xFFFFFFFF);
-            text_clr_colorPrimary.setTextColor(0xFFFFFFFF);
-            image_colorPrimary.setColorFilter(0xFFFFFFFF);
-        } else {
-            text_colorPrimary.setTextColor(0xFF000000);
-            text_clr_colorPrimary.setTextColor(0xFF000000);
-            image_colorPrimary.setColorFilter(0xFF000000);
-        }
-
-        if (ColorUtils.calculateLuminance(sp.getInt("colorPrimaryDark", -15242838)) < 0.5) {
-            text_colorPrimaryDark.setTextColor(0xFFFFFFFF);
-            text_clr_colorPrimaryDark.setTextColor(0xFFFFFFFF);
-            image_colorPrimaryDark.setColorFilter(0xFFFFFFFF);
-        } else {
-            text_colorPrimaryDark.setTextColor(0xFF000000);
-            text_clr_colorPrimaryDark.setTextColor(0xFF000000);
-            image_colorPrimaryDark.setColorFilter(0xFF000000);
-        }
-
-        if (ColorUtils.calculateLuminance(sp.getInt("colorAccent", -720809)) < 0.5) {
-            text_colorAccent.setTextColor(0xFFFFFFFF);
-            text_clr_colorAccent.setTextColor(0xFFFFFFFF);
-            image_colorAccent.setColorFilter(0xFFFFFFFF);
-        } else {
-            text_colorAccent.setTextColor(0xFF000000);
-            text_clr_colorAccent.setTextColor(0xFF000000);
-            image_colorAccent.setColorFilter(0xFF000000);
-        }
+        calculateColorBrightness(sp.getInt("colorPrimary", -14575885), text_colorPrimary,
+                text_clr_colorPrimary, image_colorPrimary);
+        calculateColorBrightness(sp.getInt("colorPrimaryDark", -15242838), text_colorPrimaryDark,
+                text_clr_colorPrimaryDark, image_colorPrimaryDark);
+        calculateColorBrightness(sp.getInt("colorAccent", -720809), text_colorAccent,
+                text_clr_colorAccent, image_colorAccent);
 
         fab.setBackgroundTintList(ColorStateList.valueOf(sp.getInt("colorAccent", -720809)));
         fab.setRippleColor(sp.getInt("colorControlHighlight", 1073741824));
@@ -223,4 +186,26 @@ public class FragmentThmEdit1 extends Fragment {
             view_colorStatusbarTint3.setColorFilter(0xFF000000);
         }
     }
+
+    //Helper
+    private void calculateColorBrightness(int color, TextView header, TextView subtitle, ImageView eyedropper) {
+        boolean isDark = ColorUtils.calculateLuminance(color) < 0.5;
+        header.setTextColor(isDark ? 0xFFFFFFFF : 0xFF000000);
+        subtitle.setTextColor(isDark ? 0xFFFFFFFF : 0xFF000000);
+        eyedropper.setColorFilter(isDark ? 0xFFFFFFFF : 0xFF000000);
+
+        /* If you confused what the function does, this is the longer version
+        if (ColorUtils.calculateLuminance(color) < 0.5) {
+            header  .setTextColor(0xFFFFFFFF);
+            subtitle   .setTextColor(0xFFFFFFFF);
+            eyedropper .setColorFilter(0xFFFFFFFF);
+        } else {
+            header  .setTextColor(0xFF000000);
+            subtitle   .setTextColor(0xFF000000);
+            eyedropper .setColorFilter(0xFF000000);
+        }
+         */
+    }
+
+
 }

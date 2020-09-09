@@ -158,6 +158,10 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                 sp.edit().putInt("colorControlHighlight", color).apply();
                 break;
         }
+        refreshFragments();
+    }
+
+    public static void refreshFragments() {
         fragment1.refreshViews();
         fragment2.refreshViews();
         fragment3.refreshViews();

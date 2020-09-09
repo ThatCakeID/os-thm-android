@@ -2,7 +2,6 @@ package tw.osthm.ui.fragments;
 
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +27,7 @@ import static tw.osthm.ui.ThemeEditorActivity.COLOR_BACKGROUND_TEXT_DIALOG_ID;
 import static tw.osthm.ui.ThemeEditorActivity.COLOR_CONTROL_HIGHLIGHT_DIALOG_ID;
 import static tw.osthm.ui.ThemeEditorActivity.COLOR_HINT_DIALOG_ID;
 import static tw.osthm.ui.ThemeEditorActivity.COLOR_PRIMARY_TEXT_DIALOG_ID;
+import static tw.osthm.ui.ThemeEditorActivity.refreshFragments;
 
 public class FragmentThmEdit2 extends Fragment {
 
@@ -151,8 +151,7 @@ public class FragmentThmEdit2 extends Fragment {
             @Override
             public void onClick(View view) {
                 sp.edit().putInt("colorStatusbarTint", 1).apply();
-                // refreshViews(); calling refresh everything to refresh a single thing is inefficient
-                refreshStatusbarTint();
+                refreshFragments();
             }
         });
 
@@ -160,8 +159,7 @@ public class FragmentThmEdit2 extends Fragment {
             @Override
             public void onClick(View view) {
                 sp.edit().putInt("colorStatusbarTint", -1).apply();
-                // refreshViews(); calling refresh everything to refresh a single thing is inefficient
-                refreshStatusbarTint();
+                refreshFragments();
             }
         });
 
@@ -170,8 +168,7 @@ public class FragmentThmEdit2 extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 sp.edit().putInt("shadow", b ? 1 : -1).apply();
-                // refreshViews(); calling refresh everything to refresh a single thing is inefficient
-                refreshShadow();
+                refreshFragments();
             }
         });
 
@@ -261,21 +258,21 @@ public class FragmentThmEdit2 extends Fragment {
         }
 
         // Set TextView to the current picked hex color
-        setTextViewHex(text_color_background_text, sp.getInt("colorBackgroundText", default_color_background_text));
-        setTextViewHex(text_color_background, sp.getInt("colorBackground", default_color_background));
-        setTextViewHex(text_color_primary_text, sp.getInt("colorPrimaryText", default_color_primary_text));
-        setTextViewHex(text_color_accent_text, sp.getInt("colorAccentText", default_color_accent_text));
-        setTextViewHex(text_color_hint, sp.getInt("colorHint", default_color_hint));
-        setTextViewHex(text_color_control_highlight, sp.getInt("colorControlHighlight", default_color_control_highlight));
+        text_color_background_text.setText(osthmEngine.colorToHex(sp.getInt("colorBackgroundText", default_color_background_text)));
+        text_color_background.setText(osthmEngine.colorToHex(sp.getInt("colorBackground", default_color_background)));
+        text_color_primary_text.setText(osthmEngine.colorToHex(sp.getInt("colorPrimaryText", default_color_primary_text)));
+        text_color_accent_text.setText(osthmEngine.colorToHex(sp.getInt("colorAccentText", default_color_accent_text)));
+        text_color_hint.setText(osthmEngine.colorToHex(sp.getInt("colorHint", default_color_hint)));
+        text_color_control_highlight.setText(osthmEngine.colorToHex(sp.getInt("colorControlHighlight", default_color_control_highlight)));
 
         // Set TextView and ImageView color
-        setTextViewImageViewColorReverseLuminance(sp.getInt("colorBackgroundText", default_color_background_text), text_color_background_text, sub_color_background_text, image_color_background_text);
-        setTextViewImageViewColorReverseLuminance(sp.getInt("colorBackgroundText", default_color_background_text), text_color_background_text, sub_color_background_text, image_color_background_text);
-        setTextViewImageViewColorReverseLuminance(sp.getInt("colorBackground", default_color_background), text_color_background, sub_color_background, image_color_background);
-        setTextViewImageViewColorReverseLuminance(sp.getInt("colorPrimaryText", default_color_primary_text), text_color_primary_text, sub_color_primary_text, image_color_primary_text);
-        setTextViewImageViewColorReverseLuminance(sp.getInt("colorAccentText", default_color_accent_text), text_color_accent_text, sub_color_accent_text, image_color_accent_text);
-        setTextViewImageViewColorReverseLuminance(sp.getInt("colorHint", default_color_hint), text_color_hint, sub_color_hint, image_color_hint);
-        setTextViewImageViewColorReverseLuminance(sp.getInt("colorControlHighlight", default_color_control_highlight), text_color_control_highlight, sub_color_control_highlight, image_color_control_highlight);
+        calculateColorBrightness(sp.getInt("colorBackgroundText", default_color_background_text), text_color_background_text, sub_color_background_text, image_color_background_text);
+        calculateColorBrightness(sp.getInt("colorBackgroundText", default_color_background_text), text_color_background_text, sub_color_background_text, image_color_background_text);
+        calculateColorBrightness(sp.getInt("colorBackground", default_color_background), text_color_background, sub_color_background, image_color_background);
+        calculateColorBrightness(sp.getInt("colorPrimaryText", default_color_primary_text), text_color_primary_text, sub_color_primary_text, image_color_primary_text);
+        calculateColorBrightness(sp.getInt("colorAccentText", default_color_accent_text), text_color_accent_text, sub_color_accent_text, image_color_accent_text);
+        calculateColorBrightness(sp.getInt("colorHint", default_color_hint), text_color_hint, sub_color_hint, image_color_hint);
+        calculateColorBrightness(sp.getInt("colorControlHighlight", default_color_control_highlight), text_color_control_highlight, sub_color_control_highlight, image_color_control_highlight);
         // Change demo view
         // Local changes ===========================================================================
 
@@ -289,25 +286,6 @@ public class FragmentThmEdit2 extends Fragment {
         background.setBackgroundColor(sp.getInt("colorBackground", -1));
 
         // colorStatusbarTint
-        refreshStatusbarTint();
-
-        // shadow
-        refreshShadow();
-
-        // Other changes ===========================================================================
-        fab.setBackgroundTintList(ColorStateList.valueOf(sp.getInt("colorAccent", -720809)));
-        color_primary_app_bar.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
-        color_primary_dark_status_bar.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
-        app_bar_title.setTextColor(sp.getInt("colorPrimaryText", -1));
-    }
-
-    private void refreshShadow() {
-        float shadow = sp.getInt("shadow", 1) == 1 ? 5f : 0f;
-        color_primary_app_bar.setElevation(shadow);
-        fab.setElevation(shadow);
-    }
-
-    private void refreshStatusbarTint() {
         if (sp.getInt("colorStatusbarTint", 1) == 1) {
             statusbar_text.setTextColor(0xFFFFFFFF);
             statusbar_icon1.setColorFilter(0xFFFFFFFF);
@@ -319,26 +297,27 @@ public class FragmentThmEdit2 extends Fragment {
             statusbar_icon2.setColorFilter(0xFF000000);
             statusbar_icon3.setColorFilter(0xFF000000);
         }
+
+        // shadow
+        float shadow = sp.getInt("shadow", 1) == 1 ? 5f : 0f;
+        color_primary_app_bar.setElevation(shadow);
+        fab.setElevation(shadow);
+
+        // Other changes ===========================================================================
+        fab.setBackgroundTintList(ColorStateList.valueOf(sp.getInt("colorAccent", -720809)));
+        color_primary_app_bar.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
+        color_primary_dark_status_bar.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
+        app_bar_title.setTextColor(sp.getInt("colorPrimaryText", -1));
     }
 
-    // Utilities
-    private void setTextViewHex(TextView textview, int color) {
-        textview.setText(
-                osthmEngine.argbToHex(
-                        Color.alpha(color),
-                        Color.red(color),
-                        Color.green(color),
-                        Color.blue(color))
-        );
-    }
-
-    private void setTextViewImageViewColorReverseLuminance(int color, TextView header, TextView subtitle, ImageView eyedropper) {
+    // Helper
+    private void calculateColorBrightness(int color, TextView header, TextView subtitle, ImageView eyedropper) {
         boolean isColorDark = ColorUtils.calculateLuminance(color) < 0.5;
         header.setTextColor(isColorDark ? 0xFFFFFFFF : 0xFF000000);
         subtitle.setTextColor(isColorDark ? 0xFFFFFFFF : 0xFF000000);
         eyedropper.setColorFilter(isColorDark ? 0xFFFFFFFF : 0xFF000000);
 
-        /* Easy-to-understand version
+        /* If you confused what the function does, this is the longer version
         if (ColorUtils.calculateLuminance(color) < 0.5) {
             header  .setTextColor(0xFFFFFFFF);
             subtitle   .setTextColor(0xFFFFFFFF);
