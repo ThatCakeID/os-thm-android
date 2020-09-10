@@ -42,6 +42,16 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     public static final int COLOR_HINT_DIALOG_ID = 7;
     public static final int COLOR_CONTROL_HIGHLIGHT_DIALOG_ID = 8;
 
+    // FRAGMENT 3
+    public static final int COLOR_PRIMARY_TINT_DIALOG_ID = 9;
+    public static final int COLOR_BACKGROUND_TINT_DIALOG_ID = 10;
+    public static final int COLOR_BACKGROUND_CARD_DIALOG_ID = 11;
+    public static final int COLOR_BACKGROUND_CARD_TINT_DIALOG_ID = 12;
+    public static final int COLOR_PRIMARY_CARD_DIALOG_ID = 13;
+    public static final int COLOR_PRIMARY_CARD_TINT_DIALOG_ID = 14;
+    public static final int COLOR_PRIMARY_CARD_TEXT_DIALOG_ID = 15;
+    public static final int COLOR_BACKGROUND_CARD_TEXT_DIALOG_ID = 16;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +74,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
             }
         });
         pagerAdapter = new ScreenSlidePagerAdapter(this);
+        mPager.setOffscreenPageLimit(3);
         mPager.setAdapter(pagerAdapter);
     }
 
@@ -156,6 +167,39 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
             case COLOR_CONTROL_HIGHLIGHT_DIALOG_ID:
                 // colorControlHighlight
                 sp.edit().putInt("colorControlHighlight", color).apply();
+                break;
+
+            case COLOR_PRIMARY_TINT_DIALOG_ID:
+                // colorPrimaryTint
+                sp.edit().putInt("colorPrimaryTint", color).apply();
+                break;
+            case COLOR_BACKGROUND_TINT_DIALOG_ID:
+                // colorBackgroundTint
+                sp.edit().putInt("colorBackgroundTint", color).apply();
+                break;
+            case COLOR_BACKGROUND_CARD_DIALOG_ID:
+                // colorBackgroundCard
+                sp.edit().putInt("colorBackgroundCard", color).apply();
+                break;
+            case COLOR_BACKGROUND_CARD_TINT_DIALOG_ID:
+                // colorBackgroundCardTint
+                sp.edit().putInt("colorBackgroundCardTint", color).apply();
+                break;
+            case COLOR_PRIMARY_CARD_DIALOG_ID:
+                // colorPrimaryCard
+                sp.edit().putInt("colorPrimaryCard", color).apply();
+                break;
+            case COLOR_PRIMARY_CARD_TINT_DIALOG_ID:
+                // colorPrimaryCardTint
+                sp.edit().putInt("colorPrimaryCardTint", color).apply();
+                break;
+            case COLOR_PRIMARY_CARD_TEXT_DIALOG_ID:
+                // colorPrimaryCardText
+                sp.edit().putInt("colorPrimaryCardText", color).apply();
+                break;
+            case COLOR_BACKGROUND_CARD_TEXT_DIALOG_ID:
+                // colorBackgroundCardText
+                sp.edit().putInt("colorBackgroundCardText", color).apply();
                 break;
         }
         refreshFragments();
