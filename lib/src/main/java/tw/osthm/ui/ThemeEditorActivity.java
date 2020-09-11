@@ -173,30 +173,37 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                 // colorPrimaryTint
                 sp.edit().putInt("colorPrimaryTint", color).apply();
                 break;
+
             case COLOR_BACKGROUND_TINT_DIALOG_ID:
                 // colorBackgroundTint
                 sp.edit().putInt("colorBackgroundTint", color).apply();
                 break;
+
             case COLOR_BACKGROUND_CARD_DIALOG_ID:
                 // colorBackgroundCard
                 sp.edit().putInt("colorBackgroundCard", color).apply();
                 break;
+
             case COLOR_BACKGROUND_CARD_TINT_DIALOG_ID:
                 // colorBackgroundCardTint
                 sp.edit().putInt("colorBackgroundCardTint", color).apply();
                 break;
+
             case COLOR_PRIMARY_CARD_DIALOG_ID:
                 // colorPrimaryCard
                 sp.edit().putInt("colorPrimaryCard", color).apply();
                 break;
+
             case COLOR_PRIMARY_CARD_TINT_DIALOG_ID:
                 // colorPrimaryCardTint
                 sp.edit().putInt("colorPrimaryCardTint", color).apply();
                 break;
+
             case COLOR_PRIMARY_CARD_TEXT_DIALOG_ID:
                 // colorPrimaryCardText
                 sp.edit().putInt("colorPrimaryCardText", color).apply();
                 break;
+
             case COLOR_BACKGROUND_CARD_TEXT_DIALOG_ID:
                 // colorBackgroundCardText
                 sp.edit().putInt("colorBackgroundCardText", color).apply();
