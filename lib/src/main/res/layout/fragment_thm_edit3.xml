@@ -677,7 +677,7 @@
                     app:layout_columnWeight="1">
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/subtitle_colorBackgroundTint"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -688,12 +688,12 @@
                         android:textColor="#FFFFFF"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView13"
+                        app:layout_constraintEnd_toStartOf="@+id/image_colorBackgroundTint"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                        app:layout_constraintTop_toBottomOf="@+id/title_colorBackgroundTint" />
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/title_colorBackgroundTint"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -704,13 +704,13 @@
                         android:text="#2196F3"
                         android:textColor="#FFFFFF"
                         android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/textView8"
+                        app:layout_constraintBottom_toTopOf="@+id/subtitle_colorBackgroundTint"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/imageView13"
+                        android:id="@+id/image_colorBackgroundTint"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginEnd="8dp"

@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import tw.osthm.R;
 
@@ -42,7 +44,25 @@ public class FragmentThmEdit3 extends Fragment {
     private ConstraintLayout subtitle_colorPrimaryCardTint;
     private ConstraintLayout subtitle_colorBackgroundCardTint;
 
-    // Demo view
+    private ConstraintLayout image_colorPrimaryTint;
+    private ConstraintLayout image_colorBackgroundTint;
+    private ConstraintLayout image_colorPrimaryCard;
+    private ConstraintLayout image_colorBackgroundCard;
+    private ConstraintLayout image_colorPrimaryCardText;
+    private ConstraintLayout image_colorBackgroundCardText;
+    private ConstraintLayout image_colorPrimaryCardTint;
+    private ConstraintLayout image_colorBackgroundCardTint;
+
+    // Demo views
+    private ConstraintLayout appbar;
+    private ConstraintLayout statusbar;
+    private ImageView statusbar_icon_1, statusbar_icon_2, statusbar_icon_3,
+                      appbar_backbutton;
+
+    private TextView statusbar_clock,
+                     appbar_title;
+
+
 
     public FragmentThmEdit3() {
         // Required empty public constructor
@@ -57,7 +77,46 @@ public class FragmentThmEdit3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_thm_edit3, container, false);
+        View root = inflater.inflate(R.layout.fragment_thm_edit3, container, false);
+
+        // Color picker views
+        constraint_colorPrimaryTint = root.findViewById(R.id.constraint_colorPrimaryTint);
+        constraint_colorBackgroundTint = root.findViewById(R.id.constraint_colorBackgroundTint);
+        constraint_colorPrimaryCard = root.findViewById(R.id.constraint_colorPrimaryCard);
+        constraint_colorBackgroundCard = root.findViewById(R.id.constraint_colorBackgroundCard);
+        constraint_colorPrimaryCardText = root.findViewById(R.id.constraint_colorPrimaryCardText);
+        constraint_colorBackgroundCardText = root.findViewById(R.id.constraint_colorBackgroundCardText);
+        constraint_colorPrimaryCardTint = root.findViewById(R.id.constraint_colorPrimaryCardTint);
+        constraint_colorBackgroundCardTint = root.findViewById(R.id.constraint_colorBackgroundCardTint);
+
+        title_colorPrimaryTint = root.findViewById(R.id.text_clr_colorPrimaryTint);
+        title_colorBackgroundTint = root.findViewById(R.id.title_colorBackgroundTint);
+        title_colorPrimaryCard = root.findViewById(R.id.textView__bgcolor_);
+        title_colorBackgroundCard = root.findViewById(R.id.textView__);
+        title_colorPrimaryCardText = root.findViewById(R.id.textView26);
+        title_colorBackgroundCardText = root.findViewById(R.id.textView20);
+        title_colorPrimaryCardTint = root.findViewById(R.id.textView9_);
+        title_colorBackgroundCardTint = root.findViewById(R.id.textViewcolortextviewcolor);
+
+        subtitle_colorPrimaryTint = root.findViewById(R.id.text_colorPrimaryTint);
+        subtitle_colorBackgroundTint = root.findViewById(R.id.subtitle_colorBackgroundTint);
+        subtitle_colorPrimaryCard = root.findViewById(R.id.textView_bgcolor_);
+        subtitle_colorBackgroundCard = root.findViewById(R.id.textView_);
+        subtitle_colorPrimaryCardText = root.findViewById(R.id.textView27);
+        subtitle_colorBackgroundCardText = root.findViewById(R.id.textView23);
+        subtitle_colorPrimaryCardTint = root.findViewById(R.id.textView8_);
+        subtitle_colorBackgroundCardTint = root.findViewById(R.id.textViewtextcolor);
+
+        image_colorPrimaryTint = root.findViewById(R.id.image_colorPrimaryTint);
+        image_colorBackgroundTint = root.findViewById(R.id.image_colorBackgroundTint);
+        image_colorPrimaryCard = root.findViewById(R.id.imageView24_);
+        image_colorBackgroundCard = root.findViewById(R.id.imageView13_);
+        image_colorPrimaryCardText = root.findViewById(R.id.imageView2);
+        image_colorBackgroundCardText = root.findViewById(R.id.imageView16);
+        image_colorPrimaryCardTint = root.findViewById(R.id.imageView134_);
+        image_colorBackgroundCardTint = root.findViewById(R.id.imageView23);
+
+        return root;
     }
 
     public void refreshViews() {
