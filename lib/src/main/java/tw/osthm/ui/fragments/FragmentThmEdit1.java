@@ -3,7 +3,6 @@ package tw.osthm.ui.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;

@@ -22,13 +22,7 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 import tw.osthm.R;
 import tw.osthm.osthmEngine;
 
-import static tw.osthm.ui.ThemeEditorActivity.COLOR_ACCENT_TEXT_DIALOG_ID;
-import static tw.osthm.ui.ThemeEditorActivity.COLOR_BACKGROUND_DIALOG_ID;
-import static tw.osthm.ui.ThemeEditorActivity.COLOR_BACKGROUND_TEXT_DIALOG_ID;
-import static tw.osthm.ui.ThemeEditorActivity.COLOR_CONTROL_HIGHLIGHT_DIALOG_ID;
-import static tw.osthm.ui.ThemeEditorActivity.COLOR_HINT_DIALOG_ID;
-import static tw.osthm.ui.ThemeEditorActivity.COLOR_PRIMARY_TEXT_DIALOG_ID;
-import static tw.osthm.ui.ThemeEditorActivity.refreshFragments;
+import static tw.osthm.ui.ThemeEditorActivity.*;
 
 public class FragmentThmEdit2 extends Fragment {
 
@@ -115,7 +109,7 @@ public class FragmentThmEdit2 extends Fragment {
             constraint_black.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    sp.edit().putInt("colorStatusbarTint", -1).apply();
+                    sp.edit().putInt("colorStatusbarTint", 0).apply();
                     refreshFragments();
                 }
             });
@@ -124,7 +118,7 @@ public class FragmentThmEdit2 extends Fragment {
             enable_shadow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    sp.edit().putInt("shadow", b ? 1 : -1).apply();
+                    sp.edit().putInt("shadow", b ? 1 : 0).apply();
                     refreshFragments();
                 }
             });

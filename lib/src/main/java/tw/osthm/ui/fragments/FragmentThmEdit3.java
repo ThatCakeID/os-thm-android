@@ -14,7 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jaredrummler.android.colorpicker.ColorPickerDialog;
+
 import tw.osthm.R;
+import tw.osthm.osthmEngine;
+
+import static tw.osthm.ui.ThemeEditorActivity.*;
 
 public class FragmentThmEdit3 extends Fragment {
 
@@ -56,8 +61,8 @@ public class FragmentThmEdit3 extends Fragment {
     private ConstraintLayout image_colorBackgroundCardTint;
 
     // Demo views
-    private ConstraintLayout appbar;
-    private ConstraintLayout statusbar;
+    private ConstraintLayout appbar, statusbar, background_demo,
+                             bottombar, bottombarcard;
     private ImageView statusbar_icon_1, statusbar_icon_2, statusbar_icon_3,
                       appbar_backbutton;
 
@@ -90,6 +95,95 @@ public class FragmentThmEdit3 extends Fragment {
 
             // Apply previous applied colors
             refreshViews();
+
+            // Set onClicks
+            constraint_colorPrimaryTint.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ColorPickerDialog.newBuilder()
+                            .setDialogId(COLOR_PRIMARY_TINT_DIALOG_ID)
+                            .setColor(sp.getInt("colorPrimaryTint", -1))
+                            .setShowAlphaSlider(true)
+                            .show(getActivity());
+                }
+            });
+
+            constraint_colorBackgroundTint.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ColorPickerDialog.newBuilder()
+                            .setDialogId(COLOR_BACKGROUND_TINT_DIALOG_ID)
+                            .setColor(sp.getInt("colorBackgroundTint", -14575885))
+                            .setShowAlphaSlider(true)
+                            .show(getActivity());
+                }
+            });
+
+            constraint_colorPrimaryCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ColorPickerDialog.newBuilder()
+                            .setDialogId(COLOR_PRIMARY_CARD_DIALOG_ID)
+                            .setColor(sp.getInt("colorPrimaryCard", -1))
+                            .setShowAlphaSlider(true)
+                            .show(getActivity());
+                }
+            });
+
+            constraint_colorBackgroundCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ColorPickerDialog.newBuilder()
+                            .setDialogId(COLOR_BACKGROUND_CARD_DIALOG_ID)
+                            .setColor(sp.getInt("colorBackgroundCard", -1))
+                            .setShowAlphaSlider(true)
+                            .show(getActivity());
+                }
+            });
+
+            constraint_colorPrimaryCardText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ColorPickerDialog.newBuilder()
+                            .setDialogId(COLOR_PRIMARY_CARD_TEXT_DIALOG_ID)
+                            .setColor(sp.getInt("colorPrimaryCardText", -16777216))
+                            .setShowAlphaSlider(true)
+                            .show(getActivity());
+                }
+            });
+
+            constraint_colorBackgroundCardText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ColorPickerDialog.newBuilder()
+                            .setDialogId(COLOR_BACKGROUND_CARD_TEXT_DIALOG_ID)
+                            .setColor(sp.getInt("colorBackgroundCardText", -16777216))
+                            .setShowAlphaSlider(true)
+                            .show(getActivity());
+                }
+            });
+
+            constraint_colorPrimaryCardTint.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ColorPickerDialog.newBuilder()
+                            .setDialogId(COLOR_PRIMARY_CARD_TINT_DIALOG_ID)
+                            .setColor(sp.getInt("colorPrimaryCardTint", -16777216))
+                            .setShowAlphaSlider(true)
+                            .show(getActivity());
+                }
+            });
+
+            constraint_colorBackgroundCardTint.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ColorPickerDialog.newBuilder()
+                            .setDialogId(COLOR_BACKGROUND_CARD_TINT_DIALOG_ID)
+                            .setColor(sp.getInt("colorBackgroundCardTint", -16777216))
+                            .setShowAlphaSlider(true)
+                            .show(getActivity());
+                }
+            });
         }
 
         return root;
