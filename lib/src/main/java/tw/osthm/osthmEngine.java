@@ -646,7 +646,7 @@ public class osthmEngine {
     }
 
     /**
-     * This method returns converts ARGB colors to HEX code
+     * This method converts ARGB colors to HEX code
      * from given ARGB Integer value. Used as Util in
      * osthm
      * @param a Alpha color value
@@ -662,5 +662,20 @@ public class osthmEngine {
         } else {
             return String.format("#%02x%02x%02x", r, g, b).toUpperCase();
         }
+    }
+
+    /**
+     * This method converts Integer color to HEX code
+     * from a given Integer value. Used as Util in
+     * osthm
+     * @param color Integer color
+     * @return String containing hex color code
+     */
+
+    public static String colorToHex(int color) {
+        return argbToHex(Color.alpha(color),
+                Color.red(color),
+                Color.green(color),
+                Color.blue(color));
     }
 }

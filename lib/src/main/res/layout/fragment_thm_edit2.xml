@@ -34,17 +34,17 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/statusbar_icon_fragment2_1"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginEnd="8dp"
                 android:src="@drawable/ic_signal_wifi_4_bar_white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textView17"
+                app:layout_constraintEnd_toStartOf="@+id/statusbar_text_fragment2_2"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView17"
+                android:id="@+id/statusbar_text_fragment2_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
@@ -56,17 +56,17 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView7"
+                android:id="@+id/statusbar_icon_fragment2_3"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginEnd="5dp"
                 android:src="@drawable/ic_signal_cellular_4_bar_white"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                app:layout_constraintEnd_toStartOf="@+id/imageView5"
-                app:layout_constraintTop_toTopOf="@+id/imageView5" />
+                app:layout_constraintBottom_toBottomOf="@+id/statusbar_icon_fragment2_1"
+                app:layout_constraintEnd_toStartOf="@+id/statusbar_icon_fragment2_1"
+                app:layout_constraintTop_toTopOf="@+id/statusbar_icon_fragment2_1" />
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/statusbar_icon_fragment2_4"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="3dp"
@@ -91,6 +91,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/googlesans"
                 android:text="@string/app_name"
                 android:textColor="#FFFFFF"
@@ -294,7 +295,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkbox1">
+            app:layout_constraintTop_toBottomOf="@+id/enable_shadow">
 
             <TextView
                 android:id="@+id/textView3"
@@ -325,13 +326,14 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/statusbar_tint_black"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="#000000"
                     app:layout_columnWeight="1">
 
                     <ImageView
-                        android:id="@+id/imageView9"
+                        android:id="@+id/statusbar_tint_black_check"
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_marginStart="8dp"
@@ -358,6 +360,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/statusbar_tint_white"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="#FFFFFF"
@@ -377,7 +380,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/imageView10"
+                        android:id="@+id/statusbar_tint_white_check"
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_marginStart="8dp"
@@ -391,7 +394,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <CheckBox
-            android:id="@+id/checkbox1"
+            android:id="@+id/enable_shadow"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -530,7 +533,7 @@
                 android:id="@+id/constraint_colorHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#808080"
+                android:background="#A8A8A8"
                 app:layout_columnWeight="1">
 
                 <TextView
@@ -542,7 +545,7 @@
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/googlesansbold"
                     android:singleLine="true"
-                    android:text="#808080"
+                    android:text="#A8A8A8"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -593,7 +596,7 @@
                     android:fontFamily="@font/googlesansbold"
                     android:singleLine="true"
                     android:text="#40000000"
-                    android:textColor="#000000"
+                    android:textColor="#FFFFFF"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -608,7 +611,7 @@
                     android:fontFamily="@font/googlesans"
                     android:singleLine="true"
                     android:text="colorControlHighlight"
-                    android:textColor="#000000"
+                    android:textColor="#FFFFFF"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/image_colorControlHighlight"
@@ -623,8 +626,7 @@
                     android:layout_marginBottom="8dp"
                     android:src="@drawable/ic_colorize_white"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:tint="#000000" />
+                    app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.gridlayout.widget.GridLayout>
 
