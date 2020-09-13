@@ -250,13 +250,6 @@ public class FragmentThmEdit2 extends Fragment {
 
     public void refreshViews() {
         if (sp != null && root != null) {
-            constraint_color_background_text.setBackgroundColor(sp.getInt("colorBackgroundText", default_color_background_text));
-            constraint_color_background.setBackgroundColor(sp.getInt("colorBackground", default_color_background));
-            constraint_color_primary_text.setBackgroundColor(sp.getInt("colorPrimaryText", default_color_primary_text));
-            constraint_color_accent_text.setBackgroundColor(sp.getInt("colorAccentText", default_color_accent_text));
-            constraint_color_hint.setBackgroundColor(sp.getInt("colorHint", default_color_hint));
-            constraint_color_control_highlight.setBackgroundColor(sp.getInt("colorControlHighlight", default_color_control_highlight));
-
             // Check if statusbar tint is 1
             if (sp.getInt("colorStatusbarTint", 1) == 1) {
                 // white
@@ -268,22 +261,13 @@ public class FragmentThmEdit2 extends Fragment {
                 selected_black.setVisibility(View.VISIBLE);
             }
 
-            // Set TextView to the current picked hex color
-            text_color_background_text.setText(osthmEngine.colorToHex(sp.getInt("colorBackgroundText", default_color_background_text)));
-            text_color_background.setText(osthmEngine.colorToHex(sp.getInt("colorBackground", default_color_background)));
-            text_color_primary_text.setText(osthmEngine.colorToHex(sp.getInt("colorPrimaryText", default_color_primary_text)));
-            text_color_accent_text.setText(osthmEngine.colorToHex(sp.getInt("colorAccentText", default_color_accent_text)));
-            text_color_hint.setText(osthmEngine.colorToHex(sp.getInt("colorHint", default_color_hint)));
-            text_color_control_highlight.setText(osthmEngine.colorToHex(sp.getInt("colorControlHighlight", default_color_control_highlight)));
-
-            // Set TextView and ImageView color
-            calculateColorBrightness(sp.getInt("colorBackgroundText", default_color_background_text), text_color_background_text, sub_color_background_text, image_color_background_text);
-            calculateColorBrightness(sp.getInt("colorBackgroundText", default_color_background_text), text_color_background_text, sub_color_background_text, image_color_background_text);
-            calculateColorBrightness(sp.getInt("colorBackground", default_color_background), text_color_background, sub_color_background, image_color_background);
-            calculateColorBrightness(sp.getInt("colorPrimaryText", default_color_primary_text), text_color_primary_text, sub_color_primary_text, image_color_primary_text);
-            calculateColorBrightness(sp.getInt("colorAccentText", default_color_accent_text), text_color_accent_text, sub_color_accent_text, image_color_accent_text);
-            calculateColorBrightness(sp.getInt("colorHint", default_color_hint), text_color_hint, sub_color_hint, image_color_hint);
-            calculateColorBrightness(sp.getInt("colorControlHighlight", default_color_control_highlight), text_color_control_highlight, sub_color_control_highlight, image_color_control_highlight);
+            // Refresh cards
+            refreshCard(sp.getInt("colorBackgroundText", default_color_background_text), text_color_background_text, sub_color_background_text, image_color_background_text, constraint_color_background_text);
+            refreshCard(sp.getInt("colorBackground", default_color_background), text_color_background, sub_color_background, image_color_background, constraint_color_background);
+            refreshCard(sp.getInt("colorPrimaryText", default_color_primary_text), text_color_primary_text, sub_color_primary_text, image_color_primary_text, constraint_color_primary_text);
+            refreshCard(sp.getInt("colorAccentText", default_color_accent_text), text_color_accent_text, sub_color_accent_text, image_color_accent_text, constraint_color_accent_text);
+            refreshCard(sp.getInt("colorHint", default_color_hint), text_color_hint, sub_color_hint, image_color_hint, constraint_color_hint);
+            refreshCard(sp.getInt("colorControlHighlight", default_color_control_highlight), text_color_control_highlight, sub_color_control_highlight, image_color_control_highlight, constraint_color_control_highlight);
             // Change demo view
             // Local changes ===========================================================================
 
@@ -336,7 +320,8 @@ public class FragmentThmEdit2 extends Fragment {
     }
 
     // Helper
-    private void calculateColorBrightness(int color, TextView header, TextView subtitle, ImageView eyedropper) {
+    private void refreshCard(int color, TextView header, TextView subtitle, ImageView eyedropper,
+                             ConstraintLayout card) {
         boolean isColorDark = ColorUtils.calculateLuminance(color) < 0.5;
         header.setTextColor(isColorDark ? 0xFFFFFFFF : 0xFF000000);
         subtitle.setTextColor(isColorDark ? 0xFFFFFFFF : 0xFF000000);
@@ -353,5 +338,8 @@ public class FragmentThmEdit2 extends Fragment {
             eyedropper .setColorFilter(0xFF000000);
         }
          */
+
+        header.setText(osthmEngine.colorToHex(color));
+        card.setBackgroundColor(color);
     }
 }

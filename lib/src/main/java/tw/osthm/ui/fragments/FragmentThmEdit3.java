@@ -3,9 +3,12 @@ package tw.osthm.ui.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.media.Image;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 
 import tw.osthm.R;
@@ -33,42 +37,47 @@ public class FragmentThmEdit3 extends Fragment {
     private ConstraintLayout constraint_colorPrimaryCardTint;
     private ConstraintLayout constraint_colorBackgroundCardTint;
 
-    private ConstraintLayout title_colorPrimaryTint;
-    private ConstraintLayout title_colorBackgroundTint;
-    private ConstraintLayout title_colorPrimaryCard;
-    private ConstraintLayout title_colorBackgroundCard;
-    private ConstraintLayout title_colorPrimaryCardText;
-    private ConstraintLayout title_colorBackgroundCardText;
-    private ConstraintLayout title_colorPrimaryCardTint;
-    private ConstraintLayout title_colorBackgroundCardTint;
+    private TextView title_colorPrimaryTint;
+    private TextView title_colorBackgroundTint;
+    private TextView title_colorPrimaryCard;
+    private TextView title_colorBackgroundCard;
+    private TextView title_colorPrimaryCardText;
+    private TextView title_colorBackgroundCardText;
+    private TextView title_colorPrimaryCardTint;
+    private TextView title_colorBackgroundCardTint;
 
-    private ConstraintLayout subtitle_colorPrimaryTint;
-    private ConstraintLayout subtitle_colorBackgroundTint;
-    private ConstraintLayout subtitle_colorPrimaryCard;
-    private ConstraintLayout subtitle_colorBackgroundCard;
-    private ConstraintLayout subtitle_colorPrimaryCardText;
-    private ConstraintLayout subtitle_colorBackgroundCardText;
-    private ConstraintLayout subtitle_colorPrimaryCardTint;
-    private ConstraintLayout subtitle_colorBackgroundCardTint;
+    private TextView subtitle_colorPrimaryTint;
+    private TextView subtitle_colorBackgroundTint;
+    private TextView subtitle_colorPrimaryCard;
+    private TextView subtitle_colorBackgroundCard;
+    private TextView subtitle_colorPrimaryCardText;
+    private TextView subtitle_colorBackgroundCardText;
+    private TextView subtitle_colorPrimaryCardTint;
+    private TextView subtitle_colorBackgroundCardTint;
 
-    private ConstraintLayout image_colorPrimaryTint;
-    private ConstraintLayout image_colorBackgroundTint;
-    private ConstraintLayout image_colorPrimaryCard;
-    private ConstraintLayout image_colorBackgroundCard;
-    private ConstraintLayout image_colorPrimaryCardText;
-    private ConstraintLayout image_colorBackgroundCardText;
-    private ConstraintLayout image_colorPrimaryCardTint;
-    private ConstraintLayout image_colorBackgroundCardTint;
+    private ImageView image_colorPrimaryTint;
+    private ImageView image_colorBackgroundTint;
+    private ImageView image_colorPrimaryCard;
+    private ImageView image_colorBackgroundCard;
+    private ImageView image_colorPrimaryCardText;
+    private ImageView image_colorBackgroundCardText;
+    private ImageView image_colorPrimaryCardTint;
+    private ImageView image_colorBackgroundCardTint;
 
     // Demo views
     private ConstraintLayout appbar, statusbar, background_demo,
                              bottombar, bottombarcard;
-    private ImageView statusbar_icon_1, statusbar_icon_2, statusbar_icon_3,
-                      appbar_backbutton;
 
-    private TextView statusbar_clock,
-                     appbar_title;
+    private CardView bcard;
 
+    private ImageView statusbar_icon1, statusbar_icon2, statusbar_icon3,
+                      appbar_backbutton, background_item1, background_item2,
+                      background_item3, background_item4, bcard_img, pcard_img;
+
+    private TextView statusbar_clock, appbar_title, bcard_text,
+                     pcard_text;
+
+    // Other components
     private View root;
     private SharedPreferences sp;
 
@@ -88,7 +97,7 @@ public class FragmentThmEdit3 extends Fragment {
                              Bundle savedInstanceState) {
         if (root == null) {
             // Inflate the layout for this fragment
-            View root = inflater.inflate(R.layout.fragment_thm_edit3, container, false);
+            root = inflater.inflate(R.layout.fragment_thm_edit3, container, false);
 
             // Initialize views
             initializeViews();
@@ -226,43 +235,122 @@ public class FragmentThmEdit3 extends Fragment {
         image_colorBackgroundCardText = root.findViewById(R.id.imageView16);
         image_colorPrimaryCardTint = root.findViewById(R.id.imageView134_);
         image_colorBackgroundCardTint = root.findViewById(R.id.imageView23);
+
+        // Demo views
+        background_demo = root.findViewById(R.id.demo_display_fragment3);
+        appbar = root.findViewById(R.id.view_colorPrimary);
+        statusbar = root.findViewById(R.id.view_colorPrimaryDark);
+
+        bcard = root.findViewById(R.id.view_colorBackgroundCard);
+
+        bottombar = root.findViewById(R.id.constraintLayout7);
+        bottombarcard = root.findViewById(R.id.view_colorPrimaryCard);
+
+        appbar_title = root.findViewById(R.id.view_colorPrimaryText);
+        statusbar_clock = root.findViewById(R.id.text_clock);
+        bcard_text = root.findViewById(R.id.textView22);
+        pcard_text = root.findViewById(R.id.textView24);
+
+        statusbar_icon1 = root.findViewById(R.id.view_colorStatusbarTint1);
+        statusbar_icon2 = root.findViewById(R.id.view_colorStatusbarTint2);
+        statusbar_icon3 = root.findViewById(R.id.view_colorStatusbarTint3);
+        appbar_backbutton = root.findViewById(R.id.view_colorPrimaryTint);
+        background_item1 = root.findViewById(R.id.imageView17);
+        background_item2 = root.findViewById(R.id.imageView20);
+        background_item3 = root.findViewById(R.id.imageView21);
+        background_item4 = root.findViewById(R.id.imageView22);
+        bcard_img = root.findViewById(R.id.imageView18);
+        pcard_img = root.findViewById(R.id.imageView19);
     }
 
     public void refreshViews() {
         if (sp != null && root != null) {
-            // Global changes ===========================================================================
-            // fab.setRippleColor(sp.getInt("colorControlHighlight", default_color_control_highlight));
-            // fab.setBackgroundTintList(ColorStateList.valueOf(sp.getInt("colorAccent", -720809)));
-            // fab.setColorFilter(sp.getInt("colorAccentText", default_color_accent_text));
+            // Refresh cards =========================
+            refreshCard(sp.getInt("colorPrimaryTint", -1), title_colorPrimaryTint,
+                    subtitle_colorPrimaryTint, image_colorPrimaryTint, constraint_colorPrimaryTint);
 
-            // fake_edit_text_accent.setBackgroundColor(sp.getInt("colorAccent", -720809));
-            background.setBackgroundColor(sp.getInt("colorBackground", -1));
-            // background_text.setTextColor(sp.getInt("colorBackgroundText", -16777216));
-            // fake_edit_text_hint.setTextColor(sp.getInt("colorHint", -5723992));
+            refreshCard(sp.getInt("colorBackgroundTint", -14575885), title_colorBackgroundTint,
+                    subtitle_colorBackgroundTint, image_colorBackgroundTint, constraint_colorBackgroundTint);
 
-            color_primary_app_bar.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
-            color_primary_dark_status_bar.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
-            app_bar_title.setTextColor(sp.getInt("colorPrimaryText", -1));
+            refreshCard(sp.getInt("colorPrimaryCard", -1), title_colorPrimaryCard,
+                    subtitle_colorPrimaryCard, image_colorPrimaryCard, constraint_colorPrimaryCard);
+
+            refreshCard(sp.getInt("colorBackgroundCard", -1), title_colorBackgroundCard,
+                    subtitle_colorBackgroundCard, image_colorBackgroundCard, constraint_colorBackgroundCard);
+
+            refreshCard(sp.getInt("colorPrimaryCardText", -16777216), title_colorPrimaryCardText,
+                    subtitle_colorPrimaryCardText, image_colorPrimaryCardText, constraint_colorPrimaryCardText);
+
+            refreshCard(sp.getInt("colorBackgroundCardText", -16777216), title_colorBackgroundCardText,
+                    subtitle_colorBackgroundCardText, image_colorBackgroundCardText, constraint_colorBackgroundCardText);
+
+            refreshCard(sp.getInt("colorPrimaryCardTint", -16777216), title_colorPrimaryCardTint,
+                    subtitle_colorPrimaryCardTint, image_colorPrimaryCardTint, constraint_colorPrimaryCardTint);
+
+            refreshCard(sp.getInt("colorBackgroundCardTint", -16777216), title_colorBackgroundCardTint,
+                    subtitle_colorBackgroundCardTint, image_colorBackgroundCardTint, constraint_colorBackgroundCardTint);
+            // =======================================
+
+            // Refresh demo views
+            background_demo.setBackgroundColor(sp.getInt("colorBackground", -1));
+
+            appbar.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
+            statusbar.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
+            appbar_title.setTextColor(sp.getInt("colorPrimaryText", -1));
+
+            bottombar.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
+            bottombarcard.setBackgroundColor(sp.getInt("colorPrimaryCard", -1));
+
+            bcard.setCardBackgroundColor(sp.getInt("colorBackgroundCard", -1));
+
+            background_item1.setColorFilter(sp.getInt("colorBackgroundTint", -14575885));
+            background_item2.setColorFilter(sp.getInt("colorBackgroundTint", -14575885));
+            background_item3.setColorFilter(sp.getInt("colorBackgroundTint", -14575885));
+            background_item4.setColorFilter(sp.getInt("colorBackgroundTint", -14575885));
+
+            bcard_img.setColorFilter(sp.getInt("colorBackgroundCardTint", -16777216));
+            pcard_img.setColorFilter(sp.getInt("colorPrimaryCardTint", -16777216));
+            bcard_text.setTextColor(sp.getInt("colorBackgroundCardText", -16777216));
+            pcard_text.setTextColor(sp.getInt("colorPrimaryCardText", -16777216));
 
             if (sp.getInt("colorStatusbarTint", 1) == 1) {
-                statusbar_text.setTextColor(0xFFFFFFFF);
+                statusbar_clock.setTextColor(0xFFFFFFFF);
                 statusbar_icon1.setColorFilter(0xFFFFFFFF);
                 statusbar_icon2.setColorFilter(0xFFFFFFFF);
                 statusbar_icon3.setColorFilter(0xFFFFFFFF);
             } else {
-                statusbar_text.setTextColor(0xFF000000);
+                statusbar_clock.setTextColor(0xFF000000);
                 statusbar_icon1.setColorFilter(0xFF000000);
                 statusbar_icon2.setColorFilter(0xFF000000);
                 statusbar_icon3.setColorFilter(0xFF000000);
             }
 
-            if (sp.getInt("shadow", 1) == 1) {
-                color_primary_app_bar.setElevation(5f);
-                fab.setElevation(6f);
-            } else {
-                color_primary_app_bar.setElevation(0f);
-                fab.setElevation(0f);
-            }
+            appbar.setElevation((sp.getInt("shadow", 1) == 1) ? 5f : 0f);
+            appbar_backbutton.setColorFilter(sp.getInt("colorPrimaryTint", -1));
         }
+    }
+
+    // Helper
+    private void refreshCard(int color, TextView header, TextView subtitle, ImageView eyedropper,
+                             ConstraintLayout card) {
+        boolean isColorDark = ColorUtils.calculateLuminance(color) < 0.5;
+        header.setTextColor(isColorDark ? 0xFFFFFFFF : 0xFF000000);
+        subtitle.setTextColor(isColorDark ? 0xFFFFFFFF : 0xFF000000);
+        eyedropper.setColorFilter(isColorDark ? 0xFFFFFFFF : 0xFF000000);
+
+        /* If you confused what the function does, this is the longer version
+        if (ColorUtils.calculateLuminance(color) < 0.5) {
+            header  .setTextColor(0xFFFFFFFF);
+            subtitle   .setTextColor(0xFFFFFFFF);
+            eyedropper .setColorFilter(0xFFFFFFFF);
+        } else {
+            header  .setTextColor(0xFF000000);
+            subtitle   .setTextColor(0xFF000000);
+            eyedropper .setColorFilter(0xFF000000);
+        }
+         */
+
+        header.setText(osthmEngine.colorToHex(color));
+        card.setBackgroundColor(color);
     }
 }

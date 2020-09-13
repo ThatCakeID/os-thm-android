@@ -148,20 +148,12 @@ public class FragmentThmEdit1 extends Fragment {
 
     public void refreshViews() {
         if (sp != null && root != null) {
-            constraint_colorPrimary.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
-            constraint_colorPrimaryDark.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
-            constraint_colorAccent.setBackgroundColor(sp.getInt("colorAccent", -720809));
-
-            text_colorPrimary.setText(osthmEngine.colorToHex(sp.getInt("colorPrimary", -14575885)));
-            text_colorPrimaryDark.setText(osthmEngine.colorToHex(sp.getInt("colorPrimaryDark", -15242838)));
-            text_colorAccent.setText(osthmEngine.colorToHex(sp.getInt("colorAccent", -720809)));
-
-            calculateColorBrightness(sp.getInt("colorPrimary", -14575885), text_colorPrimary,
-                    text_clr_colorPrimary, image_colorPrimary);
-            calculateColorBrightness(sp.getInt("colorPrimaryDark", -15242838), text_colorPrimaryDark,
-                    text_clr_colorPrimaryDark, image_colorPrimaryDark);
-            calculateColorBrightness(sp.getInt("colorAccent", -720809), text_colorAccent,
-                    text_clr_colorAccent, image_colorAccent);
+            refreshCard(sp.getInt("colorPrimary", -14575885), text_colorPrimary,
+                    text_clr_colorPrimary, image_colorPrimary, constraint_colorPrimary);
+            refreshCard(sp.getInt("colorPrimaryDark", -15242838), text_colorPrimaryDark,
+                    text_clr_colorPrimaryDark, image_colorPrimaryDark, constraint_colorPrimaryDark);
+            refreshCard(sp.getInt("colorAccent", -720809), text_colorAccent,
+                    text_clr_colorAccent, image_colorAccent, constraint_colorAccent);
 
             fab.setBackgroundTintList(ColorStateList.valueOf(sp.getInt("colorAccent", -720809)));
             fab.setRippleColor(sp.getInt("colorControlHighlight", 1073741824));
@@ -196,11 +188,12 @@ public class FragmentThmEdit1 extends Fragment {
     }
 
     // Helper
-    private void calculateColorBrightness(int color, TextView header, TextView subtitle, ImageView eyedropper) {
-        boolean isDark = ColorUtils.calculateLuminance(color) < 0.5;
-        header.setTextColor(isDark ? 0xFFFFFFFF : 0xFF000000);
-        subtitle.setTextColor(isDark ? 0xFFFFFFFF : 0xFF000000);
-        eyedropper.setColorFilter(isDark ? 0xFFFFFFFF : 0xFF000000);
+    private void refreshCard(int color, TextView header, TextView subtitle, ImageView eyedropper,
+                             ConstraintLayout card) {
+        boolean isColorDark = ColorUtils.calculateLuminance(color) < 0.5;
+        header.setTextColor(isColorDark ? 0xFFFFFFFF : 0xFF000000);
+        subtitle.setTextColor(isColorDark ? 0xFFFFFFFF : 0xFF000000);
+        eyedropper.setColorFilter(isColorDark ? 0xFFFFFFFF : 0xFF000000);
 
         /* If you confused what the function does, this is the longer version
         if (ColorUtils.calculateLuminance(color) < 0.5) {
@@ -213,7 +206,8 @@ public class FragmentThmEdit1 extends Fragment {
             eyedropper .setColorFilter(0xFF000000);
         }
          */
+
+        header.setText(osthmEngine.colorToHex(color));
+        card.setBackgroundColor(color);
     }
-
-
 }
