@@ -117,8 +117,8 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                             sp.getInt("colorPrimaryCardTint", -16777216), sp.getInt("colorBackgroundCardTint", -16777216),
                             til1.getText().toString(), til3.getText().toString(), til2.getText().toString(),
                             Integer.parseInt(til4.getText().toString()));
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+                } catch (osthmException err) {
+                    Toast.makeText(getApplicationContext(), err.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -139,6 +139,10 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         image_saveb = bottomsheetview.findViewById(R.id.image_save);
         image_close = bottomsheetview.findViewById(R.id.image_close);
         bottomSheetDialog.setContentView(bottomsheetview);
+        til1 = bottomsheetview.findViewById(R.id.til1);
+        til2 = bottomsheetview.findViewById(R.id.til2);
+        til3 = bottomsheetview.findViewById(R.id.til3);
+        til4 = bottomsheetview.findViewById(R.id.til4);
     }
 
     private void loadColors() {

@@ -1,6 +1,5 @@
 package tw.osthm.ui;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
@@ -52,7 +51,7 @@ public class ThemeGridPreview extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null)
-            view = inflater.inflate(R.layout.theme_preview, viewGroup);
+            view = inflater.inflate(R.layout.theme_preview, null);
         linear_base = view.findViewById(R.id.linear_base);
         linear_title = view.findViewById(R.id.linear_title);
         imageview_back = view.findViewById(R.id.imageview_back);
@@ -61,13 +60,15 @@ public class ThemeGridPreview extends BaseAdapter {
         textview_title = view.findViewById(R.id.textview_title);
 
         textview_name.setText(list.get(i).get("themesname").toString());
-        textview_name.setTextColor(((HashMap<String, Integer>)list.get(i).get("themesjson")).get("colorBackgroundText"));
-        textview_title.setTextColor(((HashMap<String, Integer>)list.get(i).get("themesjson")).get("colorPrimaryText"));
-        linear_base.setBackgroundTintList(ColorStateList.valueOf(((HashMap<String, Integer>)list.get(i).get("themesjson")).get("colorBackground")));
-        linear_title.setBackgroundTintList(ColorStateList.valueOf(((HashMap<String, Integer>)list.get(i).get("themesjson")).get("colorPrimary")));
-        imageview_fab.setBackgroundTintList(ColorStateList.valueOf(((HashMap<String, Integer>)list.get(i).get("themesjson")).get("colorAccent")));
-        imageview_fab.setColorFilter(((HashMap<String, Integer>)list.get(i).get("themesjson")).get("colorAccentText"));
-        imageview_back.setColorFilter(((HashMap<String, Integer>)list.get(i).get("themesjson")).get("colorPrimaryTint"));
+        HashMap<String, Integer> list2 = new Gson().fromJson(list.get(i).get("themesjson").toString(), new TypeToken<HashMap<String, Integer>>() {
+        }.getType());
+        textview_name.setTextColor(list2.get("colorBackgroundText"));
+        textview_title.setTextColor(list2.get("colorPrimaryText"));
+        linear_base.setBackgroundTintList(ColorStateList.valueOf(list2.get("colorBackground")));
+        linear_title.setBackgroundTintList(ColorStateList.valueOf(list2.get("colorPrimary")));
+        imageview_fab.setBackgroundTintList(ColorStateList.valueOf(list2.get("colorAccent")));
+        imageview_fab.setColorFilter(list2.get("colorAccentText"));
+        imageview_back.setColorFilter(list2.get("colorPrimaryTint"));
         return view;
     }
 }
