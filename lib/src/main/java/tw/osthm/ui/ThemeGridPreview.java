@@ -49,11 +49,10 @@ public class ThemeGridPreview extends BaseAdapter {
         return i;
     }
 
-    @SuppressLint({"ViewHolder", "InflateParams"})
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null)
-            view = inflater.inflate(R.layout.theme_preview, null);
+            view = inflater.inflate(R.layout.theme_preview, viewGroup);
         linear_base = view.findViewById(R.id.linear_base);
         linear_title = view.findViewById(R.id.linear_title);
         imageview_back = view.findViewById(R.id.imageview_back);

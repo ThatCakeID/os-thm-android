@@ -3,8 +3,11 @@ package tw.osthm.ui;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -12,9 +15,12 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
+import tw.osthm.osthmEngine;
 
 import tw.osthm.R;
+import tw.osthm.osthmException;
 import tw.osthm.ui.fragments.FragmentThmEdit1;
 import tw.osthm.ui.fragments.FragmentThmEdit2;
 import tw.osthm.ui.fragments.FragmentThmEdit3;
@@ -28,6 +34,11 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     private static FragmentThmEdit1 fragment1;
     private static FragmentThmEdit2 fragment2;
     private static FragmentThmEdit3 fragment3;
+
+    private View bottomsheetview;
+    private BottomSheetDialog bottomSheetDialog;
+    private ImageView image_saveb, image_close;
+    private TextView til1, til2, til3, til4;
 
     // FRAGMENT 1
     public static final int COLOR_PRIMARY_DIALOG_ID = 0;
@@ -56,23 +67,62 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theme_editor);
+
         initializeViews();
-        loadDefaultColors();
+        sp.edit().clear().apply();
+
+        if (getIntent().getBooleanExtra("isEditing", false))
+            loadColors();
+
         fragment1 = new FragmentThmEdit1();
         fragment2 = new FragmentThmEdit2();
         fragment3 = new FragmentThmEdit3();
+
         image_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
+
         image_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (bottomsheetview != null) {
+                    bottomSheetDialog.show();
+                }
             }
         });
+
+        image_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        image_saveb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    osthmEngine.addTheme(getApplicationContext(), sp.getInt("colorPrimary", -14575885),
+                            sp.getInt("colorPrimaryText", -1), sp.getInt("colorPrimaryDark", -15242838),
+                            sp.getInt("colorStatusbarTint", 1), sp.getInt("colorBackground", -1),
+                            sp.getInt("colorBackgroundText", -16777216), sp.getInt("colorAccent", -720809),
+                            sp.getInt("colorAccentText", -1), sp.getInt("shadow", 1),
+                            sp.getInt("colorControlHighlight", 1073741824), sp.getInt("colorHint", -5723992),
+                            sp.getInt("colorPrimaryTint", -1), sp.getInt("colorBackgroundTint", -14575885),
+                            sp.getInt("colorPrimaryCard", -1), sp.getInt("colorBackgroundCard", -1),
+                            sp.getInt("colorPrimaryCardText", -16777216), sp.getInt("colorBackgroundCardText", -16777216),
+                            sp.getInt("colorPrimaryCardTint", -16777216), sp.getInt("colorBackgroundCardTint", -16777216),
+                            til1.getText().toString(), til3.getText().toString(), til2.getText().toString(),
+                            Integer.parseInt(til4.getText().toString()));
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+                }
+            }
+        });
+
         pagerAdapter = new ScreenSlidePagerAdapter(this);
         mPager.setOffscreenPageLimit(3);
         mPager.setAdapter(pagerAdapter);
@@ -83,6 +133,25 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         image_back = findViewById(R.id.image_back);
         image_save = findViewById(R.id.image_save);
         sp = getSharedPreferences("colordata", Context.MODE_PRIVATE);
+        bottomSheetDialog = new BottomSheetDialog(ThemeEditorActivity.this);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        bottomsheetview = inflater.inflate(R.layout.bottomsheet_newtheme, null);
+        image_saveb = bottomsheetview.findViewById(R.id.image_save);
+        image_close = bottomsheetview.findViewById(R.id.image_close);
+        bottomSheetDialog.setContentView(bottomsheetview);
+    }
+
+    private void loadColors() {
+        sp.edit().putInt("colorPrimary", -14575885).putInt("colorPrimaryText", -1)
+                .putInt("colorPrimaryDark", -15242838).putInt("colorStatusbarTint", 1)
+                .putInt("colorBackground", -1).putInt("colorBackgroundText", -16777216)
+                .putInt("colorAccent", -720809).putInt("colorAccentText", -1)
+                .putInt("shadow", 1).putInt("colorControlHighlight", 1073741824)
+                .putInt("colorHint", -5723992).putInt("colorPrimaryTint", -1)
+                .putInt("colorBackgroundTint", -14575885).putInt("colorPrimaryCard", -1)
+                .putInt("colorBackgroundCard", -1).putInt("colorPrimaryCardText", -16777216)
+                .putInt("colorBackgroundCardText", -16777216).putInt("colorPrimaryCardTint", -16777216)
+                .putInt("colorBackgroundCardTint", -16777216).apply();
     }
 
     private void loadDefaultColors() {
@@ -118,7 +187,6 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
          * colorPrimaryCardTint:    -16777216
          * colorBackgroundCardTint: -16777216
          */
-        
     }
 
     @Override

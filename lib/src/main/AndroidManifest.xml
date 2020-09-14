@@ -13,10 +13,12 @@
         <activity
             android:name=".ui.ThemeManagerActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.ThemeEditorActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
     </application>
 
 </manifest>

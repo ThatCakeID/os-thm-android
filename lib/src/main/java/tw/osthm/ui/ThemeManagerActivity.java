@@ -79,6 +79,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), ThemeEditorActivity.class);
+                intent.putExtra("isEditing", false);
                 startActivity(intent);
             }
         });

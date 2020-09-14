@@ -36,7 +36,8 @@ import java.util.UUID;
 
 public class osthmEngine {
 
-    public static int metadataVersion = 3;
+    public static final int metadataVersion = 3;
+    public static final String codename = "hmm";
     private static SharedPreferences data;
     private static ArrayList<HashMap<String, Object>> defaultThemes;
 

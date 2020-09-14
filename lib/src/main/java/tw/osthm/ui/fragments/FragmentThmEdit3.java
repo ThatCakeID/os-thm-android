@@ -209,7 +209,7 @@ public class FragmentThmEdit3 extends Fragment {
         constraint_colorPrimaryCardTint = root.findViewById(R.id.constraint_colorPrimaryCardTint);
         constraint_colorBackgroundCardTint = root.findViewById(R.id.constraint_colorBackgroundCardTint);
 
-        title_colorPrimaryTint = root.findViewById(R.id.text_clr_colorPrimaryTint);
+        title_colorPrimaryTint = root.findViewById(R.id.text_colorPrimaryTint);
         title_colorBackgroundTint = root.findViewById(R.id.title_colorBackgroundTint);
         title_colorPrimaryCard = root.findViewById(R.id.textView__bgcolor_);
         title_colorBackgroundCard = root.findViewById(R.id.textView__);
@@ -218,7 +218,7 @@ public class FragmentThmEdit3 extends Fragment {
         title_colorPrimaryCardTint = root.findViewById(R.id.textView9_);
         title_colorBackgroundCardTint = root.findViewById(R.id.textViewcolortextviewcolor);
 
-        subtitle_colorPrimaryTint = root.findViewById(R.id.text_colorPrimaryTint);
+        subtitle_colorPrimaryTint = root.findViewById(R.id.text_clr_colorPrimaryTint);
         subtitle_colorBackgroundTint = root.findViewById(R.id.subtitle_colorBackgroundTint);
         subtitle_colorPrimaryCard = root.findViewById(R.id.textView_bgcolor_);
         subtitle_colorBackgroundCard = root.findViewById(R.id.textView_);
@@ -327,6 +327,8 @@ public class FragmentThmEdit3 extends Fragment {
 
             appbar.setElevation((sp.getInt("shadow", 1) == 1) ? 5f : 0f);
             appbar_backbutton.setColorFilter(sp.getInt("colorPrimaryTint", -1));
+            appbar_backbutton.setBackgroundTintList(ColorStateList.valueOf(sp
+                    .getInt("colorControlHighlight", 1073741824)));
         }
     }
 
