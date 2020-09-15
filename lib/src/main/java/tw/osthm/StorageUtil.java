@@ -39,13 +39,10 @@ public class StorageUtil {
 
     public static boolean isExternalWritable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
-    public boolean createDirectory(String path) {
+    public static boolean createDirectory(String path) {
         File directory = new File(path);
         if (directory.exists()) {
             Log.w(TAG, "Directory '" + path + "' already exists");
@@ -54,7 +51,7 @@ public class StorageUtil {
         return directory.mkdirs();
     }
 
-    public boolean createDirectory(String path, boolean override) {
+    public static boolean createDirectory(String path, boolean override) {
 
         // Check if directory exists. If yes, then delete all directory
         if (override && isDirectoryExists(path)) {
@@ -65,19 +62,19 @@ public class StorageUtil {
         return createDirectory(path);
     }
 
-    public boolean deleteDirectory(String path) {
+    public static boolean deleteDirectory(String path) {
         return deleteDirectoryImpl(path);
     }
 
-    public boolean isDirectoryExists(String path) {
+    public static boolean isDirectoryExists(String path) {
         return new File(path).exists();
     }
 
-    public boolean createFile(String path, String content) {
+    public static boolean createFile(String path, String content) {
         return createFile(path, content.getBytes());
     }
 
-    public boolean createFile(String path, byte[] content) {
+    public static boolean createFile(String path, byte[] content) {
         try {
             OutputStream stream = new FileOutputStream(new File(path));
 
@@ -91,24 +88,24 @@ public class StorageUtil {
         return true;
     }
 
-    public boolean createFile(String path, Bitmap bitmap) {
+    public static boolean createFile(String path, Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
         return createFile(path, byteArray);
     }
 
-    public boolean deleteFile(String path) {
+    public static boolean deleteFile(String path) {
         File file = new File(path);
         return file.delete();
     }
 
-    public boolean isFileExist(String path) {
+    public static boolean isFileExist(String path) {
         return new File(path).exists();
     }
 
     // Copied from: https://www.journaldev.com/9400/android-external-storage-read-write-save-file
-    public String readFile(String path) {
+    public static String readFile(String path) {
         StringBuilder output = new StringBuilder();
         try {
             FileInputStream fis = new FileInputStream(path);
@@ -126,11 +123,11 @@ public class StorageUtil {
         return output.toString();
     }
 
-    public void appendFile(String path, String content) {
+    public static void appendFile(String path, String content) {
         appendFile(path, content.getBytes());
     }
 
-    public void appendFile(String path, byte[] bytes) {
+    public static void appendFile(String path, byte[] bytes) {
         if (!isFileExist(path)) {
             Log.w(TAG, "Impossible to append content, because such file doesn't exist");
             return;
@@ -147,18 +144,18 @@ public class StorageUtil {
         }
     }
 
-    public List<File> getNestedFiles(String path) {
+    public static List<File> getNestedFiles(String path) {
         File file = new File(path);
         List<File> out = new ArrayList<File>();
         getDirectoryFilesImpl(file, out);
         return out;
     }
 
-    public List<File> getFiles(String dir) {
+    public static List<File> getFiles(String dir) {
         return getFiles(dir, null);
     }
 
-    public List<File> getFiles(String dir, final String matchRegex) {
+    public static List<File> getFiles(String dir, final String matchRegex) {
         File file = new File(dir);
         File[] files = null;
         if (matchRegex != null) {
@@ -175,17 +172,17 @@ public class StorageUtil {
         return files != null ? Arrays.asList(files) : null;
     }
 
-    public File getFile(String path) {
+    public static File getFile(String path) {
         return new File(path);
     }
 
-    public boolean rename(String fromPath, String toPath) {
+    public static boolean rename(String fromPath, String toPath) {
         File file = getFile(fromPath);
         File newFile = new File(toPath);
         return file.renameTo(newFile);
     }
 
-    public boolean copy(String fromPath, String toPath) {
+    public static boolean copy(String fromPath, String toPath) {
         File file = getFile(fromPath);
         if (!file.isFile()) {
             return false;
@@ -209,14 +206,14 @@ public class StorageUtil {
         return true;
     }
 
-    public boolean move(String fromPath, String toPath) {
+    public static boolean move(String fromPath, String toPath) {
         if (copy(fromPath, toPath)) {
             return getFile(fromPath).delete();
         }
         return false;
     }
 
-    private boolean deleteDirectoryImpl(String path) {
+    private static boolean deleteDirectoryImpl(String path) {
         File directory = new File(path);
 
         // If the directory exists then delete
@@ -226,39 +223,39 @@ public class StorageUtil {
                 return true;
             }
             // Run on all sub files and folders and delete them
-            for (int i = 0; i < files.length; i++) {
-                if (files[i].isDirectory()) {
-                    deleteDirectoryImpl(files[i].getAbsolutePath());
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteDirectoryImpl(file.getAbsolutePath());
                 } else {
-                    files[i].delete();
+                    file.delete();
                 }
             }
         }
         return directory.delete();
     }
 
-    private void getDirectoryFilesImpl(File directory, List<File> out) {
+    private static void getDirectoryFilesImpl(File directory, List<File> out) {
         if (directory.exists()) {
             File[] files = directory.listFiles();
             if (files == null) {
                 return;
             } else {
-                for (int i = 0; i < files.length; i++) {
-                    if (files[i].isDirectory()) {
-                        getDirectoryFilesImpl(files[i], out);
+                for (File file : files) {
+                    if (file.isDirectory()) {
+                        getDirectoryFilesImpl(file, out);
                     } else {
-                        out.add(files[i]);
+                        out.add(file);
                     }
                 }
             }
         }
     }
 
-    private void closeSilently(Closeable closeable) {
+    private static void closeSilently(Closeable closeable) {
         if (closeable != null) {
             try {
                 closeable.close();
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
         }
     }
