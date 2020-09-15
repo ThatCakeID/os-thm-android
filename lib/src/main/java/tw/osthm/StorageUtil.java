@@ -105,21 +105,17 @@ public class StorageUtil {
     }
 
     // Copied from: https://www.journaldev.com/9400/android-external-storage-read-write-save-file
-    public static String readFile(String path) {
+    public static String readFile(String path) throws IOException {
         StringBuilder output = new StringBuilder();
-        try {
-            FileInputStream fis = new FileInputStream(path);
-            DataInputStream in = new DataInputStream(fis);
-            BufferedReader br =
-                    new BufferedReader(new InputStreamReader(in));
-            String strLine;
-            while ((strLine = br.readLine()) != null) {
-                output.append(strLine);
-            }
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        FileInputStream fis = new FileInputStream(path);
+        DataInputStream in = new DataInputStream(fis);
+        BufferedReader br =
+                new BufferedReader(new InputStreamReader(in));
+        String strLine;
+        while ((strLine = br.readLine()) != null) {
+            output.append(strLine);
         }
+        in.close();
         return output.toString();
     }
 
