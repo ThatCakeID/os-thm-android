@@ -1,6 +1,7 @@
 package tw.osthm;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Environment;
 
 import com.google.gson.Gson;
@@ -11,10 +12,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class osthmManager {
 
     public static final String externalDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+    public static final String themes_folder = externalDir + "/.osthm/themes/";
+    public static final String config_file = externalDir + "/.osthm/conf";
 
     public static void init() {
         // Initialize
@@ -23,18 +27,26 @@ public class osthmManager {
         if (!StorageUtil.isDirectoryExists(externalDir + "/.osthm/")) {
             // Initialize the folder structure
             // Create the folder .osthm and .osthm/themes
-            StorageUtil.createDirectory(externalDir + "/.osthm/themes");
+            StorageUtil.createDirectory(themes_folder);
 
             // Create the config file
-            StorageUtil.createFile(externalDir + "/.osthm/conf", "");
+            StorageUtil.createFile(config_file, "{\"osthm-version\": \"3\", \"currentTheme\": null}");
         }
     }
 
-    public static ArrayList<String> getThemesPlain() throws IOException {
+    public static boolean setCurrentTheme(String uuid) {
+        if (isThemeExist(uuid)) {
+            StorageUtil.createFile(config_file, "{\"osthm-version\": \"3\", \"currentTheme\": \"" + uuid + "\"");
+            return true;
+        }
+        return false;
+    }
+
+    public static ArrayList<String> getAllThemesPlain() throws IOException {
         ArrayList<String> output = new ArrayList<>();
 
         // List the files in the /.osthm/themes/ directory
-        List<File> themes = StorageUtil.getFiles(externalDir + "/.osthm/themes/");
+        List<File> themes = StorageUtil.getFiles(themes_folder);
 
         // Loop each of the files in themes
         for (File theme: themes) {
@@ -48,11 +60,11 @@ public class osthmManager {
         return output;
     }
 
-    public static ArrayList<OsThmTheme> getThemes(Context context) throws IOException {
+    public static ArrayList<OsThmTheme> getAllThemes(Context context) throws IOException {
         ArrayList<OsThmTheme> output = new ArrayList<>();
 
         // List the files in the /.osthm/themes/ directory
-        List<File> themes = StorageUtil.getFiles(externalDir + "/.osthm/themes/");
+        List<File> themes = StorageUtil.getFiles(themes_folder);
 
         // Loop each of the files in themes
         for (File theme: themes) {
@@ -70,17 +82,35 @@ public class osthmManager {
 
     // Returns true if the addition successful, otherwise it will return false if the addition is unsuccessful
     public static boolean addTheme(String json, String UUID) {
-        return StorageUtil.createFile(externalDir + "/.osthm/themes/" + UUID + ".json", json);
+        return StorageUtil.createFile(themes_folder + UUID + ".json", json);
     }
 
-    public static boolean isThemeExist(String UUID) {
-        return StorageUtil.isFileExist(externalDir + "/.osthm/themes/" + UUID + ".json");
+    public static boolean isThemeExist(String uuid) {
+        // Check if UUID given is valid
+        try {
+            UUID.fromString(uuid);
+            // Valid UUID
+            return StorageUtil.isFileExist(themes_folder + uuid + ".json");
+        } catch (IllegalArgumentException e) {
+            // Invalid UUID
+            return false;
+        }
+
+    }
+
+    // Returns true if the removal was successful, otherwise it will return false if the removal was unsuccessful
+    public static boolean removeTheme(String UUID) {
+        String file_path = themes_folder + UUID + ".json";
+        if (!isThemeExist(UUID))
+            return false;
+        StorageUtil.deleteFile(file_path);
+        return true;
     }
 
     public static String getThemePlain(String UUID) throws osthmException {
         if (isThemeExist(UUID)) {
             try {
-                return StorageUtil.readFile(externalDir + "/.osthm/themes/" + UUID + ".json");
+                return StorageUtil.readFile(themes_folder + UUID + ".json");
             } catch (IOException e) {
                 throw new osthmException("An error occurred, please contact ThatCakeID Team about this error");
             }
@@ -95,7 +125,7 @@ public class osthmManager {
         ArrayList<HashMap<String, Object>> output = new ArrayList<>();
 
         // List the files in the /.osthm/themes/ directory
-        List<File> themes = StorageUtil.getFiles(externalDir + "/.osthm/themes/");
+        List<File> themes = StorageUtil.getFiles(themes_folder);
 
         // Loop each of the files in themes
         for (File theme: themes) {
@@ -112,7 +142,4 @@ public class osthmManager {
         return output;
     }
      */
-
-
-
 }
