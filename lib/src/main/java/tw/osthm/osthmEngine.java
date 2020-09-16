@@ -37,7 +37,7 @@ import java.util.UUID;
 public class osthmEngine {
 
     public static final int metadataVersion = 3;
-    public static final String codename = "hmm";  // :wut:
+    public static final String codename = "Cheese";  // :wut:
     private static SharedPreferences data;
     private static ArrayList<HashMap<String, Object>> defaultThemes;
 
@@ -49,10 +49,10 @@ public class osthmEngine {
     private static void initializeData(Context mContext) {
         data = mContext.getSharedPreferences("teamdata", Activity.MODE_PRIVATE);
 
-        if (data.getString("themelists", "").equals(""))
+        if (data.contains("themelists"))
             data.edit().putString("themelists", "[]").apply();
 
-        if (data.getString("currentTheme", "").equals(""))
+        if (data.contains("currentTheme"))
             data.edit().putString("currentTheme", "default").apply();
 
         defaultThemes = new ArrayList<>();
