@@ -1,11 +1,14 @@
 package tw.osthm;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Environment;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +33,7 @@ public class osthmManager {
             StorageUtil.createDirectory(themes_folder);
 
             // Create the config file
-            StorageUtil.createFile(config_file, "{\"osthm-version\": \"3\", \"currentTheme\": null}");
+            StorageUtil.createFile(config_file, "{\"osthm-version\": \"3\"}");
         }
     }
 
@@ -106,6 +109,14 @@ public class osthmManager {
         return StorageUtil.deleteFile(file_path);
     }
 
+    public static boolean editTheme(String UUID, String json) {
+        if (isJSONValid(json) && isUUIDValid(UUID) && StorageUtil.isFileExist(themes_folder + UUID + ".json")) {
+            StorageUtil.deleteFile(themes_folder + UUID + ".json");
+            return StorageUtil.createFile(themes_folder + UUID + ".json", json);
+        }
+        return false;
+    }
+
     public static String getThemePlain(String UUID) throws osthmException {
         if (isThemeExist(UUID)) {
             try {
@@ -141,4 +152,29 @@ public class osthmManager {
         return output;
     }
      */
+
+    // Utilities ===================================================================================
+    public static boolean isJSONValid(String test) {
+        try {
+            new JSONObject(test);
+        } catch (JSONException ex) {
+            // edited, to include @Arthur's comment
+            // e.g. in case JSONArray is valid as well...
+            try {
+                new JSONArray(test);
+            } catch (JSONException ex1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isUUIDValid(String test) {
+        try {
+            UUID.fromString(test);
+        } catch (IllegalArgumentException ex) {
+            return false;
+        }
+        return true;
+    }
 }
