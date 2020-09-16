@@ -103,8 +103,7 @@ public class osthmManager {
         String file_path = themes_folder + UUID + ".json";
         if (!isThemeExist(UUID))
             return false;
-        StorageUtil.deleteFile(file_path);
-        return true;
+        return StorageUtil.deleteFile(file_path);
     }
 
     public static String getThemePlain(String UUID) throws osthmException {
