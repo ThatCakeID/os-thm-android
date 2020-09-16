@@ -68,10 +68,24 @@ public class osthmManager {
         return output;
     }
 
-    public static void saveTheme(OsThmTheme themeData,
-                                 String themesname,  String themesinfo,      String themesauthor,
-                                 int themeversion,   String UUID) throws osthmException {
-        // Being worked on
+    // Returns true if the addition successful, otherwise it will return false if the addition is unsuccessful
+    public static boolean addTheme(String json, String UUID) {
+        return StorageUtil.createFile(externalDir + "/.osthm/themes/" + UUID + ".json", json);
+    }
+
+    public static boolean isThemeExist(String UUID) {
+        return StorageUtil.isFileExist(externalDir + "/.osthm/themes/" + UUID + ".json");
+    }
+
+    public static String getThemePlain(String UUID) throws osthmException {
+        if (isThemeExist(UUID)) {
+            try {
+                return StorageUtil.readFile(externalDir + "/.osthm/themes/" + UUID + ".json");
+            } catch (IOException e) {
+                throw new osthmException("An error occurred, please contact ThatCakeID Team about this error");
+            }
+        } else
+            throw new osthmException("Theme doesn't exist");
     }
 
     /*
