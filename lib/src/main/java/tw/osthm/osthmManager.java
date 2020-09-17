@@ -1,22 +1,16 @@
 package tw.osthm;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Environment;
-
-import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.UUID;
+import java.util.List;
 
 public class osthmManager {
 
@@ -24,18 +18,12 @@ public class osthmManager {
     public static final String themes_folder = externalDir + "/.osthm/themes/";
     public static final String config_file = externalDir + "/.osthm/conf";
 
-    public static void init(Context mContext) throws IOException {
+    public static void init(Context mContext) {
         // Initialize
-
-        // Check permission
-        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(mContext,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-            throw new IOException("Permission isn't granted!");
 
         // Check if .osthm folder exist
         if (!StorageUtil.isDirectoryExists(themes_folder) ||
-                !StorageUtil.isDirectoryExists(config_file)) {
+                !StorageUtil.isFileExist(config_file)) {
             // Initialize the folder structure
             // Create the folder .osthm and .osthm/themes
             StorageUtil.createDirectory(themes_folder);
@@ -48,7 +36,7 @@ public class osthmManager {
     public static void setConf(String key, String value) throws IOException {
         HashMap<String, String> data = loadConfJson();
         data.put(key, value);
-        writeConfJson(data);
+        StorageUtil.createFile(config_file, new Gson().toJson(data));
     }
 
     public static String getConf(String key, String defaultValue) throws IOException {
@@ -62,44 +50,25 @@ public class osthmManager {
     }
 
     public static void setTheme(String json) {
+        HashMap<String, Object> parsedJson = new Gson().fromJson(json,
+                new TypeToken<HashMap<String, Object>>(){}.getType());
+        StorageUtil.createFile(themes_folder + parsedJson.get("uuid").toString(), json);
+    }
 
+    public static String getThemes() throws IOException {
+        List<File> files = StorageUtil.getFiles(themes_folder);
+        ArrayList<HashMap<String, Object>> themes = new ArrayList<>();
+        for(File file : files) {
+            themes.add((HashMap<String, Object>)new Gson().fromJson(StorageUtil
+                            .readFile(file.getAbsolutePath()),
+                    new TypeToken<HashMap<String, Object>>(){}.getType()));
+        }
+        return new Gson().toJson(themes);
     }
 
     // Utilities ===================================================================================
     private static HashMap<String, String> loadConfJson() throws IOException {
         return new Gson().fromJson(StorageUtil.readFile(config_file),
                 new TypeToken<HashMap<String, Object>>(){}.getType());
-    }
-
-    private static void writeConfJson(HashMap<String, String> confhashmap) {
-        StorageUtil.createFile(config_file, new Gson().toJson(confhashmap));
-    }
-
-    private static void writeTheme(String json, String filename) {
-        StorageUtil.createFile(themes_folder + filename, json);
-    }
-
-    public static boolean isJSONValid(String test) {
-        try {
-            new JSONObject(test);
-        } catch (JSONException ex) {
-            // edited, to include @Arthur's comment
-            // e.g. in case JSONArray is valid as well...
-            try {
-                new JSONArray(test);
-            } catch (JSONException ex1) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static boolean isUUIDValid(String test) {
-        try {
-            UUID.fromString(test);
-        } catch (IllegalArgumentException ex) {
-            return false;
-        }
-        return true;
     }
 }
