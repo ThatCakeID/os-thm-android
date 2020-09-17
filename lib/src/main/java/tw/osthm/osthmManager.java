@@ -72,14 +72,11 @@ public class osthmManager {
     }
 
     private static void writeConfJson(HashMap<String, String> confhashmap) {
-        StorageUtil.appendFile(config_file, new Gson().toJson(confhashmap));
+        StorageUtil.createFile(config_file, new Gson().toJson(confhashmap));
     }
 
-    private static void writeTheme(String json, String UUID) {
-        if (StorageUtil.isFileExist(themes_folder + UUID + ".os-thm"))
-            StorageUtil.appendFile(themes_folder + UUID + ".os-thm", json);
-        else
-            StorageUtil.createFile(themes_folder + UUID + ".os-thm", json);
+    private static void writeTheme(String json, String filename) {
+        StorageUtil.createFile(themes_folder + filename, json);
     }
 
     public static boolean isJSONValid(String test) {

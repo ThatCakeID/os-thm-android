@@ -49,10 +49,10 @@ public class osthmEngine {
     private static void initializeData(Context mContext) {
         data = mContext.getSharedPreferences("teamdata", Activity.MODE_PRIVATE);
 
-        if (data.contains("themelists"))
+        if (!data.contains("themelists"))
             data.edit().putString("themelists", "[]").apply();
 
-        if (data.contains("currentTheme"))
+        if (!data.contains("currentTheme"))
             data.edit().putString("currentTheme", "default").apply();
 
         defaultThemes = new ArrayList<>();
