@@ -21,16 +21,6 @@
             android:orientation="horizontal"
             android:padding="8dp">
 
-            <ImageView
-                android:id="@+id/image_back"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/back_button"
-                android:padding="6dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_arrow_back_white" />
-
             <TextView
                 android:id="@+id/text_back"
                 android:layout_width="0dp"
@@ -129,7 +119,7 @@
             android:visibility="invisible"
             app:backgroundTint="#3F51B5"
             app:pressedTranslationZ="12dp"
-            app:srcCompat="@drawable/ic_get_app_white" />
+            app:srcCompat="@drawable/ic_import_export_white" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"

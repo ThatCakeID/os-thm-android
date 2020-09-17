@@ -19,6 +19,9 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -69,8 +72,31 @@ public class MainActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 continueActivity();
             } else
-                Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),
-                        "*Cricket noises", Snackbar.LENGTH_LONG).show();
+                makeSnackbar("Task failed successfully", 0xFFD32F2F, 0xFFFFFFFF,
+                        R.drawable.ic_close_white);
         }
+    }
+
+    private void makeSnackbar(String msg, int bcolor, int tcolor, int image) {
+        ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
+                .findViewById(android.R.id.content)).getChildAt(0);
+        Snackbar snackbar = Snackbar.make(viewGroup, "", Snackbar.LENGTH_LONG);
+        Snackbar.SnackbarLayout snacklayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        View snackview = getLayoutInflater().inflate(R.layout.snackbar_layout, null);
+        View snackroot = snackview.findViewById(R.id.root);
+        TextView textView2 = snackview.findViewById(R.id.textView2);
+        ImageView imageView3 = snackview.findViewById(R.id.imageView3);
+        snackroot.setBackgroundColor(bcolor);
+        textView2.setText(msg);
+        textView2.setTextColor(tcolor);
+        imageView3.setColorFilter(tcolor);
+        imageView3.setImageResource(image);
+        snacklayout.setPadding(0, 0, 0, 0);
+        snacklayout.addView(snackview);
+        snackbar.show();
+        /* Red : #D32F2F
+         * Blue : #1976D2
+         * Green : #43A047
+         */
     }
 }

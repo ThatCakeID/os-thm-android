@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center_vertical"
         android:background="#FFFFFF"
         android:elevation="5dp"
         android:gravity="center_vertical"
@@ -32,19 +33,9 @@
             android:fontFamily="@font/googlesans"
             android:padding="8dp"
             android:singleLine="true"
-            android:text="Save theme.."
+            android:text="@string/theme_information"
             android:textColor="#000000"
             android:textSize="16dp" />
-
-        <ImageView
-            android:id="@+id/image_save"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="6dp"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_save_white"
-            app:tint="#000000" />
 
     </LinearLayout>
 
@@ -52,69 +43,93 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingLeft="16dp"
+        android:paddingLeft="8dp"
         android:paddingTop="10dp"
-        android:paddingRight="16dp"
+        android:paddingRight="8dp"
         android:paddingBottom="10dp">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
+            android:id="@+id/linear_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/til1"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:fontFamily="@font/googlesans"
-                android:hint="Theme Name"
+                android:padding="8dp"
                 android:singleLine="true"
+                android:text="@string/app_name"
+                android:textColor="#000000"
                 android:textSize="14sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
+            android:id="@+id/linear_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/til2"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/text_description"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:fontFamily="@font/googlesans"
-                android:hint="Theme Author Name"
+                android:padding="8dp"
                 android:singleLine="true"
+                android:text="@string/app_name"
+                android:textColor="#000000"
                 android:textSize="14sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
+            android:id="@+id/linear_author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/til3"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/text_author"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:fontFamily="@font/googlesans"
-                android:hint="Theme Description"
+                android:padding="8dp"
                 android:singleLine="true"
+                android:text="@string/app_name"
+                android:textColor="#000000"
                 android:textSize="14sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
+            android:id="@+id/linear_version"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/til4"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/text_version"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:fontFamily="@font/googlesans"
-                android:hint="Theme Version"
-                android:inputType="numberSigned"
+                android:padding="8dp"
                 android:singleLine="true"
+                android:text="@string/app_name"
+                android:textColor="#000000"
                 android:textSize="14sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -104,6 +105,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         image_saveb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bottomSheetDialog.dismiss();
                 if (!til1.getText().toString().equals("") && !til2.getText().toString().equals("") && !til3
                         .getText().toString().equals("") && !til4.getText().toString().equals("")) {
                     try {
@@ -119,15 +121,14 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                                 sp.getInt("colorPrimaryCardTint", -16777216), sp.getInt("colorBackgroundCardTint", -16777216),
                                 til1.getText().toString(), til3.getText().toString(), til2.getText().toString(),
                                 Integer.parseInt(til4.getText().toString()));
-                        bottomSheetDialog.dismiss();
                         finish();
                     } catch (osthmException err) {
-                        Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),
-                                err.getMessage(), Snackbar.LENGTH_LONG).show();
+                        makeSnackbar(err.getMessage(), 0xFFD32F2F,
+                                0xFFFFFFFF, R.drawable.ic_close_white);
                     }
                 } else {
-                    Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),
-                            "Please fill all the blanks", Snackbar.LENGTH_LONG).show();
+                    makeSnackbar("Please fill all the blanks", 0xFFD32F2F,
+                            0xFFFFFFFF, R.drawable.ic_close_white);
                 }
             }
         });
@@ -297,6 +298,29 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         fragment1.refreshViews();
         fragment2.refreshViews();
         fragment3.refreshViews();
+    }
+
+    private void makeSnackbar(String msg, int bcolor, int tcolor, int image) {
+        ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
+                .findViewById(android.R.id.content)).getChildAt(0);
+        Snackbar snackbar = Snackbar.make(viewGroup, "", Snackbar.LENGTH_LONG);
+        Snackbar.SnackbarLayout snacklayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        View snackview = getLayoutInflater().inflate(R.layout.snackbar_layout, null);
+        View snackroot = snackview.findViewById(R.id.root);
+        TextView textView2 = snackview.findViewById(R.id.textView2);
+        ImageView imageView3 = snackview.findViewById(R.id.imageView3);
+        snackroot.setBackgroundColor(bcolor);
+        textView2.setText(msg);
+        textView2.setTextColor(tcolor);
+        imageView3.setColorFilter(tcolor);
+        imageView3.setImageResource(image);
+        snacklayout.setPadding(0, 0, 0, 0);
+        snacklayout.addView(snackview);
+        snackbar.show();
+        /* Red : #D32F2F
+         * Blue : #1976D2
+         * Green : #43A047
+         */
     }
 
     @Override

@@ -162,6 +162,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
                     android:src="@drawable/ic_arrow_back_white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

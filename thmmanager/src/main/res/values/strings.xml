@@ -7,4 +7,9 @@
     <string name="import_theme">Import Themes</string>
     <string name="help_button">Help Button</string>
     <string name="editing_theme">Editing a theme..</string>
+    <string name="info">Info</string>
+    <string name="delete">Delete</string>
+    <string name="export">Export</string>
+    <string name="choose_action">Choose action..</string>
+    <string name="theme_information">Theme Information</string>
 </resources>
