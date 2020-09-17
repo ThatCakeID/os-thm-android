@@ -534,16 +534,8 @@ public class osthmEngine {
      * @throws osthmException osThmException
      */
 
-    /* public static void importThemes(String json) throws osthmException {
+    public static void importThemes(String json) throws osthmException {
         initializeData();
-
-        ArrayList<String> indexUUID = new ArrayList<>();
-        ArrayList<HashMap<String, Object>> metadataarray = new Gson().fromJson(
-                data.getString("themelists", ""),
-                new TypeToken<ArrayList<HashMap<String, Object>>>() {}.getType());
-
-        for (int i = 0; i < metadataarray.size(); i++)
-            indexUUID.add((String) metadataarray.get(indexUUID.size()).get("uuid"));
 
         ArrayList<HashMap<String, Object>> thmarray = new Gson().fromJson(
                 json,
@@ -566,22 +558,16 @@ public class osthmEngine {
                 } else {
                     theme.putAll(migrateOlderThemePrivate(theme));
                 }
-                if (indexUUID.contains(theme.get("uuid")) || isExistInDefaultTheme(theme.get("uuid").toString())) {
-                    if ((int) theme.get("theme-version") > (int) metadataarray.get(indexUUID.indexOf(theme.get("uuid"))).get("theme-version") && !isExistInDefaultTheme(theme.get("uuid").toString())) {
-                        metadataarray.set(indexUUID.indexOf(theme.get("uuid")), theme);
-                    }
-                    else {
-                        throw new osthmException("Theme(s) can't be imported because the theme(s) are already exist!");
-                    }
+                if (osthmManager.containsTheme(theme.get("uuid").toString()) || isExistInDefaultTheme(theme.get("uuid").toString())) {
+                    throw new osthmException("Theme(s) can't be imported because the theme(s) are already exist!");
                 } else {
-                    metadataarray.add(theme);
+                    osthmManager.setTheme(theme);
                 }
             }
-            data.edit().putString("themelists", new Gson().toJson(metadataarray)).apply();
         } else {
             throw new osthmException("This JSON things is empty, what do you hope for? ._.");
         }
-    } */
+    }
 
     /**
      * This method is used to export themes as JSON string
