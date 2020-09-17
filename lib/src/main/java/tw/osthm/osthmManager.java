@@ -60,17 +60,6 @@ public class osthmManager {
                 new Gson().toJson(theme));
     }
 
-    public static HashMap<String, Object> getTheme(String uuid) {
-        init();
-        try {
-            return new Gson().fromJson(StorageUtil.readFile(themes_folder + uuid),
-                    new TypeToken<HashMap<String, Object>>() {
-                    }.getType());
-        } catch (IOException e) {
-            return null;
-        }
-    }
-
     public static ArrayList<HashMap<String, Object>> getThemes() {
         init();
         List<File> files = StorageUtil.getFiles(themes_folder);

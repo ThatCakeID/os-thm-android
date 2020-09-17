@@ -460,9 +460,14 @@ public class osthmEngine {
     public static void setCurrentTheme(String UUIDvar) throws osthmException {
         initializeData();
 
-        if (osthmManager.containsTheme(UUIDvar)) {
-            HashMap<String, Object> thm = osthmManager.getTheme(UUIDvar);
-            if ((int) thm.get("os-thm-version") == metadataVersion) {
+        ArrayList<String> indexUUID = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
+
+        for (int i = 0; i < metadataarray.size(); i++)
+            indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
+
+        if (indexUUID.contains(UUIDvar)) {
+            if ((int) metadataarray.get(indexUUID.indexOf(UUIDvar)).get("os-thm-version") == metadataVersion) {
                 osthmManager.setConf("currentTheme", UUIDvar);
             } else
                 throw new osthmException("Incompatible theme metadata version!");
@@ -478,9 +483,16 @@ public class osthmEngine {
     public static OsThmTheme getCurrentTheme() {
         initializeData();
 
+        ArrayList<String> indexUUID = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
+
+        for (int i = 0; i < metadataarray.size(); i++)
+            indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
+
         return new OsThmTheme((HashMap<String, Integer>)
-                new Gson().fromJson(osthmManager.getTheme(osthmManager
-                                .getConf("currentTheme", "default")).get("themesjson").toString(),
+                new Gson().fromJson(metadataarray.get(indexUUID.indexOf(osthmManager
+                                .getConf("currentTheme", "default")))
+                                .get("themesjson").toString(),
                         new TypeToken<ArrayList<HashMap<String, Integer>>>() {}.getType()));
     }
 
@@ -492,8 +504,15 @@ public class osthmEngine {
     public static HashMap<String, Integer> getCurrentThemeAsHashMap() {
         initializeData();
 
-        return new Gson().fromJson(osthmManager.getTheme(osthmManager
-                        .getConf("currentTheme", "default")).get("themesjson").toString(),
+        ArrayList<String> indexUUID = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
+
+        for (int i = 0; i < metadataarray.size(); i++)
+            indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
+
+        return new Gson().fromJson(metadataarray.get(indexUUID.indexOf(osthmManager
+                        .getConf("currentTheme", "default")))
+                        .get("themesjson").toString(),
                 new TypeToken<ArrayList<HashMap<String, Integer>>>() {}.getType());
     }
 
