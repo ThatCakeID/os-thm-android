@@ -18,6 +18,7 @@ import android.graphics.Color;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -37,8 +38,7 @@ import java.util.UUID;
 public class osthmEngine {
 
     public static final int metadataVersion = 3;
-    public static final String codename = "Cheese";  // :wut:
-    private static SharedPreferences data;
+    public static final String codename = "Cheese";
     private static ArrayList<HashMap<String, Object>> defaultThemes;
 
     /**
@@ -47,13 +47,7 @@ public class osthmEngine {
      */
 
     private static void initializeData(Context mContext) {
-        data = mContext.getSharedPreferences("teamdata", Activity.MODE_PRIVATE);
-
-        if (!data.contains("themelists"))
-            data.edit().putString("themelists", "[]").apply();
-
-        if (!data.contains("currentTheme"))
-            data.edit().putString("currentTheme", "default").apply();
+        osthmManager.init();
 
         defaultThemes = new ArrayList<>();
         defaultThemes.add(0, addKeyToHashMap("themesname", "Vanilla"));
@@ -77,11 +71,9 @@ public class osthmEngine {
      * @return ListOfThemes
      */
 
-    private static ArrayList<HashMap<String, Object>> getThemeListPrivate() {
+    private static ArrayList<HashMap<String, Object>> getThemeListPrivate() throws IOException {
         // Get theme from SharedPreferences (private method)
-        ArrayList<HashMap<String, Object>> metadataarray =
-                new Gson().fromJson(data.getString("themelists", ""),
-                                    new TypeToken<ArrayList<HashMap<String, Object>>>() {}.getType());
+        ArrayList<HashMap<String, Object>> metadataarray = osthmManager.getThemes();
 
         metadataarray.addAll(0, defaultThemes);
 
@@ -127,58 +119,25 @@ public class osthmEngine {
         newShinyFancyTheme.put("shadow", Integer.valueOf(oldTheme.get(0).get("shadow").toString()));
         newShinyFancyTheme.put("colorControlHighlight", Color.parseColor(oldTheme.get(0).get("colorRipple").toString()));
         newShinyFancyTheme.put("colorHint", Color.parseColor(oldTheme.get(0).get("colorHint").toString()));
+        newShinyFancyTheme.put("colorPrimaryTint", Color.parseColor(oldTheme.get(0).get("colorPrimaryImage").toString()));
+        newShinyFancyTheme.put("colorBackgroundTint", Color.parseColor(oldTheme.get(0).get("colorBackgroundImage").toString()));
+        newShinyFancyTheme.put("colorPrimaryCard", Color.parseColor(oldTheme.get(0).get("colorPrimaryCard").toString()));
+        newShinyFancyTheme.put("colorBackgroundCard", Color.parseColor(oldTheme.get(0).get("colorBackgroundCard").toString()));
+        newShinyFancyTheme.put("colorPrimaryCardText", Color.parseColor(oldTheme.get(0).get("colorPrimaryCardText").toString()));
+        newShinyFancyTheme.put("colorBackgroundCardText", Color.parseColor(oldTheme.get(0).get("colorBackgroundCardText").toString()));
+        newShinyFancyTheme.put("colorPrimaryCardTint", Color.parseColor(oldTheme.get(0).get("colorPrimaryCardImage").toString()));
+        newShinyFancyTheme.put("colorBackgroundCardTint", Color.parseColor(oldTheme.get(0).get("colorBackgroundCardImage").toString()));
+        newShinyFancyTheme.put("colorPrimaryText", Color.parseColor(oldTheme.get(0).get("colorPrimaryText").toString()));
+        newShinyFancyTheme.put("colorBackgroundText", Color.parseColor(oldTheme.get(0).get("colorBackgroundText").toString()));
+        newShinyFancyTheme.put("colorAccentText", Color.parseColor(oldTheme.get(0).get("colorButtonText").toString()));
 
-        if (metadataarray.containsKey("os-thm-version")) {
-            newShinyFancyTheme.put("colorPrimaryTint", Color.parseColor(oldTheme.get(0).get("colorPrimaryImage").toString()));
-            newShinyFancyTheme.put("colorBackgroundTint", Color.parseColor(oldTheme.get(0).get("colorBackgroundImage").toString()));
-            newShinyFancyTheme.put("colorPrimaryCard", Color.parseColor(oldTheme.get(0).get("colorPrimaryCard").toString()));
-            newShinyFancyTheme.put("colorBackgroundCard", Color.parseColor(oldTheme.get(0).get("colorBackgroundCard").toString()));
-            newShinyFancyTheme.put("colorPrimaryCardText", Color.parseColor(oldTheme.get(0).get("colorPrimaryCardText").toString()));
-            newShinyFancyTheme.put("colorBackgroundCardText", Color.parseColor(oldTheme.get(0).get("colorBackgroundCardText").toString()));
-            newShinyFancyTheme.put("colorPrimaryCardTint", Color.parseColor(oldTheme.get(0).get("colorPrimaryCardImage").toString()));
-            newShinyFancyTheme.put("colorBackgroundCardTint", Color.parseColor(oldTheme.get(0).get("colorBackgroundCardImage").toString()));
-            newShinyFancyTheme.put("colorPrimaryText", Color.parseColor(oldTheme.get(0).get("colorPrimaryText").toString()));
-            newShinyFancyTheme.put("colorBackgroundText", Color.parseColor(oldTheme.get(0).get("colorBackgroundText").toString()));
-            newShinyFancyTheme.put("colorAccentText", Color.parseColor(oldTheme.get(0).get("colorButtonText").toString()));
-        } else {
-            newShinyFancyTheme.put("colorPrimaryTint", 0xFFFFFFFF);
-            newShinyFancyTheme.put("colorBackgroundTint", 0xFF2196F3);
-            newShinyFancyTheme.put("colorPrimaryCard", 0xFFFFFFFF);
-            newShinyFancyTheme.put("colorBackgroundCard", 0xFFFFFFFF);
-            newShinyFancyTheme.put("colorPrimaryCardText", 0xFF000000);
-            newShinyFancyTheme.put("colorBackgroundCardText", 0xFF000000);
-            newShinyFancyTheme.put("colorPrimaryCardTint", 0xFF000000);
-            newShinyFancyTheme.put("colorBackgroundCardTint", 0xFF000000);
+        HashMap<String, Object> newmetadata = new HashMap<>();
+        newmetadata.put("themesjson", new Gson().toJson(newShinyFancyTheme));
+        newmetadata.put("os-thm-version", metadataVersion);
+        newmetadata.put("uuid", UUID.randomUUID().toString());
+        newmetadata.put("theme-version", 1);
 
-            if (oldTheme.get(0).get("colorPrimaryText") == "1")
-                newShinyFancyTheme.put("colorPrimaryText", 0xFFFFFFFF);
-            else
-                newShinyFancyTheme.put("colorPrimaryText", 0xFF000000);
-
-            if (oldTheme.get(0).get("colorBackgroundText") == "1")
-                newShinyFancyTheme.put("colorBackgroundText", 0xFFFFFFFF);
-            else
-                newShinyFancyTheme.put("colorBackgroundText", 0xFF000000);
-
-            if (oldTheme.get(0).get("colorButtonText") == "1")
-                newShinyFancyTheme.put("colorAccentText", 0xFFFFFFFF);
-            else
-                newShinyFancyTheme.put("colorAccentText", 0xFF000000);
-
-            newShinyFancyTheme.put("colorAccentText", 0xFFFFFFFF);
-        }
-
-        if (!metadataarray.containsKey("os-thm-version")) {
-            metadataarray.put("themesinfo", "Migrated from theme v1");
-            metadataarray.put("themesauthor", "os-thm");
-        }
-
-        metadataarray.put("themesjson", new Gson().toJson(newShinyFancyTheme));
-        metadataarray.put("os-thm-version", metadataVersion);
-        metadataarray.put("uuid", UUID.randomUUID().toString());
-        metadataarray.put("theme-version", 1);
-
-        return metadataarray;
+        return newmetadata;
     }
 
     private static HashMap<String, Object> migrateOldThemePrivate(HashMap<String, Object> metadataarray) {
@@ -191,7 +150,7 @@ public class osthmEngine {
      * @return List Of Themes
      */
 
-    public static ArrayList<HashMap<String, Object>> getThemeList(Context mContext) {
+    public static ArrayList<HashMap<String, Object>> getThemeList(Context mContext) throws IOException {
         // Get theme from sharedpreferences (public method)
         initializeData(mContext);
 
@@ -741,36 +700,6 @@ public class osthmEngine {
 
     // Utilites
     // =============================================================================================
-
-    /**
-     * This method returns a HashMap containing
-     * the given key and object. Used as Util in
-     * osthm
-     * @param key Key
-     * @param value Value
-     * @return HashMap containing the given key and value
-     */
-
-    private static HashMap<String, Object> addKeyToHashMap(String key, Object value) {
-        HashMap<String, Object> hashmap = new HashMap<>();
-        hashmap.put(key, value);
-        return hashmap;
-    }
-
-    /**
-     * This method returns a HashMap containing
-     * the given key and integer. Used as Util in
-     * osthm
-     * @param key Key
-     * @param value Value
-     * @return HashMap containing the given key and value
-     */
-
-    private static HashMap<String,Integer> addKeyToHashMap(String key, Integer value) {
-        HashMap<String, Integer> hashmap = new HashMap<>();
-        hashmap.put(key, value);
-        return hashmap;
-    }
 
     /**
      * This method converts ARGB colors to HEX code
