@@ -107,7 +107,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                 if (!til1.getText().toString().equals("") && !til2.getText().toString().equals("") && !til3
                         .getText().toString().equals("") && !til4.getText().toString().equals("")) {
                     try {
-                        osthmEngine.addTheme(getApplicationContext(), sp.getInt("colorPrimary", -14575885),
+                        osthmEngine.addTheme(sp.getInt("colorPrimary", -14575885),
                                 sp.getInt("colorPrimaryText", -1), sp.getInt("colorPrimaryDark", -15242838),
                                 sp.getInt("colorStatusbarTint", 1), sp.getInt("colorBackground", -1),
                                 sp.getInt("colorBackgroundText", -16777216), sp.getInt("colorAccent", -720809),

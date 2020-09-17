@@ -88,7 +88,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         gridview1.setAdapter(new ThemeGridPreview(getApplicationContext(),
-                osthmEngine.getThemeList(getApplicationContext())));
+                osthmEngine.getThemeList()));
     }
 
     private void initializeViews() {

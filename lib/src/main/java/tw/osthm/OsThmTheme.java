@@ -1,7 +1,5 @@
 package tw.osthm;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -20,8 +18,6 @@ import java.util.HashMap;
  */
 
 public class OsThmTheme {
-    Context mContext;
-
     public int colorPrimary = -14575885;
     public int colorPrimaryText = -1;
     public int colorPrimaryDark = -15242838;
@@ -43,22 +39,18 @@ public class OsThmTheme {
     public int colorBackgroundCardTint = -16777216;
 
     /**
-     * Constructor with default theme (Vanilla Theme)
+     * Empty constructor with default theme (Vanilla Theme)
      *
-     * @param mContext Context
      */
-    public OsThmTheme(@NonNull Context mContext) {
-        this.mContext = mContext;
+    public OsThmTheme() {
     }
 
     /**
      * Constructor with JSON as String
      *
-     * @param mContext    Context
      * @param json_string JSON as String
      */
-    public OsThmTheme(@NonNull Context mContext, @NonNull String json_string) {
-        this.mContext = mContext;
+    public OsThmTheme(@NonNull String json_string) {
         HashMap<String, Integer> json_data = new Gson().fromJson(
                 json_string, new TypeToken<HashMap<String, Object>>() {
                 }.getType()
@@ -70,19 +62,15 @@ public class OsThmTheme {
     /**
      * Constructor with HashMap as data
      *
-     * @param mContext Context
      * @param data     Theme Data
      */
-    public OsThmTheme(@NonNull Context mContext, @NonNull HashMap<String, Integer> data) {
-        this.mContext = mContext;
-
+    public OsThmTheme(@NonNull HashMap<String, Integer> data) {
         this.setData(data);
     }
 
     /**
      * Constructor with int values as data
      *
-     * @param mContext Context
      * @param colorPrimary Primary Color
      * @param colorPrimaryText Primary Text Color
      * @param colorPrimaryDark Primary Dark Color
@@ -104,8 +92,7 @@ public class OsThmTheme {
      * @param colorBackgroundCardTint Background color for card tint
      */
 
-    public OsThmTheme(Context mContext, int colorPrimary, int colorPrimaryText, int colorPrimaryDark, int colorStatusbarTint, int colorBackground, int colorBackgroundText, int colorAccent, int colorAccentText, int shadow, int colorControlHighlight, int colorHint, int colorPrimaryTint, int colorBackgroundTint, int colorPrimaryCard, int colorBackgroundCard, int colorPrimaryCardText, int colorBackgroundCardText, int colorPrimaryCardTint, int colorBackgroundCardTint) {
-        this.mContext = mContext;
+    public OsThmTheme(int colorPrimary, int colorPrimaryText, int colorPrimaryDark, int colorStatusbarTint, int colorBackground, int colorBackgroundText, int colorAccent, int colorAccentText, int shadow, int colorControlHighlight, int colorHint, int colorPrimaryTint, int colorBackgroundTint, int colorPrimaryCard, int colorBackgroundCard, int colorPrimaryCardText, int colorBackgroundCardText, int colorPrimaryCardTint, int colorBackgroundCardTint) {
         this.colorPrimary = colorPrimary;
         this.colorPrimaryText = colorPrimaryText;
         this.colorPrimaryDark = colorPrimaryDark;
