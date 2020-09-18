@@ -285,7 +285,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
                     case 0:
                         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                         intent.addCategory(Intent.CATEGORY_OPENABLE);
-                        intent.setType("text/plain");
+                        intent.setType("application/json");
                         startActivityForResult(intent, OPEN_REQUEST_CODE);
                         break;
                     case 1:
