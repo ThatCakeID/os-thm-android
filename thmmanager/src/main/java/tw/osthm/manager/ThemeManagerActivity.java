@@ -209,6 +209,13 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        image_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ThemeManagerActivity.this, DocumentationActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
