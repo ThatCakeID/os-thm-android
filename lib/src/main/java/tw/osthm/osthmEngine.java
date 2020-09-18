@@ -13,6 +13,7 @@ package tw.osthm;
 import android.graphics.Color;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -98,9 +99,13 @@ public class osthmEngine {
      */
 
     private static HashMap<String, Object> migrateOlderThemePrivate(HashMap<String, Object> metadataarray) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(new TypeToken<HashMap<String, Object>>() {}.getType(),
+                new HashMapDeserializerFix());
+        Gson gson = gsonBuilder.create();
         ArrayList<HashMap<String, Object>> oldTheme =
-                new Gson().fromJson(metadataarray.get("themesjson").toString(),
-                                   new TypeToken<ArrayList<HashMap<String, Object>>>() {}.getType());
+                gson.fromJson(metadataarray.get("themesjson").toString(),
+                        new TypeToken<ArrayList<HashMap<String, Object>>>() {}.getType());
 
         HashMap<String, Integer> newShinyFancyTheme = new HashMap<>();
 
@@ -468,7 +473,8 @@ public class osthmEngine {
             indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
 
         if (indexUUID.contains(UUIDvar)) {
-            if ((int) metadataarray.get(indexUUID.indexOf(UUIDvar)).get("os-thm-version") == metadataVersion) {
+            if ((int)metadataarray.get(indexUUID.indexOf(UUIDvar))
+                    .get("os-thm-version") == metadataVersion) {
                 osthmManager.setConf("currentTheme", UUIDvar);
             } else
                 throw new osthmException("Incompatible theme metadata version!");
@@ -538,7 +544,14 @@ public class osthmEngine {
     public static void importThemes(String json) throws osthmException {
         initializeData();
 
-        ArrayList<HashMap<String, Object>> thmarray = new Gson().fromJson(
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        gsonBuilder.registerTypeAdapter(new TypeToken<HashMap<String, Object>>() {}.getType(),
+                new HashMapDeserializerFix());
+
+        Gson gson = gsonBuilder.create();
+
+        ArrayList<HashMap<String, Object>> thmarray = gson.fromJson(
                 json,
                 new TypeToken<ArrayList<HashMap<String, Object>>>() {}.getType());
 

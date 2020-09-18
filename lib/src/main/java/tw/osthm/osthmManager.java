@@ -3,6 +3,7 @@ package tw.osthm;
 import android.os.Environment;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -64,12 +65,15 @@ public class osthmManager {
         init();
         List<File> files = StorageUtil.getFiles(themes_folder);
         ArrayList<HashMap<String, Object>> themes = new ArrayList<>();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(new TypeToken<HashMap<String, Object>>() {}.getType(),
+                new HashMapDeserializerFix());
+        Gson gson = gsonBuilder.create();
         for(File file : files) {
             try {
-                themes.add((HashMap<String, Object>) new Gson().fromJson(StorageUtil
+                themes.add((HashMap<String, Object>) gson.fromJson(StorageUtil
                                 .readFile(file.getAbsolutePath()),
-                        new TypeToken<HashMap<String, Object>>() {
-                        }.getType()));
+                        new TypeToken<HashMap<String, Object>>() {}.getType()));
             } catch (IOException ignored) {}
         }
         return themes;
@@ -104,7 +108,7 @@ public class osthmManager {
     private static HashMap<String, String> loadConfJson() {
         try {
             return new Gson().fromJson(StorageUtil.readFile(config_file),
-                    new TypeToken<HashMap<String, Object>>() {
+                    new TypeToken<HashMap<String, String>>() {
                     }.getType());
         } catch (IOException e) {
             return null;
@@ -145,7 +149,7 @@ public class osthmManager {
                                 new TypeToken<HashMap<String, Object>>() {
                                 }.getType());
 
-                        if (thm.get("uuid").toString().equals(file.getName()))
+                        if (!thm.get("uuid").toString().equals(file.getName()))
                             StorageUtil.rename(file.getAbsolutePath(), themes_folder +
                                     thm.get("uuid").toString());
                     }
