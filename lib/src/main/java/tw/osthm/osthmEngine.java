@@ -357,9 +357,9 @@ public class osthmEngine {
 
             HashMap<String, Object> metadataarray = new HashMap<>();
 
-            metadataarray.put("themesname", themesname);
-
             metadataarray.put("themesjson",       new Gson().toJson(themearray));
+
+            metadataarray.put("themesname",       themesname          );
             metadataarray.put("themesinfo",       themesinfo          );
             metadataarray.put("themesauthor",     themesauthor        );
             metadataarray.put("os-thm-version",   metadataVersion     );
@@ -468,8 +468,8 @@ public class osthmEngine {
 
         if (osthmManager.containsTheme(UUIDvar)) {
             HashMap<String, Object> metadataarray = new HashMap<>();
-            metadataarray.put("themesname", new Gson().toJson(themesname));
-            metadataarray.put("themesjson", themeData);
+            metadataarray.put("themesjson", new Gson().toJson(themeData));
+            metadataarray.put("themesname", themesname);
             metadataarray.put("themesinfo", themesinfo);
             metadataarray.put("themesauthor", themesauthor);
             metadataarray.put("os-thm-version", metadataVersion);
@@ -528,7 +528,7 @@ public class osthmEngine {
                 new Gson().fromJson(metadataarray.get(indexUUID.indexOf(osthmManager
                                 .getConf("currentTheme", "default")))
                                 .get("themesjson").toString(),
-                        new TypeToken<ArrayList<HashMap<String, Integer>>>() {}.getType()));
+                        new TypeToken<HashMap<String, Integer>>() {}.getType()));
     }
 
     /**
@@ -548,7 +548,7 @@ public class osthmEngine {
         return new Gson().fromJson(metadataarray.get(indexUUID.indexOf(osthmManager
                         .getConf("currentTheme", "default")))
                         .get("themesjson").toString(),
-                new TypeToken<ArrayList<HashMap<String, Integer>>>() {}.getType());
+                new TypeToken<HashMap<String, Integer>>() {}.getType());
     }
 
     /**
@@ -605,7 +605,7 @@ public class osthmEngine {
         return new OsThmTheme((HashMap<String, Integer>)
                 new Gson().fromJson(metadataarray.get(indexUUID.indexOf(UUIDvar))
                                 .get("themesjson").toString(),
-                        new TypeToken<ArrayList<HashMap<String, Integer>>>() {}.getType()));
+                        new TypeToken<HashMap<String, Integer>>() {}.getType()));
     }
 
     /**
@@ -625,7 +625,7 @@ public class osthmEngine {
 
         return new Gson().fromJson(metadataarray.get(indexUUID.indexOf(UUIDvar))
                         .get("themesjson").toString(),
-                new TypeToken<ArrayList<HashMap<String, Integer>>>() {}.getType());
+                new TypeToken<HashMap<String, Integer>>() {}.getType());
     }
 
     /**

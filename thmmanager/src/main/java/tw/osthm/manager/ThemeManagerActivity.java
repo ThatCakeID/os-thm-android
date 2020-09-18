@@ -1,5 +1,6 @@
 package tw.osthm.manager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,12 +13,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +47,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
     private LinearLayout linear_delete;
     private LinearLayout linear_export;
     private LinearLayout linear_info;
+    private LinearLayout linear_edit;
     private ImageView image_close;
     private BottomSheetDialog bottomSheetDialog;
     private int selectedNum = -1;
@@ -95,8 +98,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        arrayList = osthmEngine.getThemeList();
-        gridview1.setAdapter(new ThemeGridPreview(getApplicationContext(), arrayList));
+        refreshTheme();
         gridview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -179,6 +181,16 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 selectedNum = -1;
             }
         });
+        linear_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(getApplicationContext(), ThemeEditorActivity.class);
+                intent.putExtra("isEditing", true);
+                intent.putExtra("theme", arrayList.get(selectedNum).get("uuid").toString());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -208,6 +220,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
         linear_delete = bottomsheetView.findViewById(R.id.linear_delete);
         linear_export = bottomsheetView.findViewById(R.id.linear_export);
         linear_info = bottomsheetView.findViewById(R.id.linear_info);
+        linear_edit = bottomsheetView.findViewById(R.id.linear_edit);
         image_close = bottomsheetView.findViewById(R.id.image_close);
         bottomSheetDialog = new BottomSheetDialog(ThemeManagerActivity.this);
         bottomSheetDialog.setContentView(bottomsheetView);

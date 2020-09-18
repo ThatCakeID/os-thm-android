@@ -57,7 +57,7 @@ public class OsThmTheme {
      */
     public OsThmTheme(@NonNull String json_string) {
         HashMap<String, Integer> json_data = new Gson().fromJson(
-                json_string, new TypeToken<HashMap<String, Object>>() {
+                json_string, new TypeToken<HashMap<String, Integer>>() {
                 }.getType()
         );
 

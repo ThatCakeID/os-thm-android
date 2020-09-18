@@ -12,4 +12,5 @@
     <string name="export">Export</string>
     <string name="choose_action">Choose action..</string>
     <string name="theme_information">Theme Information</string>
+    <string name="edit">Edit</string>
 </resources>

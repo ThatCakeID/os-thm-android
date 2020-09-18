@@ -80,6 +80,37 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linear_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/image_edit"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:padding="6dp"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_edit_white"
+                app:tint="#000000" />
+
+            <TextView
+                android:id="@+id/text_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/googlesans"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:text="@string/edit"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/linear_export"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

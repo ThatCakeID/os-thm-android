@@ -6,6 +6,30 @@ import java.util.HashMap;
 import static tw.osthm.osthmEngine.metadataVersion;
 
 public class DefaultThemes {
+
+    /*
+     * Vanilla theme default colors:
+     * colorPrimary:            -14575885
+     * colorPrimaryText:        -1
+     * colorPrimaryDark:        -15242838
+     * colorStatusbarTint:       1
+     * colorBackground:         -1
+     * colorBackgroundText:     -16777216
+     * colorAccent:             -720809
+     * colorAccentText:         -1
+     * shadow:                   1
+     * colorControlHighlight:    1073741824
+     * colorHint:               -5723992
+     * colorPrimaryTint:        -1
+     * colorBackgroundTint:     -14575885
+     * colorPrimaryCard:        -1
+     * colorBackgroundCard:     -1
+     * colorPrimaryCardText:    -16777216
+     * colorBackgroundCardText: -16777216
+     * colorPrimaryCardTint:    -16777216
+     * colorBackgroundCardTint: -16777216
+     */
+
     public static ArrayList<HashMap<String, Object>> getDefaultThemes() {
         ArrayList<HashMap<String, Object>> defaultThemes = new ArrayList<>();
         defaultThemes = new ArrayList<>();
