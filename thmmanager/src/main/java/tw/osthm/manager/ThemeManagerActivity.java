@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import tw.osthm.OsThmMetadata;
 import tw.osthm.osthmEngine;
 import tw.osthm.osthmException;
 
@@ -158,6 +159,14 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 TextView text_description = bottomsheetView1.findViewById(R.id.text_description);
                 TextView text_author = bottomsheetView1.findViewById(R.id.text_author);
                 TextView text_version = bottomsheetView1.findViewById(R.id.text_version);
+                TextView text_osthm = bottomsheetView1.findViewById(R.id.text_osthm);
+                OsThmMetadata themeMetadata = osthmEngine.getThemeMetadata(arrayList
+                        .get(selectedNum).get("uuid").toString());
+                text_name.setText("Name : " + themeMetadata.themesname);
+                text_description.setText("Description : " + themeMetadata.themesinfo);
+                text_author.setText("Author : " + themeMetadata.themesauthor);
+                text_version.setText("Version : " +themeMetadata.themeversion);
+                text_osthm.setText("Engine Version : " +themeMetadata.os_thm_version);
                 ImageView image_close = bottomsheetView1.findViewById(R.id.image_close);
                 image_close.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -167,6 +176,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 });
                 bottomSheetDialog1.setContentView(bottomsheetView1);
                 bottomSheetDialog1.show();
+                selectedNum = -1;
             }
         });
     }
