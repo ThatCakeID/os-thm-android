@@ -36,7 +36,6 @@ public class osthmEngine {
 
     public static final int metadataVersion = 3;
     public static final String codename = "Cheese";
-    private static ArrayList<HashMap<String, Object>> defaultThemes;
 
     /**
      * This method is used to initialize components used by the library
@@ -44,21 +43,6 @@ public class osthmEngine {
 
     private static void initializeData() {
         if (!osthmManager.containsConf("currentTheme")) osthmManager.setConf("currentTheme", "default");
-        defaultThemes = new ArrayList<>();
-        defaultThemes.add(0, addKeyToHashMap("themesname", "Vanilla"));
-        defaultThemes.get(0).put("themesjson", "{\"colorPrimary\":-14575885,\"colorBackgroundCardTint\":-16777216,\"colorPrimaryDark\":-15242838,\"colorBackgroundText\":-16777216,\"colorBackground\":-1,\"shadow\":1,\"colorPrimaryTint\":-1,\"colorHint\":-5723992,\"colorStatusbarTint\":1,\"colorPrimaryCardTint\":-16777216,\"colorAccent\":-720809,\"colorPrimaryText\":-1,\"colorBackgroundCardText\":-16777216,\"colorBackgroundTint\":-14575885,\"colorControlHighlight\":1073741824,\"colorAccentText\":-1,\"colorBackgroundCard\":-1,\"colorPrimaryCardText\":-16777216,\"colorPrimaryCard\":-1}");
-        defaultThemes.get(0).put("themesinfo", "The default style theme of os-thm");
-        defaultThemes.get(0).put("themesauthor", "リェンーゆく");
-        defaultThemes.get(0).put("os-thm-version", metadataVersion);
-        defaultThemes.get(0).put("uuid", "default");
-        defaultThemes.get(0).put("theme-version", 2);
-        defaultThemes.add(1, addKeyToHashMap("themesname", "Dark"));
-        defaultThemes.get(1).put("themesjson", "{\"colorPrimary\":-14575885,\"colorBackgroundCardTint\":-6774616,\"colorPrimaryDark\":-14342875,\"colorBackgroundText\":-1,\"colorBackground\":-14342875,\"shadow\":1,\"colorPrimaryTint\":-1,\"colorHint\":-8355712,\"colorStatusbarTint\":1,\"colorPrimaryCardTint\":-6774616,\"colorAccent\":-720809,\"colorPrimaryText\":-1,\"colorBackgroundCardText\":-6774616,\"colorBackgroundTint\":-14575885,\"colorControlHighlight\":1090519039,\"colorAccentText\":-1,\"colorBackgroundCard\":-12566464,\"colorPrimaryCardText\":-6774616,\"colorPrimaryCard\":-12566464}");
-        defaultThemes.get(1).put("themesinfo", "A Material dark theme for os-thm");
-        defaultThemes.get(1).put("themesauthor", "thatcakepiece");
-        defaultThemes.get(1).put("os-thm-version", metadataVersion);
-        defaultThemes.get(1).put("uuid", "dark");
-        defaultThemes.get(1).put("theme-version", 3);
     }
 
     /**
@@ -69,7 +53,7 @@ public class osthmEngine {
     private static ArrayList<HashMap<String, Object>> getThemeListPrivate() {
         ArrayList<HashMap<String, Object>> metadataarray = osthmManager.getThemes();
 
-        metadataarray.addAll(0, defaultThemes);
+        metadataarray.addAll(0, DefaultThemes.getDefaultThemes());
 
         return metadataarray;
     }
@@ -82,7 +66,7 @@ public class osthmEngine {
     private static boolean isExistInDefaultTheme(String themeUUID) {
         boolean isExist = false;
 
-        for (HashMap<String, Object> theme: defaultThemes)
+        for (HashMap<String, Object> theme: DefaultThemes.getDefaultThemes())
             if (theme.get("uuid").equals(themeUUID)) {
                 isExist = true;
                 break;
@@ -212,6 +196,50 @@ public class osthmEngine {
                 themeData.colorPrimaryTint, themeData.colorBackgroundTint, themeData.colorPrimaryCard, themeData.colorBackgroundCard,
                 themeData.colorPrimaryCardText, themeData.colorBackgroundCardText, themeData.colorPrimaryCardTint, themeData.colorBackgroundCardTint,
                 themesname, themesinfo, themesauthor, themeversion, UUID);
+    }
+
+    /**
+     * This method is used to add theme into the theme list using hex colors
+     * and OsThmMetadata object
+     * @param colorPrimary Primary Color
+     * @param colorPrimaryText Primary Text Color
+     * @param colorPrimaryDark Primary Dark Color
+     * @param colorStatusbarTint Statusbar Color
+     * @param colorBackground Background color for root
+     * @param colorBackgroundText Background color for text
+     * @param colorAccent Color Accent
+     * @param colorAccentText Color Accent for text
+     * @param shadow Is shadow enabled
+     * @param colorControlHighlight Color on highlight
+     * @param colorHint Color Hint for EditText
+     * @param colorPrimaryTint Imageview tint color
+     * @param colorBackgroundTint Background Tint color
+     * @param colorPrimaryCard Card Color
+     * @param colorBackgroundCard Card Background Color
+     * @param colorPrimaryCardText Color for Text on card
+     * @param colorBackgroundCardText Color for Text Background on card
+     * @param colorPrimaryCardTint Tint for imageview on card
+     * @param colorBackgroundCardTint Background color for card tint
+     * @param themeMetadata OsThmMetadata object containing extra metadata
+     * @throws osthmException Os-Thm Exception
+     */
+
+    public static void addTheme(int colorPrimary,          int colorPrimaryText, int colorPrimaryDark,
+                                int colorStatusbarTint,    int colorBackground,  int colorBackgroundText,
+                                int colorAccent,           int colorAccentText,  int shadow,
+                                int colorControlHighlight, int colorHint,        int colorPrimaryTint,
+                                int colorBackgroundTint,   int colorPrimaryCard, int colorBackgroundCard,
+                                int colorPrimaryCardText,  int colorBackgroundCardText,
+                                int colorPrimaryCardTint,  int colorBackgroundCardTint,
+                                OsThmMetadata themeMetadata) throws osthmException {
+        // Add new theme using given hex colors and OsThmMetadata object
+
+        addTheme(colorPrimary, colorPrimaryText, colorPrimaryDark, colorStatusbarTint, colorBackground,
+                colorBackgroundText, colorAccent, colorAccentText, shadow, colorControlHighlight, colorHint,
+                colorPrimaryTint, colorBackgroundTint, colorPrimaryCard, colorBackgroundCard,
+                colorPrimaryCardText, colorBackgroundCardText, colorPrimaryCardTint, colorBackgroundCardTint,
+                themeMetadata.themesname, themeMetadata.themesinfo, themeMetadata.themesauthor,
+                themeMetadata.themeversion, themeMetadata.uuid);
     }
 
     /**
@@ -524,6 +552,119 @@ public class osthmEngine {
     }
 
     /**
+     * This method is used to get the current theme metadata
+     * @return CurrentThemeMetadata
+     */
+
+    public static OsThmMetadata getCurrentThemeMetadata() {
+        initializeData();
+
+        ArrayList<String> indexUUID = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
+
+        for (int i = 0; i < metadataarray.size(); i++)
+            indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
+
+        return new OsThmMetadata(metadataarray.get(indexUUID.indexOf(osthmManager
+                .getConf("currentTheme", "default"))));
+    }
+
+    /**
+     * This method is used to get the current theme contents
+     * @return CurrentThemeContents
+     */
+
+    public static HashMap<String, Object> getCurrentThemeContents() {
+        initializeData();
+
+        ArrayList<String> indexUUID = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
+
+        for (int i = 0; i < metadataarray.size(); i++)
+            indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
+
+        return metadataarray.get(indexUUID.indexOf(osthmManager
+                .getConf("currentTheme", "default")));
+    }
+
+    /**
+     * This method is used to get the theme with specified UUID
+     * @param  UUIDvar UUID
+     * @return Theme
+     */
+
+    public static OsThmTheme getTheme(String UUIDvar) {
+        initializeData();
+
+        ArrayList<String> indexUUID = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
+
+        for (int i = 0; i < metadataarray.size(); i++)
+            indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
+
+        return new OsThmTheme((HashMap<String, Integer>)
+                new Gson().fromJson(metadataarray.get(indexUUID.indexOf(UUIDvar))
+                                .get("themesjson").toString(),
+                        new TypeToken<ArrayList<HashMap<String, Integer>>>() {}.getType()));
+    }
+
+    /**
+     * This method is used to get the theme as HashMap<String, Integer> with specified UUID
+     * @param  UUIDvar UUID
+     * @return Theme
+     */
+
+    public static HashMap<String, Integer> getThemeAsHashMap(String UUIDvar) {
+        initializeData();
+
+        ArrayList<String> indexUUID = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
+
+        for (int i = 0; i < metadataarray.size(); i++)
+            indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
+
+        return new Gson().fromJson(metadataarray.get(indexUUID.indexOf(UUIDvar))
+                        .get("themesjson").toString(),
+                new TypeToken<ArrayList<HashMap<String, Integer>>>() {}.getType());
+    }
+
+    /**
+     * This method is used to get the theme metadata with specified UUID
+     * @param  UUIDvar UUID
+     * @return ThemeMetadata
+     */
+
+    public static OsThmMetadata getThemeMetadata(String UUIDvar) {
+        initializeData();
+
+        ArrayList<String> indexUUID = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
+
+        for (int i = 0; i < metadataarray.size(); i++)
+            indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
+
+        return new OsThmMetadata(metadataarray.get(indexUUID.indexOf(UUIDvar)));
+    }
+
+    /**
+     * This method is used to get the theme contents with specified UUID
+     * @param  UUIDvar UUID
+     * @return ThemeContents
+     */
+
+    public static HashMap<String, Object> getThemeContents(String UUIDvar) {
+        initializeData();
+
+        ArrayList<String> indexUUID = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
+
+        for (int i = 0; i < metadataarray.size(); i++)
+            indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
+
+        return metadataarray.get(indexUUID.indexOf(UUIDvar));
+    }
+
+    /**
      * This method is used to get the current theme UUID
      * @return String of the current theme UUID
      */
@@ -654,21 +795,6 @@ public class osthmEngine {
 
     // Utilites
     // =============================================================================================
-
-    /**
-     * This method returns a HashMap containing
-     * the given key and object. Used as Util in
-     * osthm
-     * @param key Key
-     * @param value Value
-     * @return HashMap containing the given key and value
-     */
-
-    private static HashMap<String, Object> addKeyToHashMap(String key, Object value) {
-        HashMap<String, Object> hashmap = new HashMap<>();
-        hashmap.put(key, value);
-        return hashmap;
-    }
 
     /**
      * This method converts ARGB colors to HEX code

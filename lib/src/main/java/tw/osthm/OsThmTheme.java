@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -18,31 +19,35 @@ import java.util.HashMap;
  */
 
 public class OsThmTheme {
-    public int colorPrimary = -14575885;
-    public int colorPrimaryText = -1;
-    public int colorPrimaryDark = -15242838;
-    public int colorStatusbarTint = 1;
-    public int colorBackground = -1;
-    public int colorBackgroundText = -16777216;
-    public int colorAccent = -720809;
-    public int colorAccentText = -1;
-    public int shadow = 1;
-    public int colorControlHighlight = 1073741824;
-    public int colorHint = -5723992;
-    public int colorPrimaryTint = -1;
-    public int colorBackgroundTint = -14575885;
-    public int colorPrimaryCard = -1;
-    public int colorBackgroundCard = 0xFFFFFF;
-    public int colorPrimaryCardText = -16777216;
-    public int colorBackgroundCardText = -16777216;
-    public int colorPrimaryCardTint = -16777216;
-    public int colorBackgroundCardTint = -16777216;
+    public int colorPrimary;
+    public int colorPrimaryText;
+    public int colorPrimaryDark;
+    public int colorStatusbarTint;
+    public int colorBackground;
+    public int colorBackgroundText;
+    public int colorAccent;
+    public int colorAccentText;
+    public int shadow;
+    public int colorControlHighlight;
+    public int colorHint;
+    public int colorPrimaryTint;
+    public int colorBackgroundTint;
+    public int colorPrimaryCard;
+    public int colorBackgroundCard;
+    public int colorPrimaryCardText;
+    public int colorBackgroundCardText;
+    public int colorPrimaryCardTint;
+    public int colorBackgroundCardTint;
 
     /**
-     * Empty constructor with default theme (Vanilla Theme)
+     * Constructor with default theme
      *
      */
     public OsThmTheme() {
+        HashMap<String, Integer> data = new Gson().fromJson(DefaultThemes.getDefaultThemes()
+                .get(0).get("themesjson").toString(),
+                new TypeToken<HashMap<String, Object>>(){}.getType());
+        setData(data);
     }
 
     /**
