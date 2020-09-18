@@ -23,6 +23,15 @@ public class OsThmMetadata {
     public String uuid;
     public int themeversion;
 
+    public OsThmMetadata(String themesname, String themesinfo, String themesauthor, int os_thm_version, String uuid, int themeversion) {
+        this.themesname = themesname;
+        this.themesinfo = themesinfo;
+        this.themesauthor = themesauthor;
+        this.os_thm_version = os_thm_version;
+        this.uuid = uuid;
+        this.themeversion = themeversion;
+    }
+
     public OsThmMetadata() {
         new OsThmMetadata((HashMap<String, Object>) new Gson().fromJson(DefaultThemes
                 .getDefaultThemes().get(0).get("themesjson").toString(),
