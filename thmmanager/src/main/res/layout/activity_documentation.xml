@@ -61,7 +61,9 @@
                 android:id="@+id/documentation_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Loading documentation, please wait..." />
+                android:scrollbars="horizontal|vertical"
+                android:text="Loading documentation, please wait..."
+                android:textIsSelectable="true" />
         </LinearLayout>
     </ScrollView>
 

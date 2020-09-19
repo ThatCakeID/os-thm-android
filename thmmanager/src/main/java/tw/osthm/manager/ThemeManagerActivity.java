@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -113,6 +114,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
                     osthmEngine.setCurrentTheme(arrayList.get(i).get("uuid").toString());
                     makeSnackbar("Theme set!", 0xFF43A047, 0xFFFFFFFF,
                             R.drawable.ic_done_white);
+                    ((BaseAdapter)gridview1.getAdapter()).notifyDataSetChanged();
                 } catch (osthmException err) {
                     makeSnackbar(err.getMessage(), 0xFFD32F2F, 0xFFFFFFFF,
                             R.drawable.ic_close_white);
@@ -228,7 +230,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
             sequence.listener(new TapTargetSequence.Listener() {
                 @Override
                 public void onSequenceFinish() {
-                    sp.edit().putBoolean("taptargetview", true);
+                    sp.edit().putBoolean("taptargetview", true).apply();
                 }
 
                 @Override

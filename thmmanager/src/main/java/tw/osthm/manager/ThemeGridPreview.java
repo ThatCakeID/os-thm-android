@@ -80,7 +80,7 @@ public class ThemeGridPreview extends BaseAdapter {
             if (ColorUtils.calculateLuminance(list2.get("colorBackground")) < 0.5)
                 indicator.setColorFilter(0xFFFFFFFF);
             else indicator.setColorFilter(0xFF000000);
-        } else indicator.setVisibility(View.VISIBLE);
+        } else indicator.setVisibility(View.INVISIBLE);
 
         return view;
     }

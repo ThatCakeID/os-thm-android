@@ -2,7 +2,6 @@ package tw.osthm.manager.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -190,6 +189,8 @@ public class FragmentThmEdit3 extends Fragment {
                             .show(getActivity());
                 }
             });
+
+            pcard_text.setSelected(true);
         }
 
         return root;

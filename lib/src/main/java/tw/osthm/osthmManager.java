@@ -57,7 +57,7 @@ public class osthmManager {
 
     public static void setTheme(HashMap<String, Object> theme) {
         init();
-        StorageUtil.createFile(themes_folder + theme.get("uuid").toString(),
+        StorageUtil.createFile(themes_folder + theme.get("uuid").toString() + ".os-thm",
                 new Gson().toJson(theme));
     }
 
@@ -81,8 +81,8 @@ public class osthmManager {
 
     public static void removeTheme(String uuid) {
         init();
-        if (StorageUtil.isFileExist(themes_folder + uuid))
-            StorageUtil.deleteFile(themes_folder + uuid);
+        if (StorageUtil.isFileExist(themes_folder + uuid + ".os-thm"))
+            StorageUtil.deleteFile(themes_folder + uuid + ".os-thm");
     }
 
     public static void clearThemes() {
@@ -97,7 +97,7 @@ public class osthmManager {
         boolean isExist = false;
         List<File> files = StorageUtil.getFiles(themes_folder);
         for (File file : files) {
-            if (file.getName().equals(uuid)) isExist = true;
+            if (file.getName().equals(uuid + ".os-thm")) isExist = true;
         }
         return isExist;
     }
@@ -149,9 +149,9 @@ public class osthmManager {
                                 new TypeToken<HashMap<String, Object>>() {
                                 }.getType());
 
-                        if (!thm.get("uuid").toString().equals(file.getName()))
+                        if (!(thm.get("uuid").toString() + ".os-thm").equals(file.getName()))
                             StorageUtil.rename(file.getAbsolutePath(), themes_folder +
-                                    thm.get("uuid").toString());
+                                    thm.get("uuid").toString() + ".os-thm");
                     }
                 } catch (IOException ignored) {}
             }
