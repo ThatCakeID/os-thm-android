@@ -35,9 +35,9 @@
         android:background="#FFFFFF"
         android:orientation="vertical"
         android:paddingLeft="8dp"
-        android:paddingTop="10dp"
+        android:paddingTop="6dp"
         android:paddingRight="8dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="6dp">
 
         <LinearLayout
             android:id="@+id/linear_name"

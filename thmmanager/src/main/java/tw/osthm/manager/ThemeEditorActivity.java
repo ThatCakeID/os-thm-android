@@ -2,6 +2,7 @@ package tw.osthm.manager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.system.Os;
 import android.view.LayoutInflater;
@@ -40,7 +41,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
 
     private View bottomsheetview;
     private BottomSheetDialog bottomSheetDialog;
-    private ImageView image_saveb, image_close;
+    private ImageView image_saveb;
     private TextView til1, til2, til3, til4;
 
     // FRAGMENT 1
@@ -105,13 +106,6 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
             }
         });
 
-        image_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomSheetDialog.dismiss();
-            }
-        });
-
         image_saveb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,8 +167,8 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         bottomsheetview = inflater.inflate(R.layout.bottomsheet_newtheme, null);
         image_saveb = bottomsheetview.findViewById(R.id.image_save);
-        image_close = bottomsheetview.findViewById(R.id.image_close);
         bottomSheetDialog.setContentView(bottomsheetview);
+        ((View)bottomsheetview.getParent()).setBackgroundColor(Color.TRANSPARENT);
         til1 = bottomsheetview.findViewById(R.id.til1);
         til2 = bottomsheetview.findViewById(R.id.til2);
         til3 = bottomsheetview.findViewById(R.id.til3);
