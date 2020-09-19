@@ -1,80 +1,105 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/linear_base"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:layout_margin="4dp"
-        android:background="@drawable/round_preview"
-        android:elevation="5dp"
-        android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/linear_title"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/round_top_preview"
-            android:backgroundTint="#2196f3"
+            android:id="@+id/linear_base"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/round_preview"
             android:elevation="5dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="8dp">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/imageview_back"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:contentDescription="@string/back_button"
-                android:focusable="false"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_arrow_back_white" />
+            <LinearLayout
+                android:id="@+id/linear_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/round_top_preview"
+                android:backgroundTint="#2196f3"
+                android:elevation="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/imageview_back"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:contentDescription="@string/back_button"
+                    android:focusable="false"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_arrow_back_white" />
+
+                <TextView
+                    android:id="@+id/textview_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:fontFamily="@font/googlesans"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:singleLine="true"
+                    android:text="@string/app_name"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/textview_title"
+                android:id="@+id/textview_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:focusable="false"
                 android:fontFamily="@font/googlesans"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="8dp"
+                android:paddingRight="10dp"
                 android:singleLine="true"
-                android:text="@string/app_name"
-                android:textColor="#FFFFFF"
+                android:text="Vannila"
+                android:textColor="#000000"
                 android:textSize="10sp" />
+
+            <ImageView
+                android:id="@+id/imageview_fab"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="right"
+                android:layout_margin="8dp"
+                android:background="@drawable/circle_background"
+                android:backgroundTint="#F50057"
+                android:elevation="6dp"
+                android:padding="6dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_add_white" />
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textview_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:focusable="false"
-            android:fontFamily="@font/googlesans"
-            android:paddingLeft="10dp"
-            android:paddingTop="8dp"
-            android:paddingRight="10dp"
-            android:singleLine="true"
-            android:text="Vannila"
-            android:textColor="#000000"
-            android:textSize="10sp" />
-
         <ImageView
-            android:id="@+id/imageview_fab"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="right"
-            android:layout_margin="8dp"
-            android:background="@drawable/circle_background"
-            android:backgroundTint="#F50057"
-            android:elevation="6dp"
-            android:padding="6dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_add_white" />
-    </LinearLayout>
+            android:id="@+id/theme_selected_indicator"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:translationZ="6dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/linear_base"
+            app:layout_constraintStart_toStartOf="@+id/linear_base"
+            app:srcCompat="@drawable/ic_baseline_check_circle"
+            app:tint="#000000" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

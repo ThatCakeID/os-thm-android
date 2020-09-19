@@ -10,11 +10,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.graphics.ColorUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import tw.osthm.osthmEngine;
 
 public class ThemeGridPreview extends BaseAdapter {
     ArrayList<HashMap<String, Object>> list;
@@ -25,6 +29,7 @@ public class ThemeGridPreview extends BaseAdapter {
     private ImageView imageview_fab;
     private TextView textview_title;
     private TextView textview_name;
+    private ImageView indicator;
 
     public ThemeGridPreview(Context mContext, ArrayList<HashMap<String, Object>> list) {
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -56,6 +61,8 @@ public class ThemeGridPreview extends BaseAdapter {
         imageview_fab = view.findViewById(R.id.imageview_fab);
         textview_name = view.findViewById(R.id.textview_name);
         textview_title = view.findViewById(R.id.textview_title);
+        indicator = view.findViewById(R.id.theme_selected_indicator);
+
 
         textview_name.setText(list.get(i).get("themesname").toString());
         HashMap<String, Integer> list2 = new Gson().fromJson(list.get(i).get("themesjson").toString(), new TypeToken<HashMap<String, Integer>>() {
@@ -67,6 +74,13 @@ public class ThemeGridPreview extends BaseAdapter {
         imageview_fab.setBackgroundTintList(ColorStateList.valueOf(list2.get("colorAccent")));
         imageview_fab.setColorFilter(list2.get("colorAccentText"));
         imageview_back.setColorFilter(list2.get("colorPrimaryTint"));
+
+        if (osthmEngine.getCurrentThemeUUID() == list.get(i).get("uuid")) {
+            indicator.setVisibility(View.VISIBLE);
+            if (ColorUtils.calculateLuminance(list2.get("colorBackground")) < 0.5)
+                indicator.setColorFilter(0xFFFFFFFF);
+        }
+
         return view;
     }
 }
