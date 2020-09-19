@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import tw.osthm.OsThmMetadata;
+import tw.osthm.OsThmTheme;
 import tw.osthm.osthmEngine;
 import tw.osthm.osthmException;
 import tw.osthm.osthmManager;
@@ -63,6 +64,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
     private View bottomsheetView;
     private LinearLayout linear_export;
     private LinearLayout linear_info;
+    private LinearLayout linear_clone;
     private ImageView image_edit;
     private ImageView image_delete;
     private TextView text_title;
@@ -199,6 +201,51 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 selectedNum = -1;
             }
         });
+        linear_clone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.dismiss();
+
+                View bottom_sheet_save_theme = getLayoutInflater().inflate(R.layout.bottomsheet_newtheme, null);
+
+                final EditText name = bottom_sheet_save_theme.findViewById(R.id.til1);
+                final EditText author = bottom_sheet_save_theme.findViewById(R.id.til2);
+                final EditText description = bottom_sheet_save_theme.findViewById(R.id.til3);
+                final EditText version = bottom_sheet_save_theme.findViewById(R.id.til4);
+
+                View save = bottom_sheet_save_theme.findViewById(R.id.image_save);
+
+                final BottomSheetDialog bsd = new BottomSheetDialog(ThemeManagerActivity.this);
+                bsd.setContentView(bottom_sheet_save_theme);
+
+                save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        OsThmTheme theme = osthmEngine.getTheme(arrayList
+                                .get(selectedNum).get("uuid").toString());
+
+                        String name_data = name.getText().toString();
+                        String author_data = author.getText().toString();
+                        String description_data = description.getText().toString();
+                        String version_data = version.getText().toString();
+
+                        try {
+                            osthmEngine.addTheme(theme, name_data, description_data, author_data, Integer.parseInt(version_data));
+                            makeSnackbar("Success!", 0xFF43A047, 0xFFFFFFFF,
+                                    R.drawable.ic_done_white);
+                        } catch (osthmException e) {
+                            makeSnackbar(e.getMessage(), 0xFFD32F2F, 0xFFFFFFFF,
+                                    R.drawable.ic_close_white);
+                        }
+                        bsd.dismiss();
+                    }
+                });
+
+                ((View) bottom_sheet_save_theme.getParent()).setBackgroundColor(Color.TRANSPARENT);
+
+                bsd.show();
+            }
+        });
         image_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -310,6 +357,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
         image_delete = bottomsheetView.findViewById(R.id.image_delete);
         linear_export = bottomsheetView.findViewById(R.id.linear_export);
         linear_info = bottomsheetView.findViewById(R.id.linear_info);
+        linear_clone = bottomsheetView.findViewById(R.id.linear_clone);
         image_edit = bottomsheetView.findViewById(R.id.image_edit);
         text_title = bottomsheetView.findViewById(R.id.text_title);
         text_subtitle = bottomsheetView.findViewById(R.id.text_subtitle);

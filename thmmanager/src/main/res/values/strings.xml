@@ -13,4 +13,5 @@
     <string name="theme_information">Theme Information</string>
     <string name="edit">Edit</string>
     <string name="documentation">Documentation</string>
+    <string name="clone">Clone</string>
 </resources>
