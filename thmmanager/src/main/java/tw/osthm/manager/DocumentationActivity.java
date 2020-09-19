@@ -3,6 +3,8 @@ package tw.osthm.manager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import io.noties.markwon.Markwon;
@@ -96,7 +98,14 @@ public class DocumentationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_documentation);
 
         TextView documentation_textview = findViewById(R.id.documentation_textview);
+        ImageView image_back = findViewById(R.id.image_back);
         final Markwon markwon = Markwon.create(this);
         markwon.setMarkdown(documentation_textview, documentation);
+        image_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 }

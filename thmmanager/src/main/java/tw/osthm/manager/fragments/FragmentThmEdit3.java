@@ -323,9 +323,8 @@ public class FragmentThmEdit3 extends Fragment {
             }
 
             appbar.setElevation((sp.getInt("shadow", 1) == 1) ? 5f : 0f);
+            bcard.setCardElevation((sp.getInt("shadow", 1) == 1) ? 5f : 0f);
             appbar_backbutton.setColorFilter(sp.getInt("colorPrimaryTint", -1));
-            appbar_backbutton.setBackgroundTintList(ColorStateList.valueOf(sp
-                    .getInt("colorControlHighlight", 1073741824)));
         }
     }
 

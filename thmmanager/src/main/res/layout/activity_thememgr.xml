@@ -15,7 +15,7 @@
             android:id="@+id/linear_title"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#2196f3"
+            android:background="@color/colorPrimary"
             android:elevation="5dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"

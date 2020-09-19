@@ -11,7 +11,7 @@
         android:id="@+id/linear_title"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#2196f3"
+        android:background="@color/colorPrimary"
         android:elevation="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/googlesans"
             android:padding="8dp"
-            android:text="@string/editing_theme"
+            android:text="@string/theme_editor"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
 

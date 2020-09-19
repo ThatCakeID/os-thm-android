@@ -1,9 +1,11 @@
 package tw.osthm.manager;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -21,13 +23,13 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -54,13 +56,15 @@ public class ThemeManagerActivity extends AppCompatActivity {
     private boolean isOpen;
     private GridView gridview1;
     private ArrayList<HashMap<String, Object>> arrayList;
+    private SharedPreferences sp;
 
     private View bottomsheetView;
-    private LinearLayout linear_delete;
     private LinearLayout linear_export;
     private LinearLayout linear_info;
-    private LinearLayout linear_edit;
-    private ImageView image_close;
+    private ImageView image_edit;
+    private ImageView image_delete;
+    private TextView text_title;
+    private TextView text_subtitle;
     private BottomSheetDialog bottomSheetDialog;
     private int selectedNum = -1;
 
@@ -70,36 +74,8 @@ public class ThemeManagerActivity extends AppCompatActivity {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_thememgr);
+
         initializeViews();
-
-        final TapTarget fab_open_taptarget = TapTarget.forView(fab, "Add themes", "Click here to add themes into your theme list");
-        final TapTarget fab2_taptarget = TapTarget.forView(fab2, "Create Theme", "Click here to create a theme yourself!");
-
-        TapTargetSequence sequence = new TapTargetSequence(this).targets(
-                fab_open_taptarget,
-                TapTarget.forView(fab1, "Import theme", "Click here to import a theme into your theme list"),
-                fab2_taptarget,
-                TapTarget.forView(image_help, "Documentation", "Click here to read the documentation on how to use os-thm"),
-                TapTarget.forView(gridview1.getChildAt(1), "Set your theme", "Click on this Dark theme to set your theme into the dark theme."),
-                TapTarget.forView(gridview1.getChildAt(1), "Get theme info", "Click hold on this Dark theme to get the info of the theme.")
-        );
-
-        sequence.listener(new TapTargetSequence.Listener() {
-            @Override
-            public void onSequenceFinish() { }
-
-            @Override
-            public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
-                if (lastTarget == fab_open_taptarget || lastTarget == fab2_taptarget) {
-                    toggleFabs();
-                }
-            }
-
-            @Override
-            public void onSequenceCanceled(TapTarget lastTarget) { }
-        });
-
-        sequence.start();
 
         image_help.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,17 +123,21 @@ public class ThemeManagerActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedNum = i;
+                OsThmMetadata themeMetadata = osthmEngine.getThemeMetadata(arrayList
+                        .get(i).get("uuid").toString());
+                text_title.setText(themeMetadata.themesname);
+                text_subtitle.setText(themeMetadata.themesauthor);
                 bottomSheetDialog.show();
                 return true;
             }
         });
-        image_close.setOnClickListener(new View.OnClickListener() {
+        bottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
-            public void onClick(View view) {
-                bottomSheetDialog.dismiss();
+            public void onDismiss(DialogInterface dialogInterface) {
+                selectedNum = -1;
             }
         });
-        linear_delete.setOnClickListener(new View.OnClickListener() {
+        image_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.dismiss();
@@ -200,26 +180,22 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 text_author.setText("Author : " + themeMetadata.themesauthor);
                 text_version.setText("Version : " +themeMetadata.themeversion);
                 text_osthm.setText("Engine Version : " +themeMetadata.os_thm_version);
-                ImageView image_close = bottomsheetView1.findViewById(R.id.image_close);
-                image_close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        bottomSheetDialog1.dismiss();
-                    }
-                });
                 bottomSheetDialog1.setContentView(bottomsheetView1);
+                ((View) bottomsheetView1.getParent()).setBackgroundColor(Color.TRANSPARENT);
                 bottomSheetDialog1.show();
                 selectedNum = -1;
             }
         });
-        linear_edit.setOnClickListener(new View.OnClickListener() {
+        image_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bottomSheetDialog.dismiss();
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), ThemeEditorActivity.class);
                 intent.putExtra("isEditing", true);
                 intent.putExtra("theme", arrayList.get(selectedNum).get("uuid").toString());
                 startActivity(intent);
+                selectedNum = -1;
             }
         });
         image_help.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +205,46 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        if (!sp.getBoolean("taptargetview", false)) {
+            final TapTarget fab_open_taptarget = TapTarget.forView(fab, "Add themes", "Click here to add themes into your theme list");
+            final TapTarget fab2_taptarget = TapTarget.forView(fab2, "Create Theme", "Click here to create a theme yourself!");
+
+            fab_open_taptarget.textTypeface(ResourcesCompat.getFont(this, R.font.googlesans));
+            fab2_taptarget.textTypeface(ResourcesCompat.getFont(this, R.font.googlesans));
+
+            TapTargetSequence sequence = new TapTargetSequence(this).targets(
+                    fab_open_taptarget,
+                    TapTarget.forView(fab1, "Import theme", "Click here to import a theme into your theme list")
+                            .textTypeface(ResourcesCompat.getFont(this, R.font.googlesans)),
+                    fab2_taptarget,
+                    TapTarget.forView(image_help, "Documentation", "Click here to read the documentation on how to use os-thm")
+                            .textTypeface(ResourcesCompat.getFont(this, R.font.googlesans))
+                    // Sad, doesn't work :(
+                    //TapTarget.forView(gridview1.getChildAt(1), "Set your theme", "Click on this Dark theme to set your theme into the dark theme."),
+                    //TapTarget.forView(gridview1.getChildAt(1), "Get theme info", "Click hold on this Dark theme to get the info of the theme.")
+            );
+
+            sequence.listener(new TapTargetSequence.Listener() {
+                @Override
+                public void onSequenceFinish() {
+                    sp.edit().putBoolean("taptargetview", true);
+                }
+
+                @Override
+                public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+                    if (lastTarget == fab_open_taptarget || lastTarget == fab2_taptarget) {
+                        toggleFabs();
+                    }
+                }
+
+                @Override
+                public void onSequenceCanceled(TapTarget lastTarget) {
+                }
+            });
+
+            sequence.start();
+        }
     }
 
     private void toggleFabs() {
@@ -276,14 +292,17 @@ public class ThemeManagerActivity extends AppCompatActivity {
         textview_create = findViewById(R.id.textview_create);
         textview_import = findViewById(R.id.textview_import);
         gridview1 = findViewById(R.id.gridview1);
+        sp = getSharedPreferences("colordata", Context.MODE_PRIVATE);
         bottomsheetView = getLayoutInflater().inflate(R.layout.bottomsheet_multichoices, null);
-        linear_delete = bottomsheetView.findViewById(R.id.linear_delete);
+        image_delete = bottomsheetView.findViewById(R.id.image_delete);
         linear_export = bottomsheetView.findViewById(R.id.linear_export);
         linear_info = bottomsheetView.findViewById(R.id.linear_info);
-        linear_edit = bottomsheetView.findViewById(R.id.linear_edit);
-        image_close = bottomsheetView.findViewById(R.id.image_close);
+        image_edit = bottomsheetView.findViewById(R.id.image_edit);
+        text_title = bottomsheetView.findViewById(R.id.text_title);
+        text_subtitle = bottomsheetView.findViewById(R.id.text_subtitle);
         bottomSheetDialog = new BottomSheetDialog(ThemeManagerActivity.this);
         bottomSheetDialog.setContentView(bottomsheetView);
+        ((View) bottomsheetView.getParent()).setBackgroundColor(Color.TRANSPARENT);
     }
 
     private void makeSnackbar(String msg, int bcolor, int tcolor, int image) {
