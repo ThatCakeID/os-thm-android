@@ -22,6 +22,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -69,36 +71,47 @@ public class ThemeManagerActivity extends AppCompatActivity {
         super.onCreate(bundle);
         setContentView(R.layout.activity_thememgr);
         initializeViews();
+
+        final TapTarget fab_open_taptarget = TapTarget.forView(fab, "Add themes", "Click here to add themes into your theme list");
+        final TapTarget fab2_taptarget = TapTarget.forView(fab2, "Create Theme", "Click here to create a theme yourself!");
+
+        TapTargetSequence sequence = new TapTargetSequence(this).targets(
+                fab_open_taptarget,
+                TapTarget.forView(fab1, "Import theme", "Click here to import a theme into your theme list"),
+                fab2_taptarget,
+                TapTarget.forView(image_help, "Documentation", "Click here to read the documentation on how to use os-thm"),
+                TapTarget.forView(gridview1.getChildAt(1), "Set your theme", "Click on this Dark theme to set your theme into the dark theme."),
+                TapTarget.forView(gridview1.getChildAt(1), "Get theme info", "Click hold on this Dark theme to get the info of the theme.")
+        );
+
+        sequence.listener(new TapTargetSequence.Listener() {
+            @Override
+            public void onSequenceFinish() { }
+
+            @Override
+            public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+                if (lastTarget == fab_open_taptarget || lastTarget == fab2_taptarget) {
+                    toggleFabs();
+                }
+            }
+
+            @Override
+            public void onSequenceCanceled(TapTarget lastTarget) { }
+        });
+
+        sequence.start();
+
         image_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO : add something here for @Iyxan23
+                startActivity(new Intent(ThemeManagerActivity.this, DocumentationActivity.class));
             }
         });
         //FAB method
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isOpen) {
-                    textview_create.setVisibility(View.INVISIBLE);
-                    textview_import.setVisibility(View.INVISIBLE);
-                    fab2.startAnimation(fab_close);
-                    fab1.startAnimation(fab_close);
-                    fab.startAnimation(fab_anticlock);
-                    fab2.setClickable(false);
-                    fab1.setClickable(false);
-                    isOpen = false;
-                } else {
-                    textview_create.setVisibility(View.VISIBLE);
-                    textview_import.setVisibility(View.VISIBLE);
-                    fab2.startAnimation(fab_open);
-                    fab1.startAnimation(fab_open);
-                    fab.startAnimation(fab_clock);
-                    fab2.setClickable(true);
-                    fab1.setClickable(true);
-                    isOpen = true;
-                }
-
+                toggleFabs();
             }
         });
         fab1.setOnClickListener(new View.OnClickListener() {
@@ -216,6 +229,28 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    private void toggleFabs() {
+        if (isOpen) {
+            textview_create.setVisibility(View.INVISIBLE);
+            textview_import.setVisibility(View.INVISIBLE);
+            fab2.startAnimation(fab_close);
+            fab1.startAnimation(fab_close);
+            fab.startAnimation(fab_anticlock);
+            fab2.setClickable(false);
+            fab1.setClickable(false);
+            isOpen = false;
+        } else {
+            textview_create.setVisibility(View.VISIBLE);
+            textview_import.setVisibility(View.VISIBLE);
+            fab2.startAnimation(fab_open);
+            fab1.startAnimation(fab_open);
+            fab.startAnimation(fab_clock);
+            fab2.setClickable(true);
+            fab1.setClickable(true);
+            isOpen = true;
+        }
     }
 
     @Override
