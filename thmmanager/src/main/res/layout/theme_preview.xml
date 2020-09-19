@@ -92,4 +92,15 @@
         app:layout_constraintStart_toStartOf="@+id/linear_base"
         app:tint="#000000" />
 
+    <ImageView
+        android:id="@+id/gridview_check"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_check_box_white"
+        android:translationZ="6dp"
+        app:layout_constraintEnd_toEndOf="@id/linear_base"
+        app:layout_constraintTop_toTopOf="@id/linear_base" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

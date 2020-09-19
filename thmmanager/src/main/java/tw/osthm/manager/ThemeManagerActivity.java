@@ -42,6 +42,7 @@ import java.util.HashMap;
 import tw.osthm.OsThmMetadata;
 import tw.osthm.osthmEngine;
 import tw.osthm.osthmException;
+import tw.osthm.osthmManager;
 
 public class ThemeManagerActivity extends AppCompatActivity {
     private ImageView image_help;
@@ -162,6 +163,16 @@ public class ThemeManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.dismiss();
+                try {
+                    makeSnackbar("Saved in " + osthmManager.exportThemeFile(osthmEngine
+                                    .exportThemes(new String[]{arrayList.get(selectedNum)
+                                            .get("uuid").toString()})), 0xFF43A047,
+                            0xFFFFFFFF, R.drawable.ic_done_white);
+                } catch (osthmException err) {
+                    makeSnackbar(err.getMessage(), 0xFFD32F2F, 0xFFFFFFFF,
+                            R.drawable.ic_close_white);
+                }
+                selectedNum = -1;
             }
         });
         linear_info.setOnClickListener(new View.OnClickListener() {
@@ -333,7 +344,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
     private void showSelectDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(ThemeManagerActivity.this);
         alertDialog.setTitle("Import a theme");
-        String[] items = {".json File","Paste json data"};
+        String[] items = {"Import .os-thm file","Paste json theme data"};
         alertDialog.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -341,7 +352,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
                     case 0:
                         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                         intent.addCategory(Intent.CATEGORY_OPENABLE);
-                        intent.setType("application/json");
+                        intent.setType("*/*");
                         startActivityForResult(intent, OPEN_REQUEST_CODE);
                         break;
                     case 1:
@@ -364,11 +375,11 @@ public class ThemeManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 try {
-                    osthmEngine.importThemes(editText.getText().toString());
-                    Toast.makeText(ThemeManagerActivity.this, "Import Successful", Toast.LENGTH_LONG).show();
                     dialogInterface.dismiss();
+                    osthmEngine.importThemes(editText.getText().toString());
+                    makeSnackbar("Theme(s) imported!", 0xFF43A047, 0xFFFFFFFF, R.drawable.ic_done_white);
                 } catch (osthmException e) {
-                    Toast.makeText(ThemeManagerActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    makeSnackbar(e.getMessage(), 0xFFD32F2F, 0xFFFFFFFF, R.drawable.ic_close_white);
                 }
             }
         });
@@ -403,11 +414,11 @@ public class ThemeManagerActivity extends AppCompatActivity {
                     try {
                         String content = readFile(uri);
                         osthmEngine.importThemes(content);
+                        makeSnackbar("Theme(s) imported!", 0xFF43A047, 0xFFFFFFFF, R.drawable.ic_done_white);
                     } catch (IOException e) {
-                        // Handle error here
-                        e.printStackTrace();
+                        makeSnackbar(e.toString(), 0xFFD32F2F, 0xFFFFFFFF, R.drawable.ic_close_white);
                     } catch (osthmException e) {
-                        Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        makeSnackbar(e.getMessage(), 0xFFD32F2F, 0xFFFFFFFF, R.drawable.ic_close_white);
                     }
                 }
             }

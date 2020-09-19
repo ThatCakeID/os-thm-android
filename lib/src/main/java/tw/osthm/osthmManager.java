@@ -6,7 +6,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,8 +18,9 @@ import java.util.List;
 public class osthmManager {
 
     public static final String externalDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-    public static final String themes_folder = externalDir + "/.osthm/themes/";
-    public static final String config_file = externalDir + "/.osthm/conf";
+    public static final String themes_folder = externalDir + "/.os-thm/themes/";
+    public static final String config_file = externalDir + "/.os-thm/conf";
+    public static final String exported_themes_folder = externalDir + "/os-thm/";
 
     public static void setConf(String key, String value) {
         init();
@@ -94,12 +94,26 @@ public class osthmManager {
 
     public static boolean containsTheme(String uuid) {
         init();
-        boolean isExist = false;
         List<File> files = StorageUtil.getFiles(themes_folder);
         for (File file : files) {
-            if (file.getName().equals(uuid + ".os-thm")) isExist = true;
+            if (file.getName().equals(uuid + ".os-thm")) {
+                return true;
+            }
         }
-        return isExist;
+
+        return false;
+    }
+
+    public static String exportThemeFile(String json) {
+       int fileNum = 0;
+       while(true) {
+           if (StorageUtil.isFileExist(exported_themes_folder + "theme_" + Integer.toString(fileNum) + ".os-thm"))
+               fileNum++;
+           else {
+               StorageUtil.createFile(exported_themes_folder + "theme_" + Integer.toString(fileNum) + ".os-thm", json);
+               return exported_themes_folder + "theme_" + Integer.toString(fileNum) + ".os-thm";
+           }
+       }
     }
 
     // Utilities ===================================================================================
@@ -163,13 +177,7 @@ public class osthmManager {
         try {
             new JSONObject(test);
         } catch (JSONException ex) {
-            // edited, to include @Arthur's comment
-            // e.g. in case JSONArray is valid as well...
-            try {
-                new JSONArray(test);
-            } catch (JSONException ex1) {
-                return false;
-            }
+            return false;
         }
         return true;
     }

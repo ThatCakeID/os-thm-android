@@ -16,6 +16,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -64,15 +68,12 @@ public class osthmEngine {
      * @return Does theme exist in the default theme
      */
     private static boolean isExistInDefaultTheme(String themeUUID) {
-        boolean isExist = false;
-
         for (HashMap<String, Object> theme: DefaultThemes.getDefaultThemes())
             if (theme.get("uuid").equals(themeUUID)) {
-                isExist = true;
-                break;
+                return true;
             }
 
-        return isExist;
+        return false;
     }
 
     /**
@@ -687,41 +688,78 @@ public class osthmEngine {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
 
-        gsonBuilder.registerTypeAdapter(new TypeToken<HashMap<String, Object>>() {}.getType(),
-                new HashMapDeserializerFix());
+        if (isArrayJSONValid(json)) {
+            gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<HashMap<String, Object>>>() {
+                    }.getType(),
+                    new ArrayMapDeserializerFix());
 
-        Gson gson = gsonBuilder.create();
+            Gson gson = gsonBuilder.create();
 
-        ArrayList<HashMap<String, Object>> thmarray = gson.fromJson(
-                json,
-                new TypeToken<ArrayList<HashMap<String, Object>>>() {}.getType());
+            ArrayList<HashMap<String, Object>> thmarray = gson.fromJson(
+                    json,
+                    new TypeToken<ArrayList<HashMap<String, Object>>>() {
+                    }.getType());
 
-        if (thmarray.size() > 0) {
-            for (HashMap<String, Object> theme: thmarray) {
-                if (theme.containsKey("os-thm-version")) {
-                    if (theme.get("os-thm-version") instanceof Integer) {
-                        if ((int) theme.get("os-thm-version") > metadataVersion) {
-                            throw new osthmException("Sorry, this theme version is newer than the current theme engine can handle.");
-                        } else {
-                            if ((int) theme.get("os-thm-version") < metadataVersion) {
-                                theme.putAll(migrateOldThemePrivate(theme));
+            if (thmarray.size() > 0) {
+                for (HashMap<String, Object> theme : thmarray) {
+                    if (theme.containsKey("os-thm-version")) {
+                        if (theme.get("os-thm-version") instanceof Integer) {
+                            if ((int) theme.get("os-thm-version") > metadataVersion) {
+                                throw new osthmException("Sorry, this theme version is newer than the current theme engine can handle.");
+                            } else {
+                                if ((int) theme.get("os-thm-version") < metadataVersion) {
+                                    theme.putAll(migrateOldThemePrivate(theme));
+                                }
                             }
+                        } else {
+                            theme.putAll(migrateOlderThemePrivate(theme));
                         }
                     } else {
                         theme.putAll(migrateOlderThemePrivate(theme));
                     }
+                    if (osthmManager.containsTheme(theme.get("uuid").toString()) || isExistInDefaultTheme(theme.get("uuid").toString())) {
+                        throw new osthmException("Theme(s) can't be imported because the theme(s) are already exist!");
+                    } else {
+                        osthmManager.setTheme(theme);
+                    }
+                }
+            } else {
+                throw new osthmException("This JSON things is empty, what do you hope for? ._.");
+            }
+        } else if (isObjectJSONValid(json)) {
+            gsonBuilder.registerTypeAdapter(new TypeToken<HashMap<String, Object>>() {
+                    }.getType(),
+                    new HashMapDeserializerFix());
+
+            Gson gson = gsonBuilder.create();
+
+            HashMap<String, Object> theme = gson.fromJson(
+                    json,
+                    new TypeToken<HashMap<String, Object>>() {
+                    }.getType());
+
+            if (theme.containsKey("os-thm-version")) {
+                if (theme.get("os-thm-version") instanceof Integer) {
+                    if ((int) theme.get("os-thm-version") > metadataVersion) {
+                        throw new osthmException("Sorry, this theme version is newer than the current theme engine can handle.");
+                    } else {
+                        if ((int) theme.get("os-thm-version") < metadataVersion) {
+                            theme.putAll(migrateOldThemePrivate(theme));
+                        }
+                    }
                 } else {
                     theme.putAll(migrateOlderThemePrivate(theme));
                 }
-                if (osthmManager.containsTheme(theme.get("uuid").toString()) || isExistInDefaultTheme(theme.get("uuid").toString())) {
-                    throw new osthmException("Theme(s) can't be imported because the theme(s) are already exist!");
-                } else {
-                    osthmManager.setTheme(theme);
-                }
+            } else {
+                theme.putAll(migrateOlderThemePrivate(theme));
             }
-        } else {
-            throw new osthmException("This JSON things is empty, what do you hope for? ._.");
-        }
+            if (osthmManager.containsTheme(theme.get("uuid").toString()) || isExistInDefaultTheme(theme.get("uuid").toString())) {
+                throw new osthmException("Theme(s) can't be imported because the theme(s) are already exist!");
+            } else {
+                osthmManager.setTheme(theme);
+            }
+        } else
+            throw new osthmException("Invalid JSON!");
     }
 
     /**
@@ -731,8 +769,8 @@ public class osthmEngine {
      * @throws osthmException osthmException
      */
 
-    public static String exportThemes(ArrayList<String> UUIDvars) throws osthmException {
-        if (UUIDvars.size() > 0) {
+    public static String exportThemes(String[] UUIDvars) throws osthmException {
+        if (UUIDvars.length > 0) {
             initializeData();
 
             ArrayList<String> indexUUID = new ArrayList<>();
@@ -741,15 +779,20 @@ public class osthmEngine {
             for (int i = 0; i < metadataarray.size(); i++)
                 indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
 
-            ArrayList<HashMap<String, Object>> thmarray = new ArrayList<>();
+            if (UUIDvars.length > 1) {
+                ArrayList<HashMap<String, Object>> thmarray = new ArrayList<>();
 
-            for (int i = 0; i < UUIDvars.size(); i++) {
-                if (indexUUID.contains(UUIDvars.get(i))) {
-                    thmarray.add(metadataarray.get(indexUUID.indexOf(UUIDvars.get(i))));
-                } else
-                    throw new osthmException("Theme(s) aren't exists!");
+                for (int i = 0; i < UUIDvars.length; i++) {
+                    if (indexUUID.contains(UUIDvars[i])) {
+                        thmarray.add(metadataarray.get(indexUUID.indexOf(UUIDvars[i])));
+                    } else
+                        throw new osthmException("Theme(s) aren't exists!");
+                }
+                return new Gson().toJson(thmarray);
+            } else {
+                return new Gson().toJson(metadataarray.get(indexUUID.indexOf(UUIDvars[0])));
             }
-            return new Gson().toJson(thmarray);
+
         } else {
             throw new osthmException("There is no UUID given, what do you hope for? ._.");
         }
@@ -795,6 +838,24 @@ public class osthmEngine {
 
     // Utilites
     // =============================================================================================
+
+    private static boolean isArrayJSONValid(String test) {
+        try {
+            new JSONArray(test);
+        } catch (JSONException ex1) {
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean isObjectJSONValid(String test) {
+        try {
+            new JSONObject(test);
+        } catch (JSONException ex) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * This method converts ARGB colors to HEX code

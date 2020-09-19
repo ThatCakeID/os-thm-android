@@ -1,5 +1,6 @@
 package tw.osthm.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
@@ -51,6 +52,7 @@ public class ThemeGridPreview extends BaseAdapter {
         return i;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null)

@@ -45,7 +45,6 @@
 
  Here is a table showing the meanings of the colors:
 
-  ________________________________________________________________________________________________________
  |Color Name             |Color Meaning                                                                   |
  |-----------------------|--------------------------------------------------------------------------------|
  |colorPrimary           |The primary color for your app (ex: actionBar)                                  |

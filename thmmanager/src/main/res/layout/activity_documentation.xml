@@ -52,19 +52,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linear_title">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/documentation_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:fontFamily="monospace"
+            android:nestedScrollingEnabled="false"
+            android:text="Loading documentation, please wait..."
+            android:textIsSelectable="true"
+            android:textSize="10sp" />
 
-            <TextView
-                android:id="@+id/documentation_textview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="horizontal|vertical"
-                android:text="Loading documentation, please wait..."
-                android:textIsSelectable="true" />
-        </LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

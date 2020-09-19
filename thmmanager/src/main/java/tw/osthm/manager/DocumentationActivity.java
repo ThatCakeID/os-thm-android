@@ -56,7 +56,6 @@ public class DocumentationActivity extends AppCompatActivity {
             "\n" +
             " Here is a table showing the meanings of the colors:\n" +
             "\n" +
-            "  ________________________________________________________________________________________________________\n" +
             " |Color Name             |Color Meaning                                                                   |\n" +
             " |-----------------------|--------------------------------------------------------------------------------|\n" +
             " |colorPrimary           |The primary color for your app (ex: actionBar)                                  |\n" +
