@@ -45,6 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="#FFFFFF"
         android:paddingLeft="16dp"
         android:paddingTop="6dp"
         android:paddingRight="16dp"
