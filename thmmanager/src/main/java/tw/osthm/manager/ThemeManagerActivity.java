@@ -30,6 +30,8 @@ import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -76,7 +78,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
     private boolean isOpen;
     private BottomSheetDialog bottomSheetDialog;
-    private int selectedNum = -1;
+    private int selectedNum = 0;
 
     private SharedPreferences sp;
 
@@ -158,32 +160,23 @@ public class ThemeManagerActivity extends AppCompatActivity {
             }
         });
 
-        bottomSheetDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                selectedNum = -1;
-            }
-        });
+        // BottomSheet thingy-------------------------------------------------
 
         image_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.dismiss();
 
-                if (selectedNum != -1) {
-                    try {
-                        osthmEngine.removeTheme(arrayList.get(selectedNum).get("uuid").toString());
-                        makeSnackbar("Theme deleted!", 0xFF43A047, 0xFFFFFFFF,
-                                R.drawable.ic_done_white);
-                        refreshTheme();
+                try {
+                    osthmEngine.removeTheme(arrayList.get(selectedNum).get("uuid").toString());
+                    makeSnackbar("Theme deleted!", 0xFF43A047, 0xFFFFFFFF,
+                            R.drawable.ic_done_white);
+                    refreshTheme();
 
-                    } catch (osthmException err) {
-                        makeSnackbar(err.getMessage(), 0xFFD32F2F, 0xFFFFFFFF,
-                                R.drawable.ic_close_white);
-                        refreshTheme();
-                    }
-
-                    selectedNum = -1;
+                } catch (osthmException err) {
+                    makeSnackbar(err.getMessage(), 0xFFD32F2F, 0xFFFFFFFF,
+                            R.drawable.ic_close_white);
+                    refreshTheme();
                 }
             }
         });
@@ -200,7 +193,14 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 final EditText description = bottom_sheet_save_theme.findViewById(R.id.til3);
                 final EditText version = bottom_sheet_save_theme.findViewById(R.id.til4);
 
-                View save = bottom_sheet_save_theme.findViewById(R.id.image_save);
+                OsThmMetadata thmMetadata = new OsThmMetadata(arrayList.get(selectedNum));
+
+                name.setText(thmMetadata.themesname);
+                author.setText(thmMetadata.themesauthor);
+                description.setText(thmMetadata.themesinfo);
+                version.setText(Integer.toString(thmMetadata.themeversion));
+
+                ImageView save = bottom_sheet_save_theme.findViewById(R.id.image_save);
 
                 final BottomSheetDialog bsd = new BottomSheetDialog(ThemeManagerActivity.this);
                 bsd.setContentView(bottom_sheet_save_theme);
@@ -208,8 +208,9 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        OsThmTheme theme = osthmEngine.getTheme(arrayList
-                                .get(selectedNum).get("uuid").toString());
+                        OsThmTheme theme = new OsThmTheme((HashMap<String, Integer>)new
+                                Gson().fromJson(arrayList.get(selectedNum).get("themesjson")
+                                .toString(), new TypeToken<HashMap<String, Integer>>(){}.getType()));
 
                         String name_data = name.getText().toString();
                         String author_data = author.getText().toString();
@@ -218,8 +219,9 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
                         try {
                             osthmEngine.addTheme(theme, name_data, description_data, author_data, Integer.parseInt(version_data));
-                            makeSnackbar("Success!", 0xFF43A047, 0xFFFFFFFF,
+                            makeSnackbar("Successfully cloned theme!", 0xFF43A047, 0xFFFFFFFF,
                                     R.drawable.ic_done_white);
+                            refreshTheme();
                         } catch (osthmException e) {
                             makeSnackbar(e.getMessage(), 0xFFD32F2F, 0xFFFFFFFF,
                                     R.drawable.ic_close_white);
@@ -238,6 +240,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.dismiss();
+
                 try {
                     makeSnackbar("Saved in " + osthmManager.exportThemeFile(osthmEngine
                                     .exportThemes(new String[]{arrayList.get(selectedNum)
@@ -247,7 +250,6 @@ public class ThemeManagerActivity extends AppCompatActivity {
                     makeSnackbar(err.getMessage(), 0xFFD32F2F, 0xFFFFFFFF,
                             R.drawable.ic_close_white);
                 }
-                selectedNum = -1;
             }
         });
 
@@ -277,8 +279,6 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 bottomSheetDialog1.setContentView(bottomsheetView1);
                 ((View) bottomsheetView1.getParent()).setBackgroundColor(Color.TRANSPARENT);
                 bottomSheetDialog1.show();
-
-                selectedNum = -1;
             }
         });
 
@@ -292,10 +292,9 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 intent.putExtra("isEditing", true);
                 intent.putExtra("theme", arrayList.get(selectedNum).get("uuid").toString());
                 startActivity(intent);
-
-                selectedNum = -1;
             }
         });
+        // -----------------------------------------------------------------
 
         image_help.setOnClickListener(new View.OnClickListener() {
             @Override
