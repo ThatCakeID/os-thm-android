@@ -8,8 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
@@ -97,52 +101,59 @@ public class FragmentThmEdit1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (root == null) {
-            // Inflate the layout for this fragment
-            root = inflater.inflate(R.layout.fragment_thm_edit1, container, false);
+        // Inflate a placeholder view while we're inflating the actual layout in background
+        ViewGroup placeholder = (ViewGroup) inflater.inflate(R.layout.placeholder_layout, container, false);
+        AsyncLayoutInflater asyncLayoutInflater = new AsyncLayoutInflater(getActivity());
+        asyncLayoutInflater.inflate(R.layout.fragment_thm_edit1, placeholder, new AsyncLayoutInflater.OnInflateFinishedListener() {
+            @Override
+            public void onInflateFinished(@NonNull View view, int resid, @Nullable ViewGroup parent) {
+                // Add the actual layout to the placeholder
+                parent.addView(view);
+                root = view;
 
-            // Initialize views
-            initializeViews();
+                // Initialize views
+                initializeViews();
 
-            // Apply previous applied colors
-            refreshViews();
+                // Apply previous applied colors
+                refreshViews();
 
-            // Set onClickListeners
-            constraint_colorPrimary.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ColorPickerDialog.newBuilder()
-                            .setDialogId(COLOR_PRIMARY_DIALOG_ID)
-                            .setColor(sp.getInt("colorPrimary", -14575885))
-                            .setShowAlphaSlider(true)
-                            .show(getActivity());
-                }
-            });
+                // Set onClickListeners
+                constraint_colorPrimary.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ColorPickerDialog.newBuilder()
+                                .setDialogId(COLOR_PRIMARY_DIALOG_ID)
+                                .setColor(sp.getInt("colorPrimary", -14575885))
+                                .setShowAlphaSlider(true)
+                                .show(getActivity());
+                    }
+                });
 
-            constraint_colorPrimaryDark.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ColorPickerDialog.newBuilder()
-                            .setDialogId(COLOR_PRIMARY_DARK_DIALOG_ID)
-                            .setColor(sp.getInt("colorPrimaryDark", -15242838))
-                            .setShowAlphaSlider(true)
-                            .show(getActivity());
-                }
-            });
+                constraint_colorPrimaryDark.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ColorPickerDialog.newBuilder()
+                                .setDialogId(COLOR_PRIMARY_DARK_DIALOG_ID)
+                                .setColor(sp.getInt("colorPrimaryDark", -15242838))
+                                .setShowAlphaSlider(true)
+                                .show(getActivity());
+                    }
+                });
 
-            constraint_colorAccent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ColorPickerDialog.newBuilder()
-                            .setDialogId(COLOR_ACCENT_DIALOG_ID)
-                            .setColor(sp.getInt("colorAccent", -720809))
-                            .setShowAlphaSlider(true)
-                            .show(getActivity());
-                }
-            });
-        }
+                constraint_colorAccent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ColorPickerDialog.newBuilder()
+                                .setDialogId(COLOR_ACCENT_DIALOG_ID)
+                                .setColor(sp.getInt("colorAccent", -720809))
+                                .setShowAlphaSlider(true)
+                                .show(getActivity());
+                    }
+                });
+            }
+        });
 
-        return root;
+        return placeholder;
     }
 
     public void refreshViews() {

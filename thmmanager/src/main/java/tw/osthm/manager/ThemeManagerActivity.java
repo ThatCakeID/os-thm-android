@@ -80,7 +80,8 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
     private SharedPreferences sp;
 
-    public static final int OPEN_REQUEST_CODE = 1945;
+    public static final int OPEN_REQUEST_CODE = 1945; //hmm =w=
+    public static String currentThemeUUID = "";
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -122,7 +123,8 @@ public class ThemeManagerActivity extends AppCompatActivity {
             }
         });
 
-        refreshTheme();
+        arrayList = new ArrayList<>();
+        gridview1.setAdapter(new ThemeGridPreview(getApplicationContext(), arrayList));
 
         gridview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -131,6 +133,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
                     osthmEngine.setCurrentTheme(arrayList.get(i).get("uuid").toString());
                     makeSnackbar("Theme set!", 0xFF43A047, 0xFFFFFFFF,
                             R.drawable.ic_done_white);
+                    currentThemeUUID = osthmEngine.getCurrentThemeUUID();
                     ((BaseAdapter) gridview1.getAdapter()).notifyDataSetChanged();
 
                 } catch (osthmException err) {
@@ -383,8 +386,10 @@ public class ThemeManagerActivity extends AppCompatActivity {
     }
 
     private void refreshTheme() {
-        arrayList = osthmEngine.getThemeList();
-        gridview1.setAdapter(new ThemeGridPreview(getApplicationContext(), arrayList));
+        currentThemeUUID = osthmEngine.getCurrentThemeUUID();
+        arrayList.clear();
+        arrayList.addAll(osthmEngine.getThemeList());
+        ((BaseAdapter)gridview1.getAdapter()).notifyDataSetChanged();
     }
 
     private void initializeViews() {
@@ -404,7 +409,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
         textview_import = findViewById(R.id.textview_import);
 
         gridview1 = findViewById(R.id.gridview1);
-        sp = getSharedPreferences("colordata", Context.MODE_PRIVATE);
+        sp = getSharedPreferences("mgrdata", Context.MODE_PRIVATE);
 
         bottomsheetView = getLayoutInflater().inflate(R.layout.bottomsheet_multichoices, null);
 

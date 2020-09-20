@@ -77,7 +77,7 @@ public class ThemeGridPreview extends BaseAdapter {
         imageview_fab.setColorFilter(list2.get("colorAccentText"));
         imageview_back.setColorFilter(list2.get("colorPrimaryTint"));
 
-        if (osthmEngine.getCurrentThemeUUID().equals(list.get(i).get("uuid").toString())) {
+        if (ThemeManagerActivity.currentThemeUUID.equals(list.get(i).get("uuid").toString())) {
             indicator.setVisibility(View.VISIBLE);
             if (ColorUtils.calculateLuminance(list2.get("colorBackground")) < 0.5)
                 indicator.setColorFilter(0xFFFFFFFF);
