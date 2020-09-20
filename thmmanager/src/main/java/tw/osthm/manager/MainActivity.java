@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         };
-        handler.postDelayed(runnable, 3000);
+        handler.postDelayed(runnable, 2000);
     }
 
     @Override

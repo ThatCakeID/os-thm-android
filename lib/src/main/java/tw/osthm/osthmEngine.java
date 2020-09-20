@@ -46,6 +46,7 @@ public class osthmEngine {
      */
 
     private static void initializeData() {
+        osthmManager.init();
         if (!osthmManager.containsConf("currentTheme")) osthmManager.setConf("currentTheme", "default");
     }
 
