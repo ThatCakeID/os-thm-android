@@ -45,10 +45,8 @@ public class FragmentThmEdit2 extends Fragment {
     private CheckBox enable_shadow;
 
     // Statusbar tint
-    private ConstraintLayout constraint_black;
-    private ConstraintLayout constraint_white;
-    private ImageView selected_black;
-    private ImageView selected_white;
+    private ConstraintLayout statusbar_tint;
+    private TextView text_statusbar_tint;
 
     // Other variables
     SharedPreferences sp;
@@ -58,11 +56,12 @@ public class FragmentThmEdit2 extends Fragment {
     private ConstraintLayout color_primary_dark_status_bar;
     private ConstraintLayout fake_edit_text_accent;
     private ConstraintLayout background;
-    private TextView fake_edit_text_hint, text_demo;
+    private TextView fake_edit_text_hint;
     private ImageView statusbar_icon1, statusbar_icon2, statusbar_icon3;
     private TextView statusbar_text;
     private FloatingActionButton fab;
     private TextView app_bar_title, background_text;
+    private TextView textView3;
 
     // Default Colors
     private final int default_color_background_text = -16777216;
@@ -107,18 +106,11 @@ public class FragmentThmEdit2 extends Fragment {
                 // =========================================================================================
 
                 // StatusBar color switch
-                constraint_white.setOnClickListener(new View.OnClickListener() {
+                statusbar_tint.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        sp.edit().putInt("colorStatusbarTint", 1).apply();
-                        refreshFragments();
-                    }
-                });
-
-                constraint_black.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        sp.edit().putInt("colorStatusbarTint", 0).apply();
+                        sp.edit().putInt("colorStatusbarTint", sp.getInt(
+                                "colorStatusbarTint", 1) == 1 ? 0 : 1).apply();
                         refreshFragments();
                     }
                 });
@@ -242,7 +234,6 @@ public class FragmentThmEdit2 extends Fragment {
         statusbar_icon2 = root.findViewById(R.id.statusbar_icon_fragment2_3);
         statusbar_icon3 = root.findViewById(R.id.statusbar_icon_fragment2_4);
         fab = root.findViewById(R.id.fab);
-        text_demo = root.findViewById(R.id.view_colorBackgroundText);
         fake_edit_text_accent = root.findViewById(R.id.view_colorAccentET);
         fake_edit_text_hint = root.findViewById(R.id.view_colorHint);
         app_bar_title = root.findViewById(R.id.view_colorPrimaryText);
@@ -251,25 +242,20 @@ public class FragmentThmEdit2 extends Fragment {
 
         // Other
         enable_shadow = root.findViewById(R.id.enable_shadow);
+        textView3 = root.findViewById(R.id.textView3);
 
-        constraint_white = root.findViewById(R.id.statusbar_tint_white);
-        constraint_black = root.findViewById(R.id.statusbar_tint_black);
-        selected_white = root.findViewById(R.id.statusbar_tint_white_check);
-        selected_black = root.findViewById(R.id.statusbar_tint_black_check);
+        statusbar_tint = root.findViewById(R.id.statusbar_tint);
+        text_statusbar_tint = root.findViewById(R.id.text_statusbar_tint);
     }
 
     public void refreshViews() {
         if (sp != null && root != null) {
-            // Check if statusbar tint is 1
-            if (sp.getInt("colorStatusbarTint", 1) == 1) {
-                // white
-                selected_white.setVisibility(View.VISIBLE);
-                selected_black.setVisibility(View.INVISIBLE);
-            } else {
-                // Black
-                selected_white.setVisibility(View.INVISIBLE);
-                selected_black.setVisibility(View.VISIBLE);
-            }
+            statusbar_tint.setBackgroundColor(sp.getInt("colorStatusbarTint", 1) == 1 ?
+                    0xFFFFFFFF : 0xFF000000);
+            text_statusbar_tint.setText(sp.getInt("colorStatusbarTint", 1) == 1 ?
+                    "White" : "Black");
+            text_statusbar_tint.setTextColor(sp.getInt("colorStatusbarTint", 1) == 1 ?
+                    0xFF808080 : 0xFFFFFFFF);
 
             // Refresh cards
             refreshCard(sp.getInt("colorBackgroundText", default_color_background_text), text_color_background_text, sub_color_background_text, image_color_background_text, constraint_color_background_text);
@@ -326,6 +312,8 @@ public class FragmentThmEdit2 extends Fragment {
             color_primary_app_bar.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
             color_primary_dark_status_bar.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
             app_bar_title.setTextColor(sp.getInt("colorPrimaryText", -1));
+            textView3.setTextColor(TEXT_COLOR);
+            enable_shadow.setTextColor(TEXT_COLOR);
         }
     }
 

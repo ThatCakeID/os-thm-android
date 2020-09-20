@@ -2,7 +2,10 @@ package tw.osthm.manager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.RippleDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.system.Os;
 import android.view.LayoutInflater;
@@ -43,6 +46,8 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     private BottomSheetDialog bottomSheetDialog;
     private ImageView image_saveb;
     private TextView til1, til2, til3, til4;
+
+    public static int TEXT_COLOR = -16777216;
 
     // FRAGMENT 1
     public static final int COLOR_PRIMARY_DIALOG_ID = 0;
@@ -310,6 +315,52 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
          * Blue : #1976D2
          * Green : #43A047
          */
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadTheme();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    private void loadTheme() {
+        OsThmTheme theme = osthmEngine.getCurrentTheme();
+        findViewById(R.id.rootView).setBackgroundColor(theme.colorBackground);
+        findViewById(R.id.linear_title).setBackgroundColor(theme.colorPrimary);
+
+        getWindow().setStatusBarColor(theme.colorPrimaryDark);
+        if (theme.colorStatusbarTint == 0
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        ((TextView)findViewById(R.id.text_back)).setTextColor(theme.colorPrimaryText);
+
+        image_back.setColorFilter(theme.colorPrimaryTint);
+        image_back.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+                .colorControlHighlight), null, null));
+        image_save.setColorFilter(theme.colorPrimaryTint);
+        image_save.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+                .colorControlHighlight), null, null));
+
+        findViewById(R.id.linear_title).setElevation(theme.shadow == 1 ? 5f : 0f);
+
+        TEXT_COLOR = theme.colorBackgroundText;
+        fragment1.refreshViews();
+        fragment2.refreshViews();
     }
 
     @Override

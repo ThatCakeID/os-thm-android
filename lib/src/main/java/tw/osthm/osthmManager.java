@@ -27,7 +27,11 @@ public class osthmManager {
     public static void init() {
         // Initialize
 
-        // Check if .osthm folder exist
+        // Check if os-thm folder exist
+        if (!StorageUtil.isDirectoryExists(exported_themes_folder))
+            StorageUtil.createDirectory(exported_themes_folder);
+
+        // Check if .os-thm folder exist
         if (!StorageUtil.isDirectoryExists(themes_folder) ||
                 !StorageUtil.isFileExist(config_file)) {
             // Initialize the folder structure

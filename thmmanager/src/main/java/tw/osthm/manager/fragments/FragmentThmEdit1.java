@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,6 +53,7 @@ public class FragmentThmEdit1 extends Fragment {
     private ImageView view_colorStatusbarTint1, view_colorStatusbarTint2, view_colorStatusbarTint3;
 
     private View root;
+    private TextView text_maincolors;
 
     public FragmentThmEdit1() {
         // Required empty public constructor
@@ -96,6 +96,7 @@ public class FragmentThmEdit1 extends Fragment {
         view_colorStatusbarTint1 = root.findViewById(R.id.view_colorStatusbarTint1);
         view_colorStatusbarTint2 = root.findViewById(R.id.view_colorStatusbarTint2);
         view_colorStatusbarTint3 = root.findViewById(R.id.view_colorStatusbarTint3);
+        text_maincolors = root.findViewById(R.id.text_maincolors);
     }
 
     @Override
@@ -194,6 +195,8 @@ public class FragmentThmEdit1 extends Fragment {
                 view_colorStatusbarTint2.setColorFilter(0xFF000000);
                 view_colorStatusbarTint3.setColorFilter(0xFF000000);
             }
+
+            text_maincolors.setTextColor(TEXT_COLOR);
         }
     }
 

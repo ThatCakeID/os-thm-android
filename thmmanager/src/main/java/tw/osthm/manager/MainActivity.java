@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadTheme();
+        getWindow().setStatusBarColor(0xFFFFFFFF);
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(MainActivity.this,
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void continueActivity() {
+        loadTheme();
         Handler handler = new Handler();
         Runnable runnable = new Runnable() {
             @Override

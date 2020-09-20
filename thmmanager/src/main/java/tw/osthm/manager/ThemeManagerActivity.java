@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.RippleDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,7 +28,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.core.graphics.ColorUtils;
 
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
@@ -436,6 +436,9 @@ public class ThemeManagerActivity extends AppCompatActivity {
         fab.setColorFilter(theme.colorAccentText);
         fab1.setColorFilter(theme.colorAccentText);
         fab2.setColorFilter(theme.colorAccentText);
+
+        gridview1.setSelector(new RippleDrawable(ColorStateList.valueOf(theme
+                .colorControlHighlight), null, new ShapeDrawable()));
     }
 
     private void refreshTheme() {

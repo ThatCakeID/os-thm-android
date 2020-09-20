@@ -52,7 +52,6 @@ public class ThemeGridPreview extends BaseAdapter {
         return i;
     }
 
-    @SuppressLint("InflateParams")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null)

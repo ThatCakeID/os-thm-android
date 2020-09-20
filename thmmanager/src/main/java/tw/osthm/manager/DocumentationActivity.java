@@ -2,12 +2,17 @@ package tw.osthm.manager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.ColorStateList;
+import android.graphics.drawable.RippleDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import io.noties.markwon.Markwon;
+import tw.osthm.OsThmTheme;
+import tw.osthm.osthmEngine;
 
 public class DocumentationActivity extends AppCompatActivity {
 
@@ -104,5 +109,21 @@ public class DocumentationActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        OsThmTheme theme = osthmEngine.getCurrentTheme();
+        findViewById(R.id.rootView).setBackgroundColor(theme.colorBackground);
+        findViewById(R.id.linear_title).setBackgroundColor(theme.colorPrimary);
+        findViewById(R.id.linear_title).setElevation(theme.shadow == 1 ? 5f : 0f);
+
+        getWindow().setStatusBarColor(theme.colorPrimaryDark);
+        if (theme.colorStatusbarTint == 0
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        ((TextView)findViewById(R.id.text_back)).setTextColor(theme.colorPrimaryText);
+        documentation_textview.setTextColor(theme.colorBackgroundText);
+
+        image_back.setColorFilter(theme.colorPrimaryTint);
+        image_back.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+                .colorControlHighlight), null, null));
     }
 }

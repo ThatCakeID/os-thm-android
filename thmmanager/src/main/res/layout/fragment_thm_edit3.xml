@@ -81,7 +81,6 @@
                 android:id="@+id/view_colorPrimaryDark"
                 android:layout_width="0dp"
                 android:layout_height="24dp"
-                android:layout_marginTop="1dp"
                 android:background="#1769AA"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
