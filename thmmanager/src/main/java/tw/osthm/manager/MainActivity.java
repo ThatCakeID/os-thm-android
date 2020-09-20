@@ -11,9 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.ColorUtils;
 
 import android.os.Handler;
 import android.view.View;
+import android.widget.TextView;
+
+import tw.osthm.OsThmTheme;
+import tw.osthm.osthmEngine;
 
 public class MainActivity extends AppCompatActivity {
     private final int REQUEST_PERM_CODE = 107;
@@ -22,12 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().setStatusBarColor(0xFFFFFFFF);
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        } else {
-            getWindow().setStatusBarColor(0xFF252525);
-        }
+        loadTheme();
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(MainActivity.this,
@@ -53,6 +53,36 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         handler.postDelayed(runnable, 2000);
+    }
+
+    private void loadTheme() {
+        OsThmTheme theme = osthmEngine.getCurrentTheme();
+        findViewById(R.id.rootView).setBackgroundColor(theme.colorBackground);
+        ((TextView)findViewById(R.id.textView)).setTextColor(theme.colorBackgroundText);
+        getWindow().setStatusBarColor(theme.colorBackground);
+        if (!(ColorUtils.calculateLuminance(theme.colorBackground) < 0.5)
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @Override

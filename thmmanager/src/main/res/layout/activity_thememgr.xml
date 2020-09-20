@@ -1,9 +1,9 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ThemeManagerActivity">
 
     <LinearLayout
@@ -90,7 +90,6 @@
             android:layout_marginBottom="176dp"
             android:clickable="true"
             android:visibility="invisible"
-            app:backgroundTint="#2196F3"
             app:pressedTranslationZ="12dp"
             app:srcCompat="@drawable/ic_palette_white" />
 
@@ -120,7 +119,6 @@
             android:layout_marginBottom="106dp"
             android:clickable="true"
             android:visibility="invisible"
-            app:backgroundTint="#3F51B5"
             app:pressedTranslationZ="12dp"
             app:srcCompat="@drawable/ic_import_export_white" />
 

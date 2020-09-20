@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.RippleDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.ColorUtils;
 
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
@@ -135,6 +139,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
                     osthmEngine.setCurrentTheme(arrayList.get(i).get("uuid").toString());
                     makeSnackbar("Theme set!", 0xFF43A047, 0xFFFFFFFF,
                             R.drawable.ic_done_white);
+                    loadTheme();
                     currentThemeUUID = osthmEngine.getCurrentThemeUUID();
                     ((BaseAdapter) gridview1.getAdapter()).notifyDataSetChanged();
 
@@ -382,6 +387,55 @@ public class ThemeManagerActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         refreshTheme();
+        loadTheme();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    private void loadTheme() {
+        OsThmTheme theme = osthmEngine.getCurrentTheme();
+        findViewById(R.id.rootView).setBackgroundColor(theme.colorBackground);
+        findViewById(R.id.linear_title).setBackgroundColor(theme.colorPrimary);
+
+        getWindow().setStatusBarColor(theme.colorPrimaryDark);
+        if (theme.colorStatusbarTint == 0
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        ((TextView)findViewById(R.id.text_back)).setTextColor(theme.colorPrimaryText);
+
+        image_help.setColorFilter(theme.colorPrimaryTint);
+        image_help.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+                .colorControlHighlight), null, null));
+
+        findViewById(R.id.linear_title).setElevation(theme.shadow == 1 ? 5f : 0f);
+        fab.setElevation(theme.shadow == 1 ? 5f : 0f);
+        fab1.setElevation(theme.shadow == 1 ? 5f : 0f);
+        fab2.setElevation(theme.shadow == 1 ? 5f : 0f);
+
+        fab.setRippleColor(theme.colorControlHighlight);
+        fab1.setRippleColor(theme.colorControlHighlight);
+        fab2.setRippleColor(theme.colorControlHighlight);
+
+        fab.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
+        fab1.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
+        fab2.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
+
+        fab.setColorFilter(theme.colorAccentText);
+        fab1.setColorFilter(theme.colorAccentText);
+        fab2.setColorFilter(theme.colorAccentText);
     }
 
     private void refreshTheme() {

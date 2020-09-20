@@ -60,7 +60,7 @@
             android:nestedScrollingEnabled="false"
             android:text="Loading documentation, please wait..."
             android:textIsSelectable="true"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
 
     </ScrollView>
 
