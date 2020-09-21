@@ -113,7 +113,7 @@ public class DocumentationActivity extends AppCompatActivity {
         OsThmTheme theme = osthmEngine.getCurrentTheme();
         findViewById(R.id.rootView).setBackgroundColor(theme.colorBackground);
         findViewById(R.id.linear_title).setBackgroundColor(theme.colorPrimary);
-        findViewById(R.id.linear_title).setElevation(theme.shadow == 1 ? 5f : 0f);
+        findViewById(R.id.linear_title).setElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 5f) : 0f);
 
         getWindow().setStatusBarColor(theme.colorPrimaryDark);
         if (theme.colorStatusbarTint == 0

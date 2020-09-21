@@ -23,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 
 import tw.osthm.manager.R;
+import tw.osthm.manager.ThmMgrUtils;
 import tw.osthm.osthmEngine;
 
 import static tw.osthm.manager.ThemeEditorActivity.*;
@@ -301,19 +302,21 @@ public class FragmentThmEdit2 extends Fragment {
 
             // shadow
             if (sp.getInt("shadow", 1) == 1) {
-                color_primary_app_bar.setElevation(5f);
-                fab.setElevation(6f);
+                color_primary_app_bar.setElevation(ThmMgrUtils.toDip(getContext(), 5f));
+                fab.setCompatElevation(ThmMgrUtils.toDip(getContext(), 6f));
             } else {
                 color_primary_app_bar.setElevation(0f);
-                fab.setElevation(0f);
+                fab.setCompatElevation(0f);
             }
 
             // Other changes ===========================================================================
             color_primary_app_bar.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
             color_primary_dark_status_bar.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
             app_bar_title.setTextColor(sp.getInt("colorPrimaryText", -1));
+            enable_shadow.setChecked(sp.getInt("shadow", 1) == 1);
             textView3.setTextColor(TEXT_COLOR);
             enable_shadow.setTextColor(TEXT_COLOR);
+            enable_shadow.setButtonTintList(ColorStateList.valueOf(ACCENT_COLOR));
         }
     }
 

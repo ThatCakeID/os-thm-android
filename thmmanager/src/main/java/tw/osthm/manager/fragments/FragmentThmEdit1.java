@@ -21,6 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 
 import tw.osthm.manager.R;
+import tw.osthm.manager.ThmMgrUtils;
 import tw.osthm.osthmEngine;
 
 import static tw.osthm.manager.ThemeEditorActivity.*;
@@ -175,11 +176,11 @@ public class FragmentThmEdit1 extends Fragment {
             view_colorPrimaryText.setTextColor(sp.getInt("colorPrimaryText", -1));
 
             if (sp.getInt("shadow", 1) == 1) {
-                view_colorPrimary.setElevation(5f);
-                fab.setElevation(6f);
+                view_colorPrimary.setElevation(ThmMgrUtils.toDip(getContext(), 5f));
+                fab.setCompatElevation(ThmMgrUtils.toDip(getContext(), 6f));
             } else {
                 view_colorPrimary.setElevation(0f);
-                fab.setElevation(0f);
+                fab.setCompatElevation(0f);
             }
 
             view_colorBackground.setBackgroundColor(sp.getInt("colorBackground", -1));

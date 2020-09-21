@@ -48,6 +48,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     private TextView til1, til2, til3, til4;
 
     public static int TEXT_COLOR = -16777216;
+    public static int ACCENT_COLOR = -720809;
 
     // FRAGMENT 1
     public static final int COLOR_PRIMARY_DIALOG_ID = 0;
@@ -356,9 +357,10 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         image_save.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, null));
 
-        findViewById(R.id.linear_title).setElevation(theme.shadow == 1 ? 5f : 0f);
+        findViewById(R.id.linear_title).setElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 5f) : 0f);
 
         TEXT_COLOR = theme.colorBackgroundText;
+        ACCENT_COLOR = theme.colorAccent;
         fragment1.refreshViews();
         fragment2.refreshViews();
     }

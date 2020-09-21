@@ -420,10 +420,10 @@ public class ThemeManagerActivity extends AppCompatActivity {
         image_help.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, null));
 
-        findViewById(R.id.linear_title).setElevation(theme.shadow == 1 ? 5f : 0f);
-        fab.setElevation(theme.shadow == 1 ? 5f : 0f);
-        fab1.setElevation(theme.shadow == 1 ? 5f : 0f);
-        fab2.setElevation(theme.shadow == 1 ? 5f : 0f);
+        findViewById(R.id.linear_title).setElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 5f) : 0f);
+        fab.setCompatElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 6f) : 0f);
+        fab1.setCompatElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 6f) : 0f);
+        fab2.setCompatElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 6f) : 0f);
 
         fab.setRippleColor(theme.colorControlHighlight);
         fab1.setRippleColor(theme.colorControlHighlight);

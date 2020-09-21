@@ -31,8 +31,10 @@ public class ThemeGridPreview extends BaseAdapter {
     private TextView textview_title;
     private TextView textview_name;
     private ImageView indicator;
+    private Context mContext;
 
     public ThemeGridPreview(Context mContext, ArrayList<HashMap<String, Object>> list) {
+        this.mContext = mContext;
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.list = list;
     }
@@ -75,6 +77,9 @@ public class ThemeGridPreview extends BaseAdapter {
         imageview_fab.setBackgroundTintList(ColorStateList.valueOf(list2.get("colorAccent")));
         imageview_fab.setColorFilter(list2.get("colorAccentText"));
         imageview_back.setColorFilter(list2.get("colorPrimaryTint"));
+
+        linear_title.setElevation(list2.get("shadow") == 1 ? ThmMgrUtils.toDip(mContext, 5f) : 0f);
+        imageview_fab.setElevation(list2.get("shadow") == 1 ? ThmMgrUtils.toDip(mContext, 6f) : 0f);
 
         if (ThemeManagerActivity.currentThemeUUID.equals(list.get(i).get("uuid").toString())) {
             indicator.setVisibility(View.VISIBLE);

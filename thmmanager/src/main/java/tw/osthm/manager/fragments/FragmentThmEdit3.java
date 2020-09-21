@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 
 import tw.osthm.manager.R;
+import tw.osthm.manager.ThmMgrUtils;
 import tw.osthm.osthmEngine;
 
 import static tw.osthm.manager.ThemeEditorActivity.*;
@@ -332,8 +333,8 @@ public class FragmentThmEdit3 extends Fragment {
                 statusbar_icon3.setColorFilter(0xFF000000);
             }
 
-            appbar.setElevation((sp.getInt("shadow", 1) == 1) ? 5f : 0f);
-            bcard.setCardElevation((sp.getInt("shadow", 1) == 1) ? 5f : 0f);
+            appbar.setElevation((sp.getInt("shadow", 1) == 1) ? ThmMgrUtils.toDip(getContext(), 5f) : 0f);
+            bcard.setCardElevation((sp.getInt("shadow", 1) == 1) ? ThmMgrUtils.toDip(getContext(), 5f) : 0f);
             appbar_backbutton.setColorFilter(sp.getInt("colorPrimaryTint", -1));
         }
     }
