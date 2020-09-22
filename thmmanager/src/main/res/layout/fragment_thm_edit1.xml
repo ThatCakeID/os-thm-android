@@ -9,7 +9,7 @@
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout"
         android:layout_width="0dp"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/gridLayout1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -42,12 +42,14 @@
                 android:id="@+id/text_clr_colorPrimary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/googlesans"
                 android:singleLine="true"
                 android:text="colorPrimary"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/text_colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/image_colorPrimary"
                 app:layout_constraintStart_toStartOf="@+id/text_colorPrimary"
                 app:layout_constraintTop_toBottomOf="@+id/text_colorPrimary" />
 
@@ -91,12 +93,14 @@
                 android:id="@+id/text_clr_colorPrimaryDark"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/googlesans"
                 android:singleLine="true"
                 android:text="colorPrimaryDark"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/text_colorPrimaryDark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/image_colorPrimaryDark"
                 app:layout_constraintStart_toStartOf="@+id/text_colorPrimaryDark"
                 app:layout_constraintTop_toBottomOf="@+id/text_colorPrimaryDark" />
 
@@ -117,7 +121,7 @@
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/gridLayout1"
         android:layout_width="0dp"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -150,12 +154,14 @@
                 android:id="@+id/text_clr_colorAccent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:fontFamily="@font/googlesans"
                 android:singleLine="true"
                 android:text="colorAccent"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="@+id/text_colorAccent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/image_colorAccent"
                 app:layout_constraintStart_toStartOf="@+id/text_colorAccent"
                 app:layout_constraintTop_toBottomOf="@+id/text_colorAccent" />
 
