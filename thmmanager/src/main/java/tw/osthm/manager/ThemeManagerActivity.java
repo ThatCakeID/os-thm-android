@@ -85,6 +85,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
     private int selectedNum = 0;
 
     private SharedPreferences sp;
+    private OsThmTheme theme;
 
     public static final int OPEN_REQUEST_CODE = 1945; //hmm =w=
     public static String currentThemeUUID = "";
@@ -406,7 +407,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
     }
 
     private void loadTheme() {
-        OsThmTheme theme = osthmEngine.getCurrentTheme();
+        theme = osthmEngine.getCurrentTheme();
         findViewById(R.id.rootView).setBackgroundColor(theme.colorBackground);
         findViewById(R.id.linear_title).setBackgroundColor(theme.colorPrimary);
 

@@ -47,6 +47,8 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     private ImageView image_saveb;
     private TextView til1, til2, til3, til4;
 
+    private OsThmTheme theme;
+
     public static int TEXT_COLOR = -16777216;
     public static int ACCENT_COLOR = -720809;
 
@@ -184,20 +186,20 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     }
 
     private void loadColors() {
-        OsThmTheme theme = osthmEngine.getTheme(getIntent().getStringExtra("theme"));
-        sp.edit().putInt("colorPrimary", theme.colorPrimary).putInt("colorPrimaryText",
-                theme.colorPrimaryText).putInt("colorPrimaryDark", theme.colorPrimaryDark)
-                .putInt("colorStatusbarTint", theme.colorStatusbarTint)
-                .putInt("colorBackground", theme.colorBackground).putInt("colorBackgroundText",
-                theme.colorBackgroundText).putInt("colorAccent", theme.colorAccent)
-                .putInt("colorAccentText", theme.colorAccentText).putInt("shadow", theme.shadow)
-                .putInt("colorControlHighlight", theme.colorControlHighlight).putInt("colorHint",
-                theme.colorHint).putInt("colorPrimaryTint", theme.colorPrimaryTint)
-                .putInt("colorBackgroundTint", theme.colorBackgroundTint).putInt("colorPrimaryCard",
-                theme.colorPrimaryCard).putInt("colorBackgroundCard", theme.colorBackgroundCard)
-                .putInt("colorPrimaryCardText", theme.colorPrimaryCardText).putInt("colorBackgroundCardText",
-                theme.colorBackgroundCardText).putInt("colorPrimaryCardTint", theme.colorPrimaryCardTint)
-                .putInt("colorBackgroundCardTint", theme.colorBackgroundCardTint).apply();
+        OsThmTheme parsedTheme = osthmEngine.getTheme(getIntent().getStringExtra("theme"));
+        sp.edit().putInt("colorPrimary", parsedTheme.colorPrimary).putInt("colorPrimaryText",
+                parsedTheme.colorPrimaryText).putInt("colorPrimaryDark", parsedTheme.colorPrimaryDark)
+                .putInt("colorStatusbarTint", parsedTheme.colorStatusbarTint)
+                .putInt("colorBackground", parsedTheme.colorBackground).putInt("colorBackgroundText",
+                parsedTheme.colorBackgroundText).putInt("colorAccent", parsedTheme.colorAccent)
+                .putInt("colorAccentText", parsedTheme.colorAccentText).putInt("shadow", parsedTheme.shadow)
+                .putInt("colorControlHighlight", parsedTheme.colorControlHighlight).putInt("colorHint",
+                parsedTheme.colorHint).putInt("colorPrimaryTint", parsedTheme.colorPrimaryTint)
+                .putInt("colorBackgroundTint", parsedTheme.colorBackgroundTint).putInt("colorPrimaryCard",
+                parsedTheme.colorPrimaryCard).putInt("colorBackgroundCard", parsedTheme.colorBackgroundCard)
+                .putInt("colorPrimaryCardText", parsedTheme.colorPrimaryCardText).putInt("colorBackgroundCardText",
+                parsedTheme.colorBackgroundCardText).putInt("colorPrimaryCardTint", parsedTheme.colorPrimaryCardTint)
+                .putInt("colorBackgroundCardTint", parsedTheme.colorBackgroundCardTint).apply();
     }
 
     @Override
@@ -342,7 +344,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     }
 
     private void loadTheme() {
-        OsThmTheme theme = osthmEngine.getCurrentTheme();
+        theme = osthmEngine.getCurrentTheme();
         findViewById(R.id.rootView).setBackgroundColor(theme.colorBackground);
         findViewById(R.id.linear_title).setBackgroundColor(theme.colorPrimary);
 
