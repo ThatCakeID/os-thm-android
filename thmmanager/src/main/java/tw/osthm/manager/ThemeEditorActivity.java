@@ -130,6 +130,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                                     sp.getInt("colorPrimaryCard", -1), sp.getInt("colorBackgroundCard", -1),
                                     sp.getInt("colorPrimaryCardText", -16777216), sp.getInt("colorBackgroundCardText", -16777216),
                                     sp.getInt("colorPrimaryCardTint", -16777216), sp.getInt("colorBackgroundCardTint", -16777216),
+                                    sp.getInt("colorDialog", -1), sp.getInt("colorDialogText", -16777216), sp.getInt("colorDialogTint", -16777216),
                                     til1.getText().toString(), til3.getText().toString(), til2.getText().toString(),
                                     Integer.parseInt(til4.getText().toString()),
                                     osthmEngine.getThemeMetadata(getIntent().getStringExtra("theme")).uuid);
@@ -144,6 +145,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                                     sp.getInt("colorPrimaryCard", -1), sp.getInt("colorBackgroundCard", -1),
                                     sp.getInt("colorPrimaryCardText", -16777216), sp.getInt("colorBackgroundCardText", -16777216),
                                     sp.getInt("colorPrimaryCardTint", -16777216), sp.getInt("colorBackgroundCardTint", -16777216),
+                                    sp.getInt("colorDialog", -1), sp.getInt("colorDialogText", -16777216), sp.getInt("colorDialogTint", -16777216),
                                     til1.getText().toString(), til3.getText().toString(), til2.getText().toString(),
                                     Integer.parseInt(til4.getText().toString()));
                         }
