@@ -42,7 +42,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/help_button"
                 android:padding="6dp"
-                app:srcCompat="@drawable/ic_help_outline_white" />
+                android:src="@drawable/ic_help_outline_white" />
 
         </LinearLayout>
 
@@ -94,7 +94,7 @@
             android:clickable="true"
             android:visibility="invisible"
             app:pressedTranslationZ="12dp"
-            app:srcCompat="@drawable/ic_palette_white" />
+            android:src="@drawable/ic_palette_white" />
 
         <TextView
             android:id="@+id/textview_import"
@@ -122,8 +122,8 @@
             android:layout_marginBottom="106dp"
             android:clickable="true"
             android:visibility="invisible"
-            app:pressedTranslationZ="12dp"
-            app:srcCompat="@drawable/ic_import_export_white" />
+            android:src="@drawable/ic_import_export_white"
+            app:pressedTranslationZ="12dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
@@ -134,8 +134,8 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="32dp"
             android:clickable="true"
-            app:pressedTranslationZ="12dp"
-            app:srcCompat="@drawable/ic_add_white" />
+            android:src="@drawable/ic_add_white"
+            app:pressedTranslationZ="12dp" />
 
     </RelativeLayout>
 

@@ -26,6 +26,7 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 
 import tw.osthm.OsThmMetadata;
 import tw.osthm.OsThmTheme;
+import tw.osthm.manager.fragments.FragmentThmEdit4;
 import tw.osthm.osthmEngine;
 import tw.osthm.osthmException;
 import tw.osthm.manager.fragments.FragmentThmEdit1;
@@ -41,6 +42,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     private static FragmentThmEdit1 fragment1;
     private static FragmentThmEdit2 fragment2;
     private static FragmentThmEdit3 fragment3;
+    private static FragmentThmEdit4 fragment4;
 
     private View bottomsheetview;
     private BottomSheetDialog bottomSheetDialog;
@@ -75,6 +77,11 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     public static final int COLOR_PRIMARY_CARD_TEXT_DIALOG_ID = 15;
     public static final int COLOR_BACKGROUND_CARD_TEXT_DIALOG_ID = 16;
 
+    // FRAGMENT 4
+    public static final int COLOR_DIALOG_DIALOG_ID = 17;
+    public static final int COLOR_DIALOG_TEXT_DIALOG_ID = 18;
+    public static final int COLOR_DIALOG_TINT_DIALOG_ID = 19;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +96,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         fragment1 = new FragmentThmEdit1();
         fragment2 = new FragmentThmEdit2();
         fragment3 = new FragmentThmEdit3();
+        fragment4 = new FragmentThmEdit4();
 
         image_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,7 +207,9 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                 parsedTheme.colorPrimaryCard).putInt("colorBackgroundCard", parsedTheme.colorBackgroundCard)
                 .putInt("colorPrimaryCardText", parsedTheme.colorPrimaryCardText).putInt("colorBackgroundCardText",
                 parsedTheme.colorBackgroundCardText).putInt("colorPrimaryCardTint", parsedTheme.colorPrimaryCardTint)
-                .putInt("colorBackgroundCardTint", parsedTheme.colorBackgroundCardTint).apply();
+                .putInt("colorBackgroundCardTint", parsedTheme.colorBackgroundCardTint)
+                .putInt("colorDialog", parsedTheme.colorDialog).putInt("colorDialogText", parsedTheme.colorDialogText)
+                .putInt("colorDialogTint", parsedTheme.colorDialogTint).apply();
     }
 
     @Override
@@ -289,6 +299,18 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                 // colorBackgroundCardText
                 sp.edit().putInt("colorBackgroundCardText", color).apply();
                 break;
+            case COLOR_DIALOG_DIALOG_ID:
+                // colorDialog
+                sp.edit().putInt("colorDialog", color).apply();
+                break;
+            case COLOR_DIALOG_TEXT_DIALOG_ID:
+                // colorDialogText
+                sp.edit().putInt("colorDialogText", color).apply();
+                break;
+            case COLOR_DIALOG_TINT_DIALOG_ID:
+                // colorDialogTint
+                sp.edit().putInt("colorDialogTint", color).apply();
+                break;
         }
         refreshFragments();
     }
@@ -297,6 +319,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         fragment1.refreshViews();
         fragment2.refreshViews();
         fragment3.refreshViews();
+        fragment4.refreshViews();
     }
 
     private void makeSnackbar(String msg, int bcolor, int tcolor, int image) {
@@ -383,7 +406,8 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
             childFragments = new Fragment[]{
                     fragment1, // 0
                     fragment2, // 1
-                    fragment3 // 2
+                    fragment3, // 2
+                    fragment4  // 3
             };
         }
 

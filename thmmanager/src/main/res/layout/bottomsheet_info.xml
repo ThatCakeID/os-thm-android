@@ -54,7 +54,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="6dp"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_palette_white"
+                android:src="@drawable/ic_palette_white"
                 app:tint="#000000" />
 
             <TextView
@@ -84,7 +84,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="6dp"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_info_white"
+                android:src="@drawable/ic_info_white"
                 app:tint="#000000" />
 
             <TextView
@@ -114,7 +114,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="6dp"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_person_outline_white"
+                android:src="@drawable/ic_person_outline_white"
                 app:tint="#000000" />
 
             <TextView
@@ -144,7 +144,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="6dp"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_colorize_white"
+                android:src="@drawable/ic_colorize_white"
                 app:tint="#000000" />
 
             <TextView
@@ -174,7 +174,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="6dp"
                 android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_osthm" />
+                android:src="@drawable/ic_osthm" />
 
             <TextView
                 android:id="@+id/text_osthm"

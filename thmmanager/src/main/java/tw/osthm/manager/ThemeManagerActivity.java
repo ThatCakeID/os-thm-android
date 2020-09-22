@@ -27,6 +27,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.getkeepsafe.taptargetview.TapTarget;
@@ -440,6 +441,29 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
         gridview1.setSelector(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, new ShapeDrawable()));
+
+        bottomsheetView.findViewById(R.id.bottomsheet_bar).setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
+        bottomsheetView.findViewById(R.id.bottomsheet_root).setBackgroundColor(theme.colorDialog);
+        image_delete.setColorFilter(theme.colorDialogTint);
+        image_edit.setColorFilter(theme.colorDialogTint);
+        ((ImageView)bottomsheetView.findViewById(R.id.image_clone)).setColorFilter(theme.colorDialogTint);
+        ((ImageView)bottomsheetView.findViewById(R.id.image_export)).setColorFilter(theme.colorDialogTint);
+        ((ImageView)bottomsheetView.findViewById(R.id.image_info)).setColorFilter(theme.colorDialogTint);
+        image_delete.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+                .colorControlHighlight), null, null));
+        image_edit.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+                .colorControlHighlight), null, null));
+        linear_clone.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+                .colorControlHighlight), null, new ShapeDrawable()));
+        linear_export.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+                .colorControlHighlight), null, new ShapeDrawable()));
+        linear_info.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+                .colorControlHighlight), null, new ShapeDrawable()));
+        ((TextView)bottomsheetView.findViewById(R.id.text_title)).setTextColor(theme.colorDialogText);
+        ((TextView)bottomsheetView.findViewById(R.id.text_subtitle)).setTextColor(theme.colorDialogText);
+        ((TextView)bottomsheetView.findViewById(R.id.text_clone)).setTextColor(theme.colorDialogText);
+        ((TextView)bottomsheetView.findViewById(R.id.text_export)).setTextColor(theme.colorDialogText);
+        ((TextView)bottomsheetView.findViewById(R.id.text_info)).setTextColor(theme.colorDialogText);
     }
 
     private void refreshTheme() {
