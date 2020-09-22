@@ -28,6 +28,9 @@ public class DefaultThemes {
      * colorBackgroundCardText: -16777216
      * colorPrimaryCardTint:    -16777216
      * colorBackgroundCardTint: -16777216
+     * colorDialog:             -1
+     * colorDialogText:         -16777216
+     * colorDialogTint:         -16777216
      */
 
     public static ArrayList<HashMap<String, Object>> getDefaultThemes() {

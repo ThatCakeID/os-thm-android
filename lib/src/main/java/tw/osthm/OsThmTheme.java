@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -38,6 +37,9 @@ public class OsThmTheme {
     public int colorBackgroundCardText;
     public int colorPrimaryCardTint;
     public int colorBackgroundCardTint;
+    public int colorDialog;
+    public int colorDialogText;
+    public int colorDialogTint;
 
     /**
      * Constructor with default theme
@@ -94,10 +96,13 @@ public class OsThmTheme {
      * @param colorPrimaryCardText Color for Text on card
      * @param colorBackgroundCardText Color for Text Background on card
      * @param colorPrimaryCardTint Tint for imageview on card
-     * @param colorBackgroundCardTint Background color for card tint
+     * @param colorBackgroundCardTint Tint for imageview on card
+     * @param colorDialog Background color for dialog & bottomsheet
+     * @param colorDialogText Text color for textview on dialog & bottomsheet
+     * @param colorDialogTint Tint color for imageview on dialog & bottomsheet
      */
 
-    public OsThmTheme(int colorPrimary, int colorPrimaryText, int colorPrimaryDark, int colorStatusbarTint, int colorBackground, int colorBackgroundText, int colorAccent, int colorAccentText, int shadow, int colorControlHighlight, int colorHint, int colorPrimaryTint, int colorBackgroundTint, int colorPrimaryCard, int colorBackgroundCard, int colorPrimaryCardText, int colorBackgroundCardText, int colorPrimaryCardTint, int colorBackgroundCardTint) {
+    public OsThmTheme(int colorPrimary, int colorPrimaryText, int colorPrimaryDark, int colorStatusbarTint, int colorBackground, int colorBackgroundText, int colorAccent, int colorAccentText, int shadow, int colorControlHighlight, int colorHint, int colorPrimaryTint, int colorBackgroundTint, int colorPrimaryCard, int colorBackgroundCard, int colorPrimaryCardText, int colorBackgroundCardText, int colorPrimaryCardTint, int colorBackgroundCardTint, int colorDialog, int colorDialogText, int colorDialogTint) {
         this.colorPrimary = colorPrimary;
         this.colorPrimaryText = colorPrimaryText;
         this.colorPrimaryDark = colorPrimaryDark;
@@ -117,6 +122,9 @@ public class OsThmTheme {
         this.colorBackgroundCardText = colorBackgroundCardText;
         this.colorPrimaryCardTint = colorPrimaryCardTint;
         this.colorBackgroundCardTint = colorBackgroundCardTint;
+        this.colorDialog = colorDialog;
+        this.colorDialogText = colorDialogText;
+        this.colorDialogTint = colorDialogTint;
     }
 
     /**
@@ -144,6 +152,9 @@ public class OsThmTheme {
         this.colorBackgroundCardText = data.get("colorBackgroundCardText");
         this.colorPrimaryCardTint = data.get("colorPrimaryCardTint");
         this.colorBackgroundCardTint = data.get("colorBackgroundCardTint");
+        this.colorDialog = data.get("colorDialog");
+        this.colorDialogText = data.get("colorDialogText");
+        this.colorDialogTint = data.get("colorDialogTint");
     }
 
     @NonNull
@@ -168,6 +179,9 @@ public class OsThmTheme {
         result.put("colorBackgroundCardText", colorBackgroundCardText);
         result.put("colorPrimaryCardTint", colorPrimaryCardTint);
         result.put("colorBackgroundCardTint", colorBackgroundCardTint);
+        result.put("colorDialog", colorDialog);
+        result.put("colorDialogText", colorDialogText);
+        result.put("colorDialogTint", colorDialogTint);
         return result;
     }
 

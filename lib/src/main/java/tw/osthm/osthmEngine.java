@@ -32,7 +32,7 @@ import java.util.UUID;
  * <p>
  *
  * @author  ThatCakeID Team
- * @version 3.0
+ * @version 3.0.1
  * @since   2019
  */
 
@@ -114,6 +114,9 @@ public class osthmEngine {
         newShinyFancyTheme.put("colorPrimaryText", Color.parseColor(oldTheme.get(0).get("colorPrimaryText").toString()));
         newShinyFancyTheme.put("colorBackgroundText", Color.parseColor(oldTheme.get(0).get("colorBackgroundText").toString()));
         newShinyFancyTheme.put("colorAccentText", Color.parseColor(oldTheme.get(0).get("colorButtonText").toString()));
+        newShinyFancyTheme.put("colorDialog", -1);
+        newShinyFancyTheme.put("colorDialogText", -16777216);
+        newShinyFancyTheme.put("colorDialogTint", -16777216);
 
         HashMap<String, Object> newmetadata = new HashMap<>();
         newmetadata.put("themesjson", new Gson().toJson(newShinyFancyTheme));
@@ -171,8 +174,8 @@ public class osthmEngine {
         addTheme(themeData.colorPrimary, themeData.colorPrimaryText, themeData.colorPrimaryDark, themeData.colorStatusbarTint, themeData.colorBackground,
                 themeData.colorBackgroundText, themeData.colorAccent, themeData.colorAccentText, themeData.shadow, themeData.colorControlHighlight, themeData.colorHint,
                 themeData.colorPrimaryTint, themeData.colorBackgroundTint, themeData.colorPrimaryCard, themeData.colorBackgroundCard,
-                themeData.colorPrimaryCardText, themeData.colorBackgroundCardText, themeData.colorPrimaryCardTint, themeData.colorBackgroundCardTint,
-                themeName, themeInfo, themeAuthor, themeVersion, UUID.randomUUID().toString());
+                themeData.colorPrimaryCardText, themeData.colorBackgroundCardText, themeData.colorPrimaryCardTint, themeData.colorBackgroundCardTint, themeData.colorDialog,
+                themeData.colorDialogText, themeData.colorDialogTint, themeName, themeInfo, themeAuthor, themeVersion, UUID.randomUUID().toString());
     }
 
 
@@ -196,8 +199,8 @@ public class osthmEngine {
         addTheme(themeData.colorPrimary, themeData.colorPrimaryText, themeData.colorPrimaryDark, themeData.colorStatusbarTint, themeData.colorBackground,
                 themeData.colorBackgroundText, themeData.colorAccent, themeData.colorAccentText, themeData.shadow, themeData.colorControlHighlight, themeData.colorHint,
                 themeData.colorPrimaryTint, themeData.colorBackgroundTint, themeData.colorPrimaryCard, themeData.colorBackgroundCard,
-                themeData.colorPrimaryCardText, themeData.colorBackgroundCardText, themeData.colorPrimaryCardTint, themeData.colorBackgroundCardTint,
-                themesname, themesinfo, themesauthor, themeversion, UUID);
+                themeData.colorPrimaryCardText, themeData.colorBackgroundCardText, themeData.colorPrimaryCardTint, themeData.colorBackgroundCardTint, themeData.colorDialog,
+                themeData.colorDialogText, themeData.colorDialogTint, themesname, themesinfo, themesauthor, themeversion, UUID);
     }
 
     /**
@@ -221,27 +224,30 @@ public class osthmEngine {
      * @param colorPrimaryCardText Color for Text on card
      * @param colorBackgroundCardText Color for Text Background on card
      * @param colorPrimaryCardTint Tint for imageview on card
-     * @param colorBackgroundCardTint Background color for card tint
+     * @param colorBackgroundCardTint Tint for imageview on card
+     * @param colorDialog Background color for dialog & bottomsheet
+     * @param colorDialogText Text color for textview on dialog & bottomsheet
+     * @param colorDialogTint Tint color for imageview on dialog & bottomsheet
      * @param themeMetadata OsThmMetadata object containing extra metadata
      * @throws osthmException Os-Thm Exception
      */
 
-    public static void addTheme(int colorPrimary,          int colorPrimaryText, int colorPrimaryDark,
-                                int colorStatusbarTint,    int colorBackground,  int colorBackgroundText,
-                                int colorAccent,           int colorAccentText,  int shadow,
-                                int colorControlHighlight, int colorHint,        int colorPrimaryTint,
-                                int colorBackgroundTint,   int colorPrimaryCard, int colorBackgroundCard,
-                                int colorPrimaryCardText,  int colorBackgroundCardText,
-                                int colorPrimaryCardTint,  int colorBackgroundCardTint,
-                                OsThmMetadata themeMetadata) throws osthmException {
+    public static void addTheme(int colorPrimary,            int colorPrimaryText,        int colorPrimaryDark,
+                                int colorStatusbarTint,      int colorBackground,         int colorBackgroundText,
+                                int colorAccent,             int colorAccentText,         int shadow,
+                                int colorControlHighlight,   int colorHint,               int colorPrimaryTint,
+                                int colorBackgroundTint,     int colorPrimaryCard,        int colorBackgroundCard,
+                                int colorPrimaryCardText,    int colorBackgroundCardText, int colorPrimaryCardTint,
+                                int colorBackgroundCardTint, int colorDialog,             int colorDialogText,
+                                int colorDialogTint,         OsThmMetadata themeMetadata) throws osthmException {
         // Add new theme using given hex colors and OsThmMetadata object
 
         addTheme(colorPrimary, colorPrimaryText, colorPrimaryDark, colorStatusbarTint, colorBackground,
                 colorBackgroundText, colorAccent, colorAccentText, shadow, colorControlHighlight, colorHint,
                 colorPrimaryTint, colorBackgroundTint, colorPrimaryCard, colorBackgroundCard,
                 colorPrimaryCardText, colorBackgroundCardText, colorPrimaryCardTint, colorBackgroundCardTint,
-                themeMetadata.themesname, themeMetadata.themesinfo, themeMetadata.themesauthor,
-                themeMetadata.themeversion, themeMetadata.uuid);
+                colorDialog, colorDialogText, colorDialogTint, themeMetadata.themesname, themeMetadata.themesinfo,
+                themeMetadata.themesauthor, themeMetadata.themeversion, themeMetadata.uuid);
     }
 
     /**
@@ -264,7 +270,10 @@ public class osthmEngine {
      * @param colorPrimaryCardText Color for Text on card
      * @param colorBackgroundCardText Color for Text Background on card
      * @param colorPrimaryCardTint Tint for imageview on card
-     * @param colorBackgroundCardTint Background color for card tint
+     * @param colorBackgroundCardTint Tint for imageview on card
+     * @param colorDialog Background color for dialog & bottomsheet
+     * @param colorDialogText Text color for textview on dialog & bottomsheet
+     * @param colorDialogTint Tint color for imageview on dialog & bottomsheet
      * @param themesname Theme name
      * @param themesinfo Theme info/ description
      * @param themesauthor Theme Author
@@ -272,13 +281,14 @@ public class osthmEngine {
      * @throws osthmException Os-Thm Exception
      */
 
-    public static void addTheme(int colorPrimary,          int colorPrimaryText, int colorPrimaryDark,
-                                int colorStatusbarTint,    int colorBackground,  int colorBackgroundText,
-                                int colorAccent,           int colorAccentText,  int shadow,
-                                int colorControlHighlight, int colorHint,        int colorPrimaryTint,
-                                int colorBackgroundTint,   int colorPrimaryCard, int colorBackgroundCard,
-                                int colorPrimaryCardText,  int colorBackgroundCardText,
-                                int colorPrimaryCardTint,  int colorBackgroundCardTint,
+    public static void addTheme(int colorPrimary,            int colorPrimaryText,        int colorPrimaryDark,
+                                int colorStatusbarTint,      int colorBackground,         int colorBackgroundText,
+                                int colorAccent,             int colorAccentText,         int shadow,
+                                int colorControlHighlight,   int colorHint,               int colorPrimaryTint,
+                                int colorBackgroundTint,     int colorPrimaryCard,        int colorBackgroundCard,
+                                int colorPrimaryCardText,    int colorBackgroundCardText, int colorPrimaryCardTint,
+                                int colorBackgroundCardTint, int colorDialog,             int colorDialogText,
+                                int colorDialogTint,
 
                                 String themesname,         String themesinfo,
                                 String themesauthor,       int themeversion) throws osthmException {
@@ -288,7 +298,8 @@ public class osthmEngine {
                 colorBackgroundText, colorAccent, colorAccentText, shadow, colorControlHighlight, colorHint,
                 colorPrimaryTint, colorBackgroundTint, colorPrimaryCard, colorBackgroundCard,
                 colorPrimaryCardText, colorBackgroundCardText, colorPrimaryCardTint, colorBackgroundCardTint,
-                themesname, themesinfo, themesauthor, themeversion, UUID.randomUUID().toString());
+                colorDialog, colorDialogText, colorDialogTint, themesname, themesinfo, themesauthor, themeversion,
+                UUID.randomUUID().toString());
     }
 
     /**
@@ -311,7 +322,10 @@ public class osthmEngine {
      * @param colorPrimaryCardText Color for Text on card
      * @param colorBackgroundCardText Color for Text Background on card
      * @param colorPrimaryCardTint Tint for imageview on card
-     * @param colorBackgroundCardTint Background color for card tint
+     * @param colorBackgroundCardTint Tint for imageview on card
+     * @param colorDialog Background color for dialog & bottomsheet
+     * @param colorDialogText Text color for textview on dialog & bottomsheet
+     * @param colorDialogTint Tint color for imageview on dialog & bottomsheet
      * @param themesname Theme name
      * @param themesinfo Theme info/ description
      * @param themesauthor Theme Author
@@ -320,12 +334,14 @@ public class osthmEngine {
      * @throws osthmException Os-Thm Exception
      */
 
-    public static void addTheme(int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
-                                int colorStatusbarTint, int colorBackground, int colorBackgroundText,
-                                int colorAccent, int colorAccentText, int shadow, int colorControlHighlight,
-                                int colorHint, int colorPrimaryTint, int colorBackgroundTint,
-                                int colorPrimaryCard, int colorBackgroundCard, int colorPrimaryCardText,
-                                int colorBackgroundCardText, int colorPrimaryCardTint, int colorBackgroundCardTint,
+    public static void addTheme(int colorPrimary,            int colorPrimaryText,        int colorPrimaryDark,
+                                int colorStatusbarTint,      int colorBackground,         int colorBackgroundText,
+                                int colorAccent,             int colorAccentText,         int shadow,
+                                int colorControlHighlight,   int colorHint,               int colorPrimaryTint,
+                                int colorBackgroundTint,     int colorPrimaryCard,        int colorBackgroundCard,
+                                int colorPrimaryCardText,    int colorBackgroundCardText, int colorPrimaryCardTint,
+                                int colorBackgroundCardTint, int colorDialog,             int colorDialogText,
+                                int colorDialogTint,
 
                                 String themesname, String themesinfo, String themesauthor,
                                 int themeversion, String UUIDvar) throws osthmException {
@@ -356,6 +372,9 @@ public class osthmEngine {
             themearray.put("colorBackgroundCardText",        colorBackgroundCardText );
             themearray.put("colorPrimaryCardTint",           colorPrimaryCardTint    );
             themearray.put("colorBackgroundCardTint",        colorBackgroundCardTint );
+            themearray.put("colorDialog",                    colorDialog             );
+            themearray.put("colorDialogText",                colorDialogText         );
+            themearray.put("colorDialogTint",                colorDialogTint         );
 
             HashMap<String, Object> metadataarray = new HashMap<>();
 
@@ -409,7 +428,10 @@ public class osthmEngine {
      * @param colorPrimaryCardText Color for Text on card
      * @param colorBackgroundCardText Color for Text Background on card
      * @param colorPrimaryCardTint Tint for imageview on card
-     * @param colorBackgroundCardTint Background color for card tint
+     * @param colorBackgroundCardTint Tint for imageview on card
+     * @param colorDialog Background color for dialog & bottomsheet
+     * @param colorDialogText Text color for textview on dialog & bottomsheet
+     * @param colorDialogTint Tint color for imageview on dialog & bottomsheet
      * @param themesname Theme name
      * @param themesinfo Theme info/ description
      * @param themesauthor Theme Author
@@ -418,12 +440,14 @@ public class osthmEngine {
      * @throws osthmException Os-Thm Exception
      */
 
-    public static void editTheme(int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
-                                 int colorStatusbarTint, int colorBackground, int colorBackgroundText,
-                                 int colorAccent, int colorAccentText, int shadow, int colorControlHighlight,
-                                 int colorHint, int colorPrimaryTint, int colorBackgroundTint,
-                                 int colorPrimaryCard, int colorBackgroundCard, int colorPrimaryCardText,
-                                 int colorBackgroundCardText, int colorPrimaryCardTint, int colorBackgroundCardTint,
+    public static void editTheme(int colorPrimary,            int colorPrimaryText,        int colorPrimaryDark,
+                                 int colorStatusbarTint,      int colorBackground,         int colorBackgroundText,
+                                 int colorAccent,             int colorAccentText,         int shadow,
+                                 int colorControlHighlight,   int colorHint,               int colorPrimaryTint,
+                                 int colorBackgroundTint,     int colorPrimaryCard,        int colorBackgroundCard,
+                                 int colorPrimaryCardText,    int colorBackgroundCardText, int colorPrimaryCardTint,
+                                 int colorBackgroundCardTint, int colorDialog,             int colorDialogText,
+                                 int colorDialogTint,
 
                                  String themesname, String themesinfo, String themesauthor,
                                  int themeversion, String UUIDvar) throws osthmException {
@@ -448,6 +472,9 @@ public class osthmEngine {
         themearray.put("colorBackgroundCardText",        colorBackgroundCardText );
         themearray.put("colorPrimaryCardTint",           colorPrimaryCardTint    );
         themearray.put("colorBackgroundCardTint",        colorBackgroundCardTint );
+        themearray.put("colorDialog",                    colorDialog             );
+        themearray.put("colorDialogText",                colorDialogText         );
+        themearray.put("colorDialogTint",                colorDialogTint         );
 
         editTheme(themearray, themesname, themesinfo, themesauthor, themeversion, UUIDvar);
     }
