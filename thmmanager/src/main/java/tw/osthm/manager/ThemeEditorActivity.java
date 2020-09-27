@@ -2,13 +2,17 @@ package tw.osthm.manager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.RippleDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.system.Os;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -20,6 +24,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 
+import tw.osthm.OsThmMetadata;
+import tw.osthm.OsThmTheme;
+import tw.osthm.manager.fragments.FragmentThmEdit4;
 import tw.osthm.osthmEngine;
 import tw.osthm.osthmException;
 import tw.osthm.manager.fragments.FragmentThmEdit1;
@@ -35,11 +42,17 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     private static FragmentThmEdit1 fragment1;
     private static FragmentThmEdit2 fragment2;
     private static FragmentThmEdit3 fragment3;
+    private static FragmentThmEdit4 fragment4;
 
     private View bottomsheetview;
     private BottomSheetDialog bottomSheetDialog;
-    private ImageView image_saveb, image_close;
+    private ImageView image_saveb;
     private TextView til1, til2, til3, til4;
+
+    private OsThmTheme theme;
+
+    public static int TEXT_COLOR = -16777216;
+    public static int ACCENT_COLOR = -720809;
 
     // FRAGMENT 1
     public static final int COLOR_PRIMARY_DIALOG_ID = 0;
@@ -64,6 +77,11 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     public static final int COLOR_PRIMARY_CARD_TEXT_DIALOG_ID = 15;
     public static final int COLOR_BACKGROUND_CARD_TEXT_DIALOG_ID = 16;
 
+    // FRAGMENT 4
+    public static final int COLOR_DIALOG_DIALOG_ID = 17;
+    public static final int COLOR_DIALOG_TEXT_DIALOG_ID = 18;
+    public static final int COLOR_DIALOG_TINT_DIALOG_ID = 19;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +96,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         fragment1 = new FragmentThmEdit1();
         fragment2 = new FragmentThmEdit2();
         fragment3 = new FragmentThmEdit3();
+        fragment4 = new FragmentThmEdit4();
 
         image_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,15 +109,16 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
             @Override
             public void onClick(View view) {
                 if (bottomsheetview != null) {
+                    if (getIntent().getBooleanExtra("isEditing", false)) {
+                        OsThmMetadata thmMetadata = osthmEngine.getThemeMetadata(getIntent()
+                                .getStringExtra("theme"));
+                        til1.setText(thmMetadata.themesname);
+                        til2.setText(thmMetadata.themesauthor);
+                        til3.setText(thmMetadata.themesinfo);
+                        til4.setText(Integer.toString(thmMetadata.themeversion));
+                    }
                     bottomSheetDialog.show();
                 }
-            }
-        });
-
-        image_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomSheetDialog.dismiss();
             }
         });
 
@@ -109,18 +129,36 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                 if (!til1.getText().toString().equals("") && !til2.getText().toString().equals("") && !til3
                         .getText().toString().equals("") && !til4.getText().toString().equals("")) {
                     try {
-                        osthmEngine.addTheme(sp.getInt("colorPrimary", -14575885),
-                                sp.getInt("colorPrimaryText", -1), sp.getInt("colorPrimaryDark", -15242838),
-                                sp.getInt("colorStatusbarTint", 1), sp.getInt("colorBackground", -1),
-                                sp.getInt("colorBackgroundText", -16777216), sp.getInt("colorAccent", -720809),
-                                sp.getInt("colorAccentText", -1), sp.getInt("shadow", 1),
-                                sp.getInt("colorControlHighlight", 1073741824), sp.getInt("colorHint", -5723992),
-                                sp.getInt("colorPrimaryTint", -1), sp.getInt("colorBackgroundTint", -14575885),
-                                sp.getInt("colorPrimaryCard", -1), sp.getInt("colorBackgroundCard", -1),
-                                sp.getInt("colorPrimaryCardText", -16777216), sp.getInt("colorBackgroundCardText", -16777216),
-                                sp.getInt("colorPrimaryCardTint", -16777216), sp.getInt("colorBackgroundCardTint", -16777216),
-                                til1.getText().toString(), til3.getText().toString(), til2.getText().toString(),
-                                Integer.parseInt(til4.getText().toString()));
+                        if (getIntent().getBooleanExtra("isEditing", false)) {
+                            osthmEngine.editTheme(sp.getInt("colorPrimary", -14575885),
+                                    sp.getInt("colorPrimaryText", -1), sp.getInt("colorPrimaryDark", -15242838),
+                                    sp.getInt("colorStatusbarTint", 1), sp.getInt("colorBackground", -1),
+                                    sp.getInt("colorBackgroundText", -16777216), sp.getInt("colorAccent", -720809),
+                                    sp.getInt("colorAccentText", -1), sp.getInt("shadow", 1),
+                                    sp.getInt("colorControlHighlight", 1073741824), sp.getInt("colorHint", -5723992),
+                                    sp.getInt("colorPrimaryTint", -1), sp.getInt("colorBackgroundTint", -14575885),
+                                    sp.getInt("colorPrimaryCard", -1), sp.getInt("colorBackgroundCard", -1),
+                                    sp.getInt("colorPrimaryCardText", -16777216), sp.getInt("colorBackgroundCardText", -16777216),
+                                    sp.getInt("colorPrimaryCardTint", -16777216), sp.getInt("colorBackgroundCardTint", -16777216),
+                                    sp.getInt("colorDialog", -1), sp.getInt("colorDialogText", -16777216), sp.getInt("colorDialogTint", -16777216),
+                                    til1.getText().toString(), til3.getText().toString(), til2.getText().toString(),
+                                    Integer.parseInt(til4.getText().toString()),
+                                    osthmEngine.getThemeMetadata(getIntent().getStringExtra("theme")).uuid);
+                        } else {
+                            osthmEngine.addTheme(sp.getInt("colorPrimary", -14575885),
+                                    sp.getInt("colorPrimaryText", -1), sp.getInt("colorPrimaryDark", -15242838),
+                                    sp.getInt("colorStatusbarTint", 1), sp.getInt("colorBackground", -1),
+                                    sp.getInt("colorBackgroundText", -16777216), sp.getInt("colorAccent", -720809),
+                                    sp.getInt("colorAccentText", -1), sp.getInt("shadow", 1),
+                                    sp.getInt("colorControlHighlight", 1073741824), sp.getInt("colorHint", -5723992),
+                                    sp.getInt("colorPrimaryTint", -1), sp.getInt("colorBackgroundTint", -14575885),
+                                    sp.getInt("colorPrimaryCard", -1), sp.getInt("colorBackgroundCard", -1),
+                                    sp.getInt("colorPrimaryCardText", -16777216), sp.getInt("colorBackgroundCardText", -16777216),
+                                    sp.getInt("colorPrimaryCardTint", -16777216), sp.getInt("colorBackgroundCardTint", -16777216),
+                                    sp.getInt("colorDialog", -1), sp.getInt("colorDialogText", -16777216), sp.getInt("colorDialogTint", -16777216),
+                                    til1.getText().toString(), til3.getText().toString(), til2.getText().toString(),
+                                    Integer.parseInt(til4.getText().toString()));
+                        }
                         finish();
                     } catch (osthmException err) {
                         makeSnackbar(err.getMessage(), 0xFFD32F2F,
@@ -134,7 +172,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         });
 
         pagerAdapter = new ScreenSlidePagerAdapter(this);
-        mPager.setOffscreenPageLimit(3);
+        mPager.setOffscreenPageLimit(4);
         mPager.setAdapter(pagerAdapter);
     }
 
@@ -147,8 +185,8 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         bottomsheetview = inflater.inflate(R.layout.bottomsheet_newtheme, null);
         image_saveb = bottomsheetview.findViewById(R.id.image_save);
-        image_close = bottomsheetview.findViewById(R.id.image_close);
         bottomSheetDialog.setContentView(bottomsheetview);
+        ((View)bottomsheetview.getParent()).setBackgroundColor(Color.TRANSPARENT);
         til1 = bottomsheetview.findViewById(R.id.til1);
         til2 = bottomsheetview.findViewById(R.id.til2);
         til3 = bottomsheetview.findViewById(R.id.til3);
@@ -156,51 +194,22 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     }
 
     private void loadColors() {
-        sp.edit().putInt("colorPrimary", -14575885).putInt("colorPrimaryText", -1)
-                .putInt("colorPrimaryDark", -15242838).putInt("colorStatusbarTint", 1)
-                .putInt("colorBackground", -1).putInt("colorBackgroundText", -16777216)
-                .putInt("colorAccent", -720809).putInt("colorAccentText", -1)
-                .putInt("shadow", 1).putInt("colorControlHighlight", 1073741824)
-                .putInt("colorHint", -5723992).putInt("colorPrimaryTint", -1)
-                .putInt("colorBackgroundTint", -14575885).putInt("colorPrimaryCard", -1)
-                .putInt("colorBackgroundCard", -1).putInt("colorPrimaryCardText", -16777216)
-                .putInt("colorBackgroundCardText", -16777216).putInt("colorPrimaryCardTint", -16777216)
-                .putInt("colorBackgroundCardTint", -16777216).apply();
-    }
-
-    private void loadDefaultColors() {
-        sp.edit().putInt("colorPrimary", -14575885).putInt("colorPrimaryText", -1)
-                .putInt("colorPrimaryDark", -15242838).putInt("colorStatusbarTint", 1)
-                .putInt("colorBackground", -1).putInt("colorBackgroundText", -16777216)
-                .putInt("colorAccent", -720809).putInt("colorAccentText", -1)
-                .putInt("shadow", 1).putInt("colorControlHighlight", 1073741824)
-                .putInt("colorHint", -5723992).putInt("colorPrimaryTint", -1)
-                .putInt("colorBackgroundTint", -14575885).putInt("colorPrimaryCard", -1)
-                .putInt("colorBackgroundCard", -1).putInt("colorPrimaryCardText", -16777216)
-                .putInt("colorBackgroundCardText", -16777216).putInt("colorPrimaryCardTint", -16777216)
-                .putInt("colorBackgroundCardTint", -16777216).apply();
-        /*
-         * Default colors (more readable than the code above):
-         * colorPrimary:            -14575885
-         * colorPrimaryText:        -1
-         * colorPrimaryDark:        -15242838
-         * colorStatusbarTint:       1
-         * colorBackground:         -1
-         * colorBackgroundText:     -16777216
-         * colorAccent:             -720809
-         * colorAccentText:         -1
-         * shadow:                   1
-         * colorControlHighlight:    1073741824
-         * colorHint:               -5723992
-         * colorPrimaryTint:        -1
-         * colorBackgroundTint:     -14575885
-         * colorPrimaryCard:        -1
-         * colorBackgroundCard:     -1
-         * colorPrimaryCardText:    -16777216
-         * colorBackgroundCardText: -16777216
-         * colorPrimaryCardTint:    -16777216
-         * colorBackgroundCardTint: -16777216
-         */
+        OsThmTheme parsedTheme = osthmEngine.getTheme(getIntent().getStringExtra("theme"));
+        sp.edit().putInt("colorPrimary", parsedTheme.colorPrimary).putInt("colorPrimaryText",
+                parsedTheme.colorPrimaryText).putInt("colorPrimaryDark", parsedTheme.colorPrimaryDark)
+                .putInt("colorStatusbarTint", parsedTheme.colorStatusbarTint)
+                .putInt("colorBackground", parsedTheme.colorBackground).putInt("colorBackgroundText",
+                parsedTheme.colorBackgroundText).putInt("colorAccent", parsedTheme.colorAccent)
+                .putInt("colorAccentText", parsedTheme.colorAccentText).putInt("shadow", parsedTheme.shadow)
+                .putInt("colorControlHighlight", parsedTheme.colorControlHighlight).putInt("colorHint",
+                parsedTheme.colorHint).putInt("colorPrimaryTint", parsedTheme.colorPrimaryTint)
+                .putInt("colorBackgroundTint", parsedTheme.colorBackgroundTint).putInt("colorPrimaryCard",
+                parsedTheme.colorPrimaryCard).putInt("colorBackgroundCard", parsedTheme.colorBackgroundCard)
+                .putInt("colorPrimaryCardText", parsedTheme.colorPrimaryCardText).putInt("colorBackgroundCardText",
+                parsedTheme.colorBackgroundCardText).putInt("colorPrimaryCardTint", parsedTheme.colorPrimaryCardTint)
+                .putInt("colorBackgroundCardTint", parsedTheme.colorBackgroundCardTint)
+                .putInt("colorDialog", parsedTheme.colorDialog).putInt("colorDialogText", parsedTheme.colorDialogText)
+                .putInt("colorDialogTint", parsedTheme.colorDialogTint).apply();
     }
 
     @Override
@@ -290,6 +299,18 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                 // colorBackgroundCardText
                 sp.edit().putInt("colorBackgroundCardText", color).apply();
                 break;
+            case COLOR_DIALOG_DIALOG_ID:
+                // colorDialog
+                sp.edit().putInt("colorDialog", color).apply();
+                break;
+            case COLOR_DIALOG_TEXT_DIALOG_ID:
+                // colorDialogText
+                sp.edit().putInt("colorDialogText", color).apply();
+                break;
+            case COLOR_DIALOG_TINT_DIALOG_ID:
+                // colorDialogTint
+                sp.edit().putInt("colorDialogTint", color).apply();
+                break;
         }
         refreshFragments();
     }
@@ -298,6 +319,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         fragment1.refreshViews();
         fragment2.refreshViews();
         fragment3.refreshViews();
+        fragment4.refreshViews();
     }
 
     private void makeSnackbar(String msg, int bcolor, int tcolor, int image) {
@@ -324,6 +346,53 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        loadTheme();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    private void loadTheme() {
+        theme = osthmEngine.getCurrentTheme();
+        findViewById(R.id.rootView).setBackgroundColor(theme.colorBackground);
+        findViewById(R.id.linear_title).setBackgroundColor(theme.colorPrimary);
+
+        getWindow().setStatusBarColor(theme.colorPrimaryDark);
+        if (theme.colorStatusbarTint == 0
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        ((TextView)findViewById(R.id.text_back)).setTextColor(theme.colorPrimaryText);
+
+        image_back.setColorFilter(theme.colorPrimaryTint);
+        image_back.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+                .colorControlHighlight), null, null));
+        image_save.setColorFilter(theme.colorPrimaryTint);
+        image_save.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+                .colorControlHighlight), null, null));
+
+        findViewById(R.id.linear_title).setElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 5f) : 0f);
+
+        TEXT_COLOR = theme.colorBackgroundText;
+        ACCENT_COLOR = theme.colorAccent;
+        fragment1.refreshViews();
+        fragment2.refreshViews();
+    }
+
+    @Override
     public void onDialogDismissed(int dialogId) {
         //Do nothing
     }
@@ -337,7 +406,8 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
             childFragments = new Fragment[]{
                     fragment1, // 0
                     fragment2, // 1
-                    fragment3 // 2
+                    fragment3, // 2
+                    fragment4  // 3
             };
         }
 

@@ -1,12 +1,12 @@
 package tw.osthm;
 
+import android.os.AsyncTask;
 import android.os.Environment;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,107 +19,19 @@ import java.util.List;
 public class osthmManager {
 
     public static final String externalDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-    public static final String themes_folder = externalDir + "/.osthm/themes/";
-    public static final String config_file = externalDir + "/.osthm/conf";
-
-    public static void setConf(String key, String value) {
-        init();
-        HashMap<String, String> data = loadConfJson();
-        data.put(key, value);
-        StorageUtil.createFile(config_file, new Gson().toJson(data));
-    }
-
-    public static String getConf(String key, String defaultValue) {
-        init();
-        HashMap<String, String> data = loadConfJson();
-        return data.containsKey(key) ? data.get(key) : defaultValue;
-    }
-
-    public static boolean containsConf(String key)  {
-        init();
-        HashMap<String, String> data = loadConfJson();
-        return data.containsKey(key);
-    }
-
-    public static void removeConf(String key) throws IOException {
-        init();
-        HashMap<String, String> data = loadConfJson();
-        if (data.containsKey(key)) {
-            data.remove(key);
-            StorageUtil.createFile(config_file, new Gson().toJson(data));
-        }
-    }
-
-    public static void clearConf() {
-        init();
-        StorageUtil.createFile(config_file, "{}");
-    }
-
-    public static void setTheme(HashMap<String, Object> theme) {
-        init();
-        StorageUtil.createFile(themes_folder + theme.get("uuid").toString(),
-                new Gson().toJson(theme));
-    }
-
-    public static ArrayList<HashMap<String, Object>> getThemes() {
-        init();
-        List<File> files = StorageUtil.getFiles(themes_folder);
-        ArrayList<HashMap<String, Object>> themes = new ArrayList<>();
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(new TypeToken<HashMap<String, Object>>() {}.getType(),
-                new HashMapDeserializerFix());
-        Gson gson = gsonBuilder.create();
-        for(File file : files) {
-            try {
-                themes.add((HashMap<String, Object>) gson.fromJson(StorageUtil
-                                .readFile(file.getAbsolutePath()),
-                        new TypeToken<HashMap<String, Object>>() {}.getType()));
-            } catch (IOException ignored) {}
-        }
-        return themes;
-    }
-
-    public static void removeTheme(String uuid) {
-        init();
-        if (StorageUtil.isFileExist(themes_folder + uuid))
-            StorageUtil.deleteFile(themes_folder + uuid);
-    }
-
-    public static void clearThemes() {
-        init();
-        List<File> files = StorageUtil.getFiles(themes_folder);
-        for (File file : files)
-            StorageUtil.deleteFile(file.getAbsolutePath());
-    }
-
-    public static boolean containsTheme(String uuid) {
-        init();
-        boolean isExist = false;
-        List<File> files = StorageUtil.getFiles(themes_folder);
-        for (File file : files) {
-            if (file.getName().equals(uuid)) isExist = true;
-        }
-        return isExist;
-    }
-
-    // Utilities ===================================================================================
-
-    // Load config file into HashMap
-    private static HashMap<String, String> loadConfJson() {
-        try {
-            return new Gson().fromJson(StorageUtil.readFile(config_file),
-                    new TypeToken<HashMap<String, String>>() {
-                    }.getType());
-        } catch (IOException e) {
-            return null;
-        }
-    }
+    public static final String themes_folder = externalDir + "/.os-thm/themes/";
+    public static final String config_file = externalDir + "/.os-thm/conf";
+    public static final String exported_themes_folder = externalDir + "/os-thm/";
 
     // Initialize
-    private static void init() {
+    public static void init() {
         // Initialize
 
-        // Check if .osthm folder exist
+        // Check if os-thm folder exist
+        if (!StorageUtil.isDirectoryExists(exported_themes_folder))
+            StorageUtil.createDirectory(exported_themes_folder);
+
+        // Check if .os-thm folder exist
         if (!StorageUtil.isDirectoryExists(themes_folder) ||
                 !StorageUtil.isFileExist(config_file)) {
             // Initialize the folder structure
@@ -149,12 +61,109 @@ public class osthmManager {
                                 new TypeToken<HashMap<String, Object>>() {
                                 }.getType());
 
-                        if (!thm.get("uuid").toString().equals(file.getName()))
+                        if (!(thm.get("uuid").toString() + ".os-thm").equals(file.getName()))
                             StorageUtil.rename(file.getAbsolutePath(), themes_folder +
-                                    thm.get("uuid").toString());
+                                    thm.get("uuid").toString() + ".os-thm");
                     }
                 } catch (IOException ignored) {}
             }
+        }
+    }
+
+    public static void setConf(String key, String value) {
+        HashMap<String, String> data = loadConfJson();
+        data.put(key, value);
+        StorageUtil.createFile(config_file, new Gson().toJson(data));
+    }
+
+    public static String getConf(String key, String defaultValue) {
+        HashMap<String, String> data = loadConfJson();
+        return data.containsKey(key) ? data.get(key) : defaultValue;
+    }
+
+    public static boolean containsConf(String key)  {
+        HashMap<String, String> data = loadConfJson();
+        return data.containsKey(key);
+    }
+
+    public static void removeConf(String key) throws IOException {
+        HashMap<String, String> data = loadConfJson();
+        if (data.containsKey(key)) {
+            data.remove(key);
+            StorageUtil.createFile(config_file, new Gson().toJson(data));
+        }
+    }
+
+    public static void clearConf() {
+        StorageUtil.createFile(config_file, "{}");
+    }
+
+    public static void setTheme(HashMap<String, Object> theme) {
+        StorageUtil.createFile(themes_folder + theme.get("uuid").toString() + ".os-thm",
+                new Gson().toJson(theme));
+    }
+
+    public static ArrayList<HashMap<String, Object>> getThemes() {
+        List<File> files = StorageUtil.getFiles(themes_folder);
+        ArrayList<HashMap<String, Object>> themes = new ArrayList<>();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(new TypeToken<HashMap<String, Object>>() {}.getType(),
+                new HashMapDeserializerFix());
+        Gson gson = gsonBuilder.create();
+        for(File file : files) {
+            try {
+                themes.add((HashMap<String, Object>) gson.fromJson(StorageUtil
+                                .readFile(file.getAbsolutePath()),
+                        new TypeToken<HashMap<String, Object>>() {}.getType()));
+            } catch (IOException ignored) {}
+        }
+        return themes;
+    }
+
+    public static void removeTheme(String uuid) {
+        if (StorageUtil.isFileExist(themes_folder + uuid + ".os-thm"))
+            StorageUtil.deleteFile(themes_folder + uuid + ".os-thm");
+    }
+
+    public static void clearThemes() {
+        List<File> files = StorageUtil.getFiles(themes_folder);
+        for (File file : files)
+            StorageUtil.deleteFile(file.getAbsolutePath());
+    }
+
+    public static boolean containsTheme(String uuid) {
+        List<File> files = StorageUtil.getFiles(themes_folder);
+        for (File file : files) {
+            if (file.getName().equals(uuid + ".os-thm")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static String exportThemeFile(String json) {
+       int fileNum = 0;
+       while(true) {
+           if (StorageUtil.isFileExist(exported_themes_folder + "theme_" + Integer.toString(fileNum) + ".os-thm"))
+               fileNum++;
+           else {
+               StorageUtil.createFile(exported_themes_folder + "theme_" + Integer.toString(fileNum) + ".os-thm", json);
+               return exported_themes_folder + "theme_" + Integer.toString(fileNum) + ".os-thm";
+           }
+       }
+    }
+
+    // Utilities ===================================================================================
+
+    // Load config file into HashMap
+    private static HashMap<String, String> loadConfJson() {
+        try {
+            return new Gson().fromJson(StorageUtil.readFile(config_file),
+                    new TypeToken<HashMap<String, String>>() {
+                    }.getType());
+        } catch (IOException e) {
+            return null;
         }
     }
 
@@ -163,13 +172,7 @@ public class osthmManager {
         try {
             new JSONObject(test);
         } catch (JSONException ex) {
-            // edited, to include @Arthur's comment
-            // e.g. in case JSONArray is valid as well...
-            try {
-                new JSONArray(test);
-            } catch (JSONException ex1) {
-                return false;
-            }
+            return false;
         }
         return true;
     }

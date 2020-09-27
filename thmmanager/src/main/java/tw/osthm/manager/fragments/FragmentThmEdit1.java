@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
@@ -18,6 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 
 import tw.osthm.manager.R;
+import tw.osthm.manager.ThmMgrUtils;
 import tw.osthm.osthmEngine;
 
 import static tw.osthm.manager.ThemeEditorActivity.*;
@@ -50,6 +54,7 @@ public class FragmentThmEdit1 extends Fragment {
     private ImageView view_colorStatusbarTint1, view_colorStatusbarTint2, view_colorStatusbarTint3;
 
     private View root;
+    private TextView text_maincolors;
 
     public FragmentThmEdit1() {
         // Required empty public constructor
@@ -92,57 +97,65 @@ public class FragmentThmEdit1 extends Fragment {
         view_colorStatusbarTint1 = root.findViewById(R.id.view_colorStatusbarTint1);
         view_colorStatusbarTint2 = root.findViewById(R.id.view_colorStatusbarTint2);
         view_colorStatusbarTint3 = root.findViewById(R.id.view_colorStatusbarTint3);
+        text_maincolors = root.findViewById(R.id.text_maincolors);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (root == null) {
-            // Inflate the layout for this fragment
-            root = inflater.inflate(R.layout.fragment_thm_edit1, container, false);
+        // Inflate a placeholder view while we're inflating the actual layout in background
+        ViewGroup placeholder = (ViewGroup) inflater.inflate(R.layout.placeholder_layout, container, false);
+        AsyncLayoutInflater asyncLayoutInflater = new AsyncLayoutInflater(getActivity());
+        asyncLayoutInflater.inflate(R.layout.fragment_thm_edit1, placeholder, new AsyncLayoutInflater.OnInflateFinishedListener() {
+            @Override
+            public void onInflateFinished(@NonNull View view, int resid, @Nullable ViewGroup parent) {
+                // Add the actual layout to the placeholder
+                parent.addView(view);
+                root = view;
 
-            // Initialize views
-            initializeViews();
+                // Initialize views
+                initializeViews();
 
-            // Apply previous applied colors
-            refreshViews();
+                // Apply previous applied colors
+                refreshViews();
 
-            // Set onClickListeners
-            constraint_colorPrimary.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ColorPickerDialog.newBuilder()
-                            .setDialogId(COLOR_PRIMARY_DIALOG_ID)
-                            .setColor(sp.getInt("colorPrimary", -14575885))
-                            .setShowAlphaSlider(true)
-                            .show(getActivity());
-                }
-            });
+                // Set onClickListeners
+                constraint_colorPrimary.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ColorPickerDialog.newBuilder()
+                                .setDialogId(COLOR_PRIMARY_DIALOG_ID)
+                                .setColor(sp.getInt("colorPrimary", -14575885))
+                                .setShowAlphaSlider(true)
+                                .show(getActivity());
+                    }
+                });
 
-            constraint_colorPrimaryDark.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ColorPickerDialog.newBuilder()
-                            .setDialogId(COLOR_PRIMARY_DARK_DIALOG_ID)
-                            .setColor(sp.getInt("colorPrimaryDark", -15242838))
-                            .setShowAlphaSlider(true)
-                            .show(getActivity());
-                }
-            });
+                constraint_colorPrimaryDark.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ColorPickerDialog.newBuilder()
+                                .setDialogId(COLOR_PRIMARY_DARK_DIALOG_ID)
+                                .setColor(sp.getInt("colorPrimaryDark", -15242838))
+                                .setShowAlphaSlider(true)
+                                .show(getActivity());
+                    }
+                });
 
-            constraint_colorAccent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ColorPickerDialog.newBuilder()
-                            .setDialogId(COLOR_ACCENT_DIALOG_ID)
-                            .setColor(sp.getInt("colorAccent", -720809))
-                            .setShowAlphaSlider(true)
-                            .show(getActivity());
-                }
-            });
-        }
+                constraint_colorAccent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ColorPickerDialog.newBuilder()
+                                .setDialogId(COLOR_ACCENT_DIALOG_ID)
+                                .setColor(sp.getInt("colorAccent", -720809))
+                                .setShowAlphaSlider(true)
+                                .show(getActivity());
+                    }
+                });
+            }
+        });
 
-        return root;
+        return placeholder;
     }
 
     public void refreshViews() {
@@ -163,11 +176,11 @@ public class FragmentThmEdit1 extends Fragment {
             view_colorPrimaryText.setTextColor(sp.getInt("colorPrimaryText", -1));
 
             if (sp.getInt("shadow", 1) == 1) {
-                view_colorPrimary.setElevation(5f);
-                fab.setElevation(6f);
+                view_colorPrimary.setElevation(ThmMgrUtils.toDip(getContext(), 5f));
+                fab.setCompatElevation(ThmMgrUtils.toDip(getContext(), 6f));
             } else {
                 view_colorPrimary.setElevation(0f);
-                fab.setElevation(0f);
+                fab.setCompatElevation(0f);
             }
 
             view_colorBackground.setBackgroundColor(sp.getInt("colorBackground", -1));
@@ -183,6 +196,8 @@ public class FragmentThmEdit1 extends Fragment {
                 view_colorStatusbarTint2.setColorFilter(0xFF000000);
                 view_colorStatusbarTint3.setColorFilter(0xFF000000);
             }
+
+            text_maincolors.setTextColor(TEXT_COLOR);
         }
     }
 

@@ -12,6 +12,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
@@ -20,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 
 import tw.osthm.manager.R;
+import tw.osthm.manager.ThmMgrUtils;
 import tw.osthm.osthmEngine;
 
 import static tw.osthm.manager.ThemeEditorActivity.*;
@@ -42,10 +46,8 @@ public class FragmentThmEdit2 extends Fragment {
     private CheckBox enable_shadow;
 
     // Statusbar tint
-    private ConstraintLayout constraint_black;
-    private ConstraintLayout constraint_white;
-    private ImageView selected_black;
-    private ImageView selected_white;
+    private ConstraintLayout statusbar_tint;
+    private TextView text_statusbar_tint;
 
     // Other variables
     SharedPreferences sp;
@@ -55,11 +57,12 @@ public class FragmentThmEdit2 extends Fragment {
     private ConstraintLayout color_primary_dark_status_bar;
     private ConstraintLayout fake_edit_text_accent;
     private ConstraintLayout background;
-    private TextView fake_edit_text_hint, text_demo;
+    private TextView fake_edit_text_hint;
     private ImageView statusbar_icon1, statusbar_icon2, statusbar_icon3;
     private TextView statusbar_text;
     private FloatingActionButton fab;
     private TextView app_bar_title, background_text;
+    private TextView textView3;
 
     // Default Colors
     private final int default_color_background_text = -16777216;
@@ -85,109 +88,109 @@ public class FragmentThmEdit2 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (root == null) {
-            // Inflate the layout for this fragment
-            root = inflater.inflate(R.layout.fragment_thm_edit2, container, false);
+        // Inflate a placeholder view while we're inflating the actual layout in background
+        ViewGroup placeholder = (ViewGroup) inflater.inflate(R.layout.placeholder_layout, container, false);
+        AsyncLayoutInflater asyncLayoutInflater = new AsyncLayoutInflater(getActivity());
+        asyncLayoutInflater.inflate(R.layout.fragment_thm_edit2, placeholder, new AsyncLayoutInflater.OnInflateFinishedListener() {
+            @Override
+            public void onInflateFinished(@NonNull View view, int resid, @Nullable ViewGroup parent) {
+                // Add the actual layout to the placeholder
+                parent.addView(view);
+                root = view;
 
-            // Initialize views
-            initializeViews();
+                // Initialize views
+                initializeViews();
 
-            // Apply previous applied colors
-            refreshViews();
+                // Apply previous applied colors
+                refreshViews();
 
-            // =========================================================================================
+                // =========================================================================================
 
-            // StatusBar color switch
-            constraint_white.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sp.edit().putInt("colorStatusbarTint", 1).apply();
-                    refreshFragments();
-                }
-            });
+                // StatusBar color switch
+                statusbar_tint.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sp.edit().putInt("colorStatusbarTint", sp.getInt(
+                                "colorStatusbarTint", 1) == 1 ? 0 : 1).apply();
+                        refreshFragments();
+                    }
+                });
 
-            constraint_black.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sp.edit().putInt("colorStatusbarTint", 0).apply();
-                    refreshFragments();
-                }
-            });
-
-            // Enable shadow
-            enable_shadow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    sp.edit().putInt("shadow", b ? 1 : 0).apply();
-                    refreshFragments();
-                }
-            });
+                // Enable shadow
+                enable_shadow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        sp.edit().putInt("shadow", b ? 1 : 0).apply();
+                        refreshFragments();
+                    }
+                });
 
 
-            // ColorPickers onClick
-            constraint_color_background_text.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ColorPickerDialog.newBuilder()
-                            .setDialogId(COLOR_BACKGROUND_TEXT_DIALOG_ID)
-                            .setColor(sp.getInt("colorBackgroundText", default_color_background_text))
-                            .setShowAlphaSlider(true)
-                            .show(getActivity());
-                }
-            });
-            constraint_color_background.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ColorPickerDialog.newBuilder()
-                            .setDialogId(COLOR_BACKGROUND_DIALOG_ID)
-                            .setColor(sp.getInt("colorBackground", default_color_background))
-                            .setShowAlphaSlider(true)
-                            .show(getActivity());
-                }
-            });
-            constraint_color_primary_text.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ColorPickerDialog.newBuilder()
-                            .setDialogId(COLOR_PRIMARY_TEXT_DIALOG_ID)
-                            .setColor(sp.getInt("colorPrimaryText", default_color_primary_text))
-                            .setShowAlphaSlider(true)
-                            .show(getActivity());
-                }
-            });
-            constraint_color_accent_text.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ColorPickerDialog.newBuilder()
-                            .setDialogId(COLOR_ACCENT_TEXT_DIALOG_ID)
-                            .setColor(sp.getInt("colorAccentText", default_color_accent_text))
-                            .setShowAlphaSlider(true)
-                            .show(getActivity());
-                }
-            });
-            constraint_color_hint.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ColorPickerDialog.newBuilder()
-                            .setDialogId(COLOR_HINT_DIALOG_ID)
-                            .setColor(sp.getInt("colorHint", default_color_hint))
-                            .setShowAlphaSlider(true)
-                            .show(getActivity());
-                }
-            });
-            constraint_color_control_highlight.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    ColorPickerDialog.newBuilder()
-                            .setDialogId(COLOR_CONTROL_HIGHLIGHT_DIALOG_ID)
-                            .setColor(sp.getInt("colorControlHighlight", default_color_control_highlight))
-                            .setShowAlphaSlider(true)
-                            .show(getActivity());
-                }
-            });
-        }
+                // ColorPickers onClick
+                constraint_color_background_text.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ColorPickerDialog.newBuilder()
+                                .setDialogId(COLOR_BACKGROUND_TEXT_DIALOG_ID)
+                                .setColor(sp.getInt("colorBackgroundText", default_color_background_text))
+                                .setShowAlphaSlider(true)
+                                .show(getActivity());
+                    }
+                });
+                constraint_color_background.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ColorPickerDialog.newBuilder()
+                                .setDialogId(COLOR_BACKGROUND_DIALOG_ID)
+                                .setColor(sp.getInt("colorBackground", default_color_background))
+                                .setShowAlphaSlider(true)
+                                .show(getActivity());
+                    }
+                });
+                constraint_color_primary_text.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ColorPickerDialog.newBuilder()
+                                .setDialogId(COLOR_PRIMARY_TEXT_DIALOG_ID)
+                                .setColor(sp.getInt("colorPrimaryText", default_color_primary_text))
+                                .setShowAlphaSlider(true)
+                                .show(getActivity());
+                    }
+                });
+                constraint_color_accent_text.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ColorPickerDialog.newBuilder()
+                                .setDialogId(COLOR_ACCENT_TEXT_DIALOG_ID)
+                                .setColor(sp.getInt("colorAccentText", default_color_accent_text))
+                                .setShowAlphaSlider(true)
+                                .show(getActivity());
+                    }
+                });
+                constraint_color_hint.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ColorPickerDialog.newBuilder()
+                                .setDialogId(COLOR_HINT_DIALOG_ID)
+                                .setColor(sp.getInt("colorHint", default_color_hint))
+                                .setShowAlphaSlider(true)
+                                .show(getActivity());
+                    }
+                });
+                constraint_color_control_highlight.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ColorPickerDialog.newBuilder()
+                                .setDialogId(COLOR_CONTROL_HIGHLIGHT_DIALOG_ID)
+                                .setColor(sp.getInt("colorControlHighlight", default_color_control_highlight))
+                                .setShowAlphaSlider(true)
+                                .show(getActivity());
+                    }
+                });
+            }
+        });
 
-        return root;
+        return placeholder;
     }
 
     private void initializeViews() {
@@ -232,7 +235,6 @@ public class FragmentThmEdit2 extends Fragment {
         statusbar_icon2 = root.findViewById(R.id.statusbar_icon_fragment2_3);
         statusbar_icon3 = root.findViewById(R.id.statusbar_icon_fragment2_4);
         fab = root.findViewById(R.id.fab);
-        text_demo = root.findViewById(R.id.view_colorBackgroundText);
         fake_edit_text_accent = root.findViewById(R.id.view_colorAccentET);
         fake_edit_text_hint = root.findViewById(R.id.view_colorHint);
         app_bar_title = root.findViewById(R.id.view_colorPrimaryText);
@@ -241,25 +243,20 @@ public class FragmentThmEdit2 extends Fragment {
 
         // Other
         enable_shadow = root.findViewById(R.id.enable_shadow);
+        textView3 = root.findViewById(R.id.textView3);
 
-        constraint_white = root.findViewById(R.id.statusbar_tint_white);
-        constraint_black = root.findViewById(R.id.statusbar_tint_black);
-        selected_white = root.findViewById(R.id.statusbar_tint_white_check);
-        selected_black = root.findViewById(R.id.statusbar_tint_black_check);
+        statusbar_tint = root.findViewById(R.id.statusbar_tint);
+        text_statusbar_tint = root.findViewById(R.id.text_statusbar_tint);
     }
 
     public void refreshViews() {
         if (sp != null && root != null) {
-            // Check if statusbar tint is 1
-            if (sp.getInt("colorStatusbarTint", 1) == 1) {
-                // white
-                selected_white.setVisibility(View.VISIBLE);
-                selected_black.setVisibility(View.INVISIBLE);
-            } else {
-                // Black
-                selected_white.setVisibility(View.INVISIBLE);
-                selected_black.setVisibility(View.VISIBLE);
-            }
+            statusbar_tint.setBackgroundColor(sp.getInt("colorStatusbarTint", 1) == 1 ?
+                    0xFFFFFFFF : 0xFF000000);
+            text_statusbar_tint.setText(sp.getInt("colorStatusbarTint", 1) == 1 ?
+                    "White" : "Black");
+            text_statusbar_tint.setTextColor(sp.getInt("colorStatusbarTint", 1) == 1 ?
+                    0xFF808080 : 0xFFFFFFFF);
 
             // Refresh cards
             refreshCard(sp.getInt("colorBackgroundText", default_color_background_text), text_color_background_text, sub_color_background_text, image_color_background_text, constraint_color_background_text);
@@ -305,17 +302,21 @@ public class FragmentThmEdit2 extends Fragment {
 
             // shadow
             if (sp.getInt("shadow", 1) == 1) {
-                color_primary_app_bar.setElevation(5f);
-                fab.setElevation(6f);
+                color_primary_app_bar.setElevation(ThmMgrUtils.toDip(getContext(), 5f));
+                fab.setCompatElevation(ThmMgrUtils.toDip(getContext(), 6f));
             } else {
                 color_primary_app_bar.setElevation(0f);
-                fab.setElevation(0f);
+                fab.setCompatElevation(0f);
             }
 
             // Other changes ===========================================================================
             color_primary_app_bar.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
             color_primary_dark_status_bar.setBackgroundColor(sp.getInt("colorPrimaryDark", -15242838));
             app_bar_title.setTextColor(sp.getInt("colorPrimaryText", -1));
+            enable_shadow.setChecked(sp.getInt("shadow", 1) == 1);
+            textView3.setTextColor(TEXT_COLOR);
+            enable_shadow.setTextColor(TEXT_COLOR);
+            enable_shadow.setButtonTintList(ColorStateList.valueOf(ACCENT_COLOR));
         }
     }
 

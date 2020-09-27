@@ -8,21 +8,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#FFFFFF"
-        android:elevation="5dp"
+        android:background="@drawable/round_top_bottomsheet"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="8dp">
-
-        <ImageView
-            android:id="@+id/image_close"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:padding="6dp"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_close_white"
-            app:tint="#000000" />
+        android:paddingLeft="43dp"
+        android:paddingTop="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:id="@+id/text_title"
@@ -33,6 +25,7 @@
             android:padding="8dp"
             android:singleLine="true"
             android:text="Save theme.."
+            android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="16dp" />
 
@@ -43,7 +36,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="6dp"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_save_white"
+            android:src="@drawable/ic_save_white"
             app:tint="#000000" />
 
     </LinearLayout>
@@ -52,10 +45,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="#FFFFFF"
         android:paddingLeft="16dp"
-        android:paddingTop="10dp"
+        android:paddingTop="6dp"
         android:paddingRight="16dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="6dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
