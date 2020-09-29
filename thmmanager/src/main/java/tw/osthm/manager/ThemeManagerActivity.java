@@ -212,6 +212,16 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
                 ImageView save = bottom_sheet_save_theme.findViewById(R.id.image_save);
 
+                //TODO: Implement custom dialog color for bottomsheet_newtheme. int ThemeEditorActivity.java too
+                /*
+                bottom_sheet_save_theme.findViewById(R.id.bottomsheet_bar).setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
+                bottom_sheet_save_theme.findViewById(R.id.bottomsheet_root).setBackgroundColor(theme.colorDialog);
+                ((TextView)bottom_sheet_save_theme.findViewById(R.id.text_title)).setTextColor(theme.colorDialogText);
+                save.setColorFilter(theme.colorDialogTint);
+                save.setColorFilter(theme.colorControlHighlight);
+                name.setBac
+                 */
+
                 final BottomSheetDialog bsd = new BottomSheetDialog(ThemeManagerActivity.this);
                 bsd.setContentView(bottom_sheet_save_theme);
 
@@ -277,6 +287,19 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 TextView text_author = bottomsheetView1.findViewById(R.id.text_author);
                 TextView text_version = bottomsheetView1.findViewById(R.id.text_version);
                 TextView text_osthm = bottomsheetView1.findViewById(R.id.text_osthm);
+
+                bottomsheetView1.findViewById(R.id.bottomsheet_bar).setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
+                bottomsheetView1.findViewById(R.id.bottomsheet_root).setBackgroundColor(theme.colorDialog);
+                ((TextView)bottomsheetView1.findViewById(R.id.text_title)).setTextColor(theme.colorDialogText);
+                text_name.setTextColor(theme.colorDialogText);
+                text_description.setTextColor(theme.colorDialogText);
+                text_author.setTextColor(theme.colorDialogText);
+                text_version.setTextColor(theme.colorDialogText);
+                text_osthm.setTextColor(theme.colorDialogText);
+                ((ImageView)bottomsheetView1.findViewById(R.id.image_name)).setColorFilter(theme.colorDialogTint);
+                ((ImageView)bottomsheetView1.findViewById(R.id.image_description)).setColorFilter(theme.colorDialogTint);
+                ((ImageView)bottomsheetView1.findViewById(R.id.image_author)).setColorFilter(theme.colorDialogTint);
+                ((ImageView)bottomsheetView1.findViewById(R.id.image_version)).setColorFilter(theme.colorDialogTint);
 
                 OsThmMetadata themeMetadata = osthmEngine.getThemeMetadata(arrayList
                         .get(selectedNum).get("uuid").toString());

@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/bottomsheet_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/round_top_bottomsheet"
@@ -42,10 +43,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/bottomsheet_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="#FFFFFF"
+        android:orientation="vertical"
         android:paddingLeft="16dp"
         android:paddingTop="6dp"
         android:paddingRight="16dp"
@@ -60,9 +62,11 @@
                 android:id="@+id/til1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="#000000"
                 android:fontFamily="@font/googlesans"
                 android:hint="Theme Name"
                 android:singleLine="true"
+                android:text="hmm"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 

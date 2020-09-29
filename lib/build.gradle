@@ -15,7 +15,7 @@ def getArtifactId = { ->
 publishing {
     publications {
         bar(MavenPublication) {
-            groupId 'com.thatcakeid'
+            groupId 'tw'
             artifactId getArtifactId()
             version getVersionName()
             artifact("$buildDir/outputs/aar/${getArtifactId()}-release.aar")
