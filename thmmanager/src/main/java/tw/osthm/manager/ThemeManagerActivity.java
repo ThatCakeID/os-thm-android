@@ -212,12 +212,15 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
                 ImageView save = bottom_sheet_save_theme.findViewById(R.id.image_save);
 
+                //TODO: Implement custom dialog color for bottomsheet_newtheme. int ThemeEditorActivity.java too
+                /*
                 bottom_sheet_save_theme.findViewById(R.id.bottomsheet_bar).setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
                 bottom_sheet_save_theme.findViewById(R.id.bottomsheet_root).setBackgroundColor(theme.colorDialog);
                 ((TextView)bottom_sheet_save_theme.findViewById(R.id.text_title)).setTextColor(theme.colorDialogText);
                 save.setColorFilter(theme.colorDialogTint);
                 save.setColorFilter(theme.colorControlHighlight);
-                //name.setBac
+                name.setBac
+                 */
 
                 final BottomSheetDialog bsd = new BottomSheetDialog(ThemeManagerActivity.this);
                 bsd.setContentView(bottom_sheet_save_theme);
