@@ -27,7 +27,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.getkeepsafe.taptargetview.TapTarget;
@@ -57,7 +56,6 @@ public class ThemeManagerActivity extends AppCompatActivity {
     private FloatingActionButton fab;
     private FloatingActionButton fab1;
     private FloatingActionButton fab2;
-    private FloatingActionButton fab3;
 
     private Animation fab_open;
     private Animation fab_close;
@@ -66,7 +64,6 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
     private TextView textview_create;
     private TextView textview_import;
-    private TextView textview_online;
 
     private GridView gridview1;
     private ArrayList<HashMap<String, Object>> arrayList;
@@ -107,7 +104,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
             }
         });
 
-        // FAB method
+        // FAB methods
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,15 +130,6 @@ public class ThemeManagerActivity extends AppCompatActivity {
             }
         });
 
-        fab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getApplicationContext(), ThemeStoreActivity.class);
-                startActivity(intent);
-            }
-        });
-
         arrayList = new ArrayList<>();
         gridview1.setAdapter(new ThemeGridPreview(getApplicationContext(), arrayList));
 
@@ -150,10 +138,14 @@ public class ThemeManagerActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
                     osthmEngine.setCurrentTheme(arrayList.get(i).get("uuid").toString());
+
                     makeSnackbar("Theme set!", 0xFF43A047, 0xFFFFFFFF,
                             R.drawable.ic_done_white);
+
                     loadTheme();
+
                     currentThemeUUID = osthmEngine.getCurrentThemeUUID();
+
                     ((BaseAdapter) gridview1.getAdapter()).notifyDataSetChanged();
 
                 } catch (osthmException err) {
@@ -226,9 +218,10 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        OsThmTheme theme = new OsThmTheme((HashMap<String, Integer>)new
+                        OsThmTheme theme = new OsThmTheme((HashMap<String, Integer>) new
                                 Gson().fromJson(arrayList.get(selectedNum).get("themesjson")
-                                .toString(), new TypeToken<HashMap<String, Integer>>(){}.getType()));
+                                .toString(), new TypeToken<HashMap<String, Integer>>() {
+                        }.getType()));
 
                         String name_data = name.getText().toString();
                         String author_data = author.getText().toString();
@@ -325,18 +318,15 @@ public class ThemeManagerActivity extends AppCompatActivity {
         if (!sp.getBoolean("taptargetview", false)) {
             final TapTarget fab_open_taptarget = TapTarget.forView(fab, "Add themes", "Click here to add themes into your theme list");
             final TapTarget fab2_taptarget = TapTarget.forView(fab2, "Create Theme", "Click here to create a theme yourself!");
-            final TapTarget fab3_taptarget = TapTarget.forView(fab3, "Online Theme", "Click here to go to the theme store!");
 
             fab_open_taptarget.textTypeface(ResourcesCompat.getFont(this, R.font.googlesans));
             fab2_taptarget.textTypeface(ResourcesCompat.getFont(this, R.font.googlesans));
-            fab3_taptarget.textTypeface(ResourcesCompat.getFont(this, R.font.googlesans));
 
             TapTargetSequence sequence = new TapTargetSequence(this).targets(
                     fab_open_taptarget,
                     TapTarget.forView(fab1, "Import theme", "Click here to import a theme into your theme list")
                             .textTypeface(ResourcesCompat.getFont(this, R.font.googlesans)),
                     fab2_taptarget,
-                    fab3_taptarget,
                     TapTarget.forView(image_help, "Documentation", "Click here to read the documentation on how to use os-thm")
                             .textTypeface(ResourcesCompat.getFont(this, R.font.googlesans))
                     // Sad, doesn't work :(
@@ -352,7 +342,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
                 @Override
                 public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
-                    if (lastTarget == fab_open_taptarget || lastTarget == fab3_taptarget) {
+                    if (lastTarget == fab_open_taptarget || lastTarget == fab2_taptarget) {
                         toggleFabs();
                     }
                 }
@@ -369,14 +359,15 @@ public class ThemeManagerActivity extends AppCompatActivity {
     private void toggleFabs() {
         textview_create.setVisibility(isOpen ? View.INVISIBLE : View.VISIBLE);
         textview_import.setVisibility(isOpen ? View.INVISIBLE : View.VISIBLE);
-        textview_online.setVisibility(isOpen ? View.INVISIBLE : View.VISIBLE);
-        fab3.startAnimation(isOpen ? fab_close : fab_open);
+
         fab2.startAnimation(isOpen ? fab_close : fab_open);
         fab1.startAnimation(isOpen ? fab_close : fab_open);
+
         fab.startAnimation(isOpen ? fab_anticlock : fab_clock);
-        fab3.setClickable(!isOpen);
+
         fab2.setClickable(!isOpen);
         fab1.setClickable(!isOpen);
+
         isOpen = !isOpen;
 
         /*
@@ -439,7 +430,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
         if (theme.colorStatusbarTint == 0
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        ((TextView)findViewById(R.id.text_back)).setTextColor(theme.colorPrimaryText);
+        ((TextView) findViewById(R.id.text_back)).setTextColor(theme.colorPrimaryText);
 
         image_help.setColorFilter(theme.colorPrimaryTint);
         image_help.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
@@ -449,22 +440,18 @@ public class ThemeManagerActivity extends AppCompatActivity {
         fab.setCompatElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 6f) : 0f);
         fab1.setCompatElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 6f) : 0f);
         fab2.setCompatElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 6f) : 0f);
-        fab3.setCompatElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 6f) : 0f);
 
         fab.setRippleColor(theme.colorControlHighlight);
         fab1.setRippleColor(theme.colorControlHighlight);
         fab2.setRippleColor(theme.colorControlHighlight);
-        fab3.setRippleColor(theme.colorControlHighlight);
 
         fab.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
         fab1.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
         fab2.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
-        fab3.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
 
         fab.setColorFilter(theme.colorAccentText);
         fab1.setColorFilter(theme.colorAccentText);
         fab2.setColorFilter(theme.colorAccentText);
-        fab3.setColorFilter(theme.colorAccentText);
 
         gridview1.setSelector(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, new ShapeDrawable()));
@@ -473,9 +460,9 @@ public class ThemeManagerActivity extends AppCompatActivity {
         bottomsheetView.findViewById(R.id.bottomsheet_root).setBackgroundColor(theme.colorDialog);
         image_delete.setColorFilter(theme.colorDialogTint);
         image_edit.setColorFilter(theme.colorDialogTint);
-        ((ImageView)bottomsheetView.findViewById(R.id.image_clone)).setColorFilter(theme.colorDialogTint);
-        ((ImageView)bottomsheetView.findViewById(R.id.image_export)).setColorFilter(theme.colorDialogTint);
-        ((ImageView)bottomsheetView.findViewById(R.id.image_info)).setColorFilter(theme.colorDialogTint);
+        ((ImageView) bottomsheetView.findViewById(R.id.image_clone)).setColorFilter(theme.colorDialogTint);
+        ((ImageView) bottomsheetView.findViewById(R.id.image_export)).setColorFilter(theme.colorDialogTint);
+        ((ImageView) bottomsheetView.findViewById(R.id.image_info)).setColorFilter(theme.colorDialogTint);
         image_delete.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, null));
         image_edit.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
@@ -486,18 +473,18 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 .colorControlHighlight), null, new ShapeDrawable()));
         linear_info.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, new ShapeDrawable()));
-        ((TextView)bottomsheetView.findViewById(R.id.text_title)).setTextColor(theme.colorDialogText);
-        ((TextView)bottomsheetView.findViewById(R.id.text_subtitle)).setTextColor(theme.colorDialogText);
-        ((TextView)bottomsheetView.findViewById(R.id.text_clone)).setTextColor(theme.colorDialogText);
-        ((TextView)bottomsheetView.findViewById(R.id.text_export)).setTextColor(theme.colorDialogText);
-        ((TextView)bottomsheetView.findViewById(R.id.text_info)).setTextColor(theme.colorDialogText);
+        ((TextView) bottomsheetView.findViewById(R.id.text_title)).setTextColor(theme.colorDialogText);
+        ((TextView) bottomsheetView.findViewById(R.id.text_subtitle)).setTextColor(theme.colorDialogText);
+        ((TextView) bottomsheetView.findViewById(R.id.text_clone)).setTextColor(theme.colorDialogText);
+        ((TextView) bottomsheetView.findViewById(R.id.text_export)).setTextColor(theme.colorDialogText);
+        ((TextView) bottomsheetView.findViewById(R.id.text_info)).setTextColor(theme.colorDialogText);
     }
 
     private void refreshTheme() {
         currentThemeUUID = osthmEngine.getCurrentThemeUUID();
         arrayList.clear();
         arrayList.addAll(osthmEngine.getThemeList());
-        ((BaseAdapter)gridview1.getAdapter()).notifyDataSetChanged();
+        ((BaseAdapter) gridview1.getAdapter()).notifyDataSetChanged();
     }
 
     private void initializeViews() {
@@ -506,7 +493,6 @@ public class ThemeManagerActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         fab1 = findViewById(R.id.fab1);
         fab2 = findViewById(R.id.fab2);
-        fab3 = findViewById(R.id.fab3);
 
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);

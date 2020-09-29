@@ -1,7 +1,5 @@
 package tw.osthm.manager;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.res.ColorStateList;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
@@ -9,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import io.noties.markwon.Markwon;
 import tw.osthm.OsThmTheme;
@@ -119,7 +119,7 @@ public class DocumentationActivity extends AppCompatActivity {
         if (theme.colorStatusbarTint == 0
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        ((TextView)findViewById(R.id.text_back)).setTextColor(theme.colorPrimaryText);
+        ((TextView) findViewById(R.id.text_back)).setTextColor(theme.colorPrimaryText);
         documentation_textview.setTextColor(theme.colorBackgroundText);
 
         image_back.setColorFilter(theme.colorPrimaryTint);

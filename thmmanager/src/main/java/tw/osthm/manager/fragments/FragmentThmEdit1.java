@@ -24,7 +24,10 @@ import tw.osthm.manager.R;
 import tw.osthm.manager.ThmMgrUtils;
 import tw.osthm.osthmEngine;
 
-import static tw.osthm.manager.ThemeEditorActivity.*;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_ACCENT_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_PRIMARY_DARK_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_PRIMARY_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.TEXT_COLOR;
 
 public class FragmentThmEdit1 extends Fragment {
 

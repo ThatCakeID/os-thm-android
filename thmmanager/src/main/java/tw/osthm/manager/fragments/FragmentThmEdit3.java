@@ -23,7 +23,14 @@ import tw.osthm.manager.R;
 import tw.osthm.manager.ThmMgrUtils;
 import tw.osthm.osthmEngine;
 
-import static tw.osthm.manager.ThemeEditorActivity.*;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_BACKGROUND_CARD_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_BACKGROUND_CARD_TEXT_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_BACKGROUND_CARD_TINT_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_BACKGROUND_TINT_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_PRIMARY_CARD_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_PRIMARY_CARD_TEXT_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_PRIMARY_CARD_TINT_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_PRIMARY_TINT_DIALOG_ID;
 
 public class FragmentThmEdit3 extends Fragment {
 
@@ -66,16 +73,16 @@ public class FragmentThmEdit3 extends Fragment {
 
     // Demo views
     private ConstraintLayout appbar, statusbar, background_demo,
-                             bottombar, bottombarcard;
+            bottombar, bottombarcard;
 
     private CardView bcard;
 
     private ImageView statusbar_icon1, statusbar_icon2, statusbar_icon3,
-                      appbar_backbutton, background_item1, background_item2,
-                      background_item3, background_item4, bcard_img, pcard_img;
+            appbar_backbutton, background_item1, background_item2,
+            background_item3, background_item4, bcard_img, pcard_img;
 
     private TextView statusbar_clock, appbar_title, bcard_text,
-                     pcard_text;
+            pcard_text;
 
     // Other components
     private View root;
