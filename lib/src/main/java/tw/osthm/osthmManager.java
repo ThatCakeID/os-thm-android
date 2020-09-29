@@ -1,6 +1,5 @@
 package tw.osthm;
 
-import android.os.AsyncTask;
 import android.os.Environment;
 
 import com.google.gson.Gson;
@@ -45,7 +44,8 @@ public class osthmManager {
             try {
                 if (!isJSONValid(StorageUtil.readFile(config_file)))
                     StorageUtil.createFile(config_file, "{}");
-            } catch (IOException ignored) {}
+            } catch (IOException ignored) {
+            }
 
             // Check if the themes are valid or not
             List<File> files = StorageUtil.getFiles(themes_folder);
@@ -65,7 +65,8 @@ public class osthmManager {
                             StorageUtil.rename(file.getAbsolutePath(), themes_folder +
                                     thm.get("uuid").toString() + ".os-thm");
                     }
-                } catch (IOException ignored) {}
+                } catch (IOException ignored) {
+                }
             }
         }
     }
@@ -81,7 +82,7 @@ public class osthmManager {
         return data.containsKey(key) ? data.get(key) : defaultValue;
     }
 
-    public static boolean containsConf(String key)  {
+    public static boolean containsConf(String key) {
         HashMap<String, String> data = loadConfJson();
         return data.containsKey(key);
     }
@@ -107,15 +108,18 @@ public class osthmManager {
         List<File> files = StorageUtil.getFiles(themes_folder);
         ArrayList<HashMap<String, Object>> themes = new ArrayList<>();
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(new TypeToken<HashMap<String, Object>>() {}.getType(),
+        gsonBuilder.registerTypeAdapter(new TypeToken<HashMap<String, Object>>() {
+                }.getType(),
                 new HashMapDeserializerFix());
         Gson gson = gsonBuilder.create();
-        for(File file : files) {
+        for (File file : files) {
             try {
                 themes.add((HashMap<String, Object>) gson.fromJson(StorageUtil
                                 .readFile(file.getAbsolutePath()),
-                        new TypeToken<HashMap<String, Object>>() {}.getType()));
-            } catch (IOException ignored) {}
+                        new TypeToken<HashMap<String, Object>>() {
+                        }.getType()));
+            } catch (IOException ignored) {
+            }
         }
         return themes;
     }
@@ -143,15 +147,15 @@ public class osthmManager {
     }
 
     public static String exportThemeFile(String json) {
-       int fileNum = 0;
-       while(true) {
-           if (StorageUtil.isFileExist(exported_themes_folder + "theme_" + Integer.toString(fileNum) + ".os-thm"))
-               fileNum++;
-           else {
-               StorageUtil.createFile(exported_themes_folder + "theme_" + Integer.toString(fileNum) + ".os-thm", json);
-               return exported_themes_folder + "theme_" + Integer.toString(fileNum) + ".os-thm";
-           }
-       }
+        int fileNum = 0;
+        while (true) {
+            if (StorageUtil.isFileExist(exported_themes_folder + "theme_" + Integer.toString(fileNum) + ".os-thm"))
+                fileNum++;
+            else {
+                StorageUtil.createFile(exported_themes_folder + "theme_" + Integer.toString(fileNum) + ".os-thm", json);
+                return exported_themes_folder + "theme_" + Integer.toString(fileNum) + ".os-thm";
+            }
+        }
     }
 
     // Utilities ===================================================================================

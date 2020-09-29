@@ -34,16 +34,17 @@ public class OsThmMetadata {
 
     public OsThmMetadata() {
         new OsThmMetadata((HashMap<String, Object>) new Gson().fromJson(DefaultThemes
-                .getDefaultThemes().get(0).get("themesjson").toString(),
-                new TypeToken<HashMap<String, Integer>>(){}.getType()));
+                        .getDefaultThemes().get(0).get("themesjson").toString(),
+                new TypeToken<HashMap<String, Integer>>() {
+                }.getType()));
     }
 
     public OsThmMetadata(HashMap<String, Object> data) {
         themesname = data.get("themesname").toString();
         themesinfo = data.get("themesinfo").toString();
         themesauthor = data.get("themesauthor").toString();
-        os_thm_version = (int)data.get("os-thm-version");
+        os_thm_version = (int) data.get("os-thm-version");
         uuid = data.get("uuid").toString();
-        themeversion = (int)data.get("theme-version");
+        themeversion = (int) data.get("theme-version");
     }
 }

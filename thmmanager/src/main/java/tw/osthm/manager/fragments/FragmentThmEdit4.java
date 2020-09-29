@@ -22,7 +22,9 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialog;
 import tw.osthm.manager.R;
 import tw.osthm.osthmEngine;
 
-import static tw.osthm.manager.ThemeEditorActivity.*;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_DIALOG_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_DIALOG_TEXT_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_DIALOG_TINT_DIALOG_ID;
 
 public class FragmentThmEdit4 extends Fragment {
     private SharedPreferences sp;
@@ -124,13 +126,13 @@ public class FragmentThmEdit4 extends Fragment {
 
         root.findViewById(R.id.view_dialog).setBackgroundTintList(ColorStateList
                 .valueOf(sp.getInt("colorDialog", -1)));
-        ((ImageView)root.findViewById(R.id.image_delete)).setColorFilter(
+        ((ImageView) root.findViewById(R.id.image_delete)).setColorFilter(
                 sp.getInt("colorDialogTint", -16777216));
-        ((ImageView)root.findViewById(R.id.image_edit)).setColorFilter(
+        ((ImageView) root.findViewById(R.id.image_edit)).setColorFilter(
                 sp.getInt("colorDialogTint", -16777216));
-        ((TextView)root.findViewById(R.id.text_title)).setTextColor(
+        ((TextView) root.findViewById(R.id.text_title)).setTextColor(
                 sp.getInt("colorDialogText", -16777216));
-        ((TextView)root.findViewById(R.id.text_subtitle)).setTextColor(
+        ((TextView) root.findViewById(R.id.text_subtitle)).setTextColor(
                 sp.getInt("colorDialogText", -16777216));
     }
 

@@ -22,35 +22,35 @@ public class ArrayMapDeserializerFix implements JsonDeserializer<ArrayList<HashM
     }
 
     public Object read(JsonElement in) {
-        if(in.isJsonArray()){
+        if (in.isJsonArray()) {
             List<Object> list = new ArrayList<Object>();
             JsonArray arr = in.getAsJsonArray();
             for (JsonElement anArr : arr) {
                 list.add(read(anArr));
             }
             return list;
-        }else if(in.isJsonObject()){
+        } else if (in.isJsonObject()) {
             // Also here we fixed a bug where HashMap transformed into LinkedTreeMap, magic
             Map<String, Object> map = new HashMap<String, Object>();
             JsonObject obj = in.getAsJsonObject();
             Set<Map.Entry<String, JsonElement>> entitySet = obj.entrySet();
-            for(Map.Entry<String, JsonElement> entry: entitySet){
+            for (Map.Entry<String, JsonElement> entry : entitySet) {
                 map.put(entry.getKey(), read(entry.getValue()));
             }
             return map;
-        }else if( in.isJsonPrimitive()){
+        } else if (in.isJsonPrimitive()) {
             JsonPrimitive prim = in.getAsJsonPrimitive();
-            if(prim.isBoolean()){
+            if (prim.isBoolean()) {
                 return prim.getAsBoolean();
-            }else if(prim.isString()){
+            } else if (prim.isString()) {
                 return prim.getAsString();
-            }else if(prim.isNumber()){
+            } else if (prim.isNumber()) {
 
                 Number num = prim.getAsNumber();
                 // In here we fixed that damn bug where it converts double to int
-                if(Math.ceil(num.doubleValue())  == num.intValue())
+                if (Math.ceil(num.doubleValue()) == num.intValue())
                     return num.intValue();
-                else{
+                else {
                     return num.doubleValue();
                 }
             }

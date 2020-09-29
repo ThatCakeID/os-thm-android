@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.system.Os;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +25,12 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
 
 import tw.osthm.OsThmMetadata;
 import tw.osthm.OsThmTheme;
-import tw.osthm.manager.fragments.FragmentThmEdit4;
-import tw.osthm.osthmEngine;
-import tw.osthm.osthmException;
 import tw.osthm.manager.fragments.FragmentThmEdit1;
 import tw.osthm.manager.fragments.FragmentThmEdit2;
 import tw.osthm.manager.fragments.FragmentThmEdit3;
+import tw.osthm.manager.fragments.FragmentThmEdit4;
+import tw.osthm.osthmEngine;
+import tw.osthm.osthmException;
 
 public class ThemeEditorActivity extends AppCompatActivity implements ColorPickerDialogListener {
     private ViewPager2 mPager;
@@ -178,15 +177,21 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
 
     private void initializeViews() {
         mPager = findViewById(R.id.viewPager_thmedit);
+
         image_back = findViewById(R.id.image_back);
         image_save = findViewById(R.id.image_save);
+
         sp = getSharedPreferences("colordata", Context.MODE_PRIVATE);
+
         bottomSheetDialog = new BottomSheetDialog(ThemeEditorActivity.this);
+
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         bottomsheetview = inflater.inflate(R.layout.bottomsheet_newtheme, null);
+
         image_saveb = bottomsheetview.findViewById(R.id.image_save);
         bottomSheetDialog.setContentView(bottomsheetview);
-        ((View)bottomsheetview.getParent()).setBackgroundColor(Color.TRANSPARENT);
+
+        ((View) bottomsheetview.getParent()).setBackgroundColor(Color.TRANSPARENT);
         til1 = bottomsheetview.findViewById(R.id.til1);
         til2 = bottomsheetview.findViewById(R.id.til2);
         til3 = bottomsheetview.findViewById(R.id.til3);
@@ -195,20 +200,29 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
 
     private void loadColors() {
         OsThmTheme parsedTheme = osthmEngine.getTheme(getIntent().getStringExtra("theme"));
-        sp.edit().putInt("colorPrimary", parsedTheme.colorPrimary).putInt("colorPrimaryText",
-                parsedTheme.colorPrimaryText).putInt("colorPrimaryDark", parsedTheme.colorPrimaryDark)
+
+        sp.edit()
+                .putInt("colorPrimary", parsedTheme.colorPrimary)
+                .putInt("colorPrimaryText", parsedTheme.colorPrimaryText)
+                .putInt("colorPrimaryDark", parsedTheme.colorPrimaryDark)
                 .putInt("colorStatusbarTint", parsedTheme.colorStatusbarTint)
-                .putInt("colorBackground", parsedTheme.colorBackground).putInt("colorBackgroundText",
-                parsedTheme.colorBackgroundText).putInt("colorAccent", parsedTheme.colorAccent)
-                .putInt("colorAccentText", parsedTheme.colorAccentText).putInt("shadow", parsedTheme.shadow)
-                .putInt("colorControlHighlight", parsedTheme.colorControlHighlight).putInt("colorHint",
-                parsedTheme.colorHint).putInt("colorPrimaryTint", parsedTheme.colorPrimaryTint)
-                .putInt("colorBackgroundTint", parsedTheme.colorBackgroundTint).putInt("colorPrimaryCard",
-                parsedTheme.colorPrimaryCard).putInt("colorBackgroundCard", parsedTheme.colorBackgroundCard)
-                .putInt("colorPrimaryCardText", parsedTheme.colorPrimaryCardText).putInt("colorBackgroundCardText",
-                parsedTheme.colorBackgroundCardText).putInt("colorPrimaryCardTint", parsedTheme.colorPrimaryCardTint)
+                .putInt("colorBackground", parsedTheme.colorBackground)
+                .putInt("colorBackgroundText", parsedTheme.colorBackgroundText)
+                .putInt("colorAccent", parsedTheme.colorAccent)
+                .putInt("colorAccentText", parsedTheme.colorAccentText)
+                .putInt("shadow", parsedTheme.shadow)
+                .putInt("colorControlHighlight", parsedTheme.colorControlHighlight)
+                .putInt("colorHint", parsedTheme.colorHint)
+                .putInt("colorPrimaryTint", parsedTheme.colorPrimaryTint)
+                .putInt("colorBackgroundTint", parsedTheme.colorBackgroundTint)
+                .putInt("colorPrimaryCard", parsedTheme.colorPrimaryCard)
+                .putInt("colorBackgroundCard", parsedTheme.colorBackgroundCard)
+                .putInt("colorPrimaryCardText", parsedTheme.colorPrimaryCardText)
+                .putInt("colorBackgroundCardText", parsedTheme.colorBackgroundCardText)
+                .putInt("colorPrimaryCardTint", parsedTheme.colorPrimaryCardTint)
                 .putInt("colorBackgroundCardTint", parsedTheme.colorBackgroundCardTint)
-                .putInt("colorDialog", parsedTheme.colorDialog).putInt("colorDialogText", parsedTheme.colorDialogText)
+                .putInt("colorDialog", parsedTheme.colorDialog)
+                .putInt("colorDialogText", parsedTheme.colorDialogText)
                 .putInt("colorDialogTint", parsedTheme.colorDialogTint).apply();
     }
 
@@ -312,6 +326,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                 sp.edit().putInt("colorDialogTint", color).apply();
                 break;
         }
+
         refreshFragments();
     }
 
@@ -325,19 +340,27 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     private void makeSnackbar(String msg, int bcolor, int tcolor, int image) {
         ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
                 .findViewById(android.R.id.content)).getChildAt(0);
+
         Snackbar snackbar = Snackbar.make(viewGroup, "", Snackbar.LENGTH_LONG);
         Snackbar.SnackbarLayout snacklayout = (Snackbar.SnackbarLayout) snackbar.getView();
+
         View snackview = getLayoutInflater().inflate(R.layout.snackbar_layout, null);
         View snackroot = snackview.findViewById(R.id.root);
+
         TextView textView2 = snackview.findViewById(R.id.textView2);
         ImageView imageView3 = snackview.findViewById(R.id.imageView3);
+
         snackroot.setBackgroundColor(bcolor);
+
         textView2.setText(msg);
         textView2.setTextColor(tcolor);
+
         imageView3.setColorFilter(tcolor);
         imageView3.setImageResource(image);
+
         snacklayout.setPadding(0, 0, 0, 0);
         snacklayout.addView(snackview);
+
         snackbar.show();
         /* Red : #D32F2F
          * Blue : #1976D2
@@ -375,7 +398,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         if (theme.colorStatusbarTint == 0
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        ((TextView)findViewById(R.id.text_back)).setTextColor(theme.colorPrimaryText);
+        ((TextView) findViewById(R.id.text_back)).setTextColor(theme.colorPrimaryText);
 
         image_back.setColorFilter(theme.colorPrimaryTint);
         image_back.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
@@ -388,8 +411,8 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
 
         TEXT_COLOR = theme.colorBackgroundText;
         ACCENT_COLOR = theme.colorAccent;
-        fragment1.refreshViews();
-        fragment2.refreshViews();
+
+        refreshFragments();
     }
 
     @Override
@@ -420,7 +443,5 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         public int getItemCount() {
             return childFragments.length;
         }
-
     }
-
 }

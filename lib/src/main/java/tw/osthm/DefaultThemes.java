@@ -60,7 +60,8 @@ public class DefaultThemes {
      * This method returns a HashMap containing
      * the given key and object. Used as Util in
      * osthm
-     * @param key Key
+     *
+     * @param key   Key
      * @param value Value
      * @return HashMap containing the given key and value
      */

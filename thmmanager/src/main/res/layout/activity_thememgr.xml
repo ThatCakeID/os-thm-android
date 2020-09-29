@@ -68,6 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--
         <TextView
             android:id="@+id/textview_create2"
             android:layout_width="wrap_content"
@@ -94,7 +95,7 @@
             android:clickable="true"
             android:src="@drawable/ic_baseline_cloud"
             android:visibility="invisible"
-            app:pressedTranslationZ="12dp" />
+            app:pressedTranslationZ="12dp" /> -->
 
         <TextView
             android:id="@+id/textview_create"

@@ -43,12 +43,12 @@ public class OsThmTheme {
 
     /**
      * Constructor with default theme
-     *
      */
     public OsThmTheme() {
         HashMap<String, Integer> data = new Gson().fromJson(DefaultThemes.getDefaultThemes()
-                .get(0).get("themesjson").toString(),
-                new TypeToken<HashMap<String, Object>>(){}.getType());
+                        .get(0).get("themesjson").toString(),
+                new TypeToken<HashMap<String, Object>>() {
+                }.getType());
         setData(data);
     }
 
@@ -69,7 +69,7 @@ public class OsThmTheme {
     /**
      * Constructor with HashMap as data
      *
-     * @param data     Theme Data
+     * @param data Theme Data
      */
     public OsThmTheme(@NonNull HashMap<String, Integer> data) {
         this.setData(data);
@@ -78,28 +78,28 @@ public class OsThmTheme {
     /**
      * Constructor with int values as data
      *
-     * @param colorPrimary Primary Color
-     * @param colorPrimaryText Primary Text Color
-     * @param colorPrimaryDark Primary Dark Color
-     * @param colorStatusbarTint Statusbar Color
-     * @param colorBackground Background color for root
-     * @param colorBackgroundText Background color for text
-     * @param colorAccent Color Accent
-     * @param colorAccentText Color Accent for text
-     * @param shadow Is shadow enabled
-     * @param colorControlHighlight Color on highlight
-     * @param colorHint Color Hint for EditText
-     * @param colorPrimaryTint Imageview tint color
-     * @param colorBackgroundTint Background Tint color
-     * @param colorPrimaryCard Card Color
-     * @param colorBackgroundCard Card Background Color
-     * @param colorPrimaryCardText Color for Text on card
+     * @param colorPrimary            Primary Color
+     * @param colorPrimaryText        Primary Text Color
+     * @param colorPrimaryDark        Primary Dark Color
+     * @param colorStatusbarTint      Statusbar Color
+     * @param colorBackground         Background color for root
+     * @param colorBackgroundText     Background color for text
+     * @param colorAccent             Color Accent
+     * @param colorAccentText         Color Accent for text
+     * @param shadow                  Is shadow enabled
+     * @param colorControlHighlight   Color on highlight
+     * @param colorHint               Color Hint for EditText
+     * @param colorPrimaryTint        Imageview tint color
+     * @param colorBackgroundTint     Background Tint color
+     * @param colorPrimaryCard        Card Color
+     * @param colorBackgroundCard     Card Background Color
+     * @param colorPrimaryCardText    Color for Text on card
      * @param colorBackgroundCardText Color for Text Background on card
-     * @param colorPrimaryCardTint Tint for imageview on card
+     * @param colorPrimaryCardTint    Tint for imageview on card
      * @param colorBackgroundCardTint Tint for imageview on card
-     * @param colorDialog Background color for dialog & bottomsheet
-     * @param colorDialogText Text color for textview on dialog & bottomsheet
-     * @param colorDialogTint Tint color for imageview on dialog & bottomsheet
+     * @param colorDialog             Background color for dialog & bottomsheet
+     * @param colorDialogText         Text color for textview on dialog & bottomsheet
+     * @param colorDialogTint         Tint color for imageview on dialog & bottomsheet
      */
 
     public OsThmTheme(int colorPrimary, int colorPrimaryText, int colorPrimaryDark, int colorStatusbarTint, int colorBackground, int colorBackgroundText, int colorAccent, int colorAccentText, int shadow, int colorControlHighlight, int colorHint, int colorPrimaryTint, int colorBackgroundTint, int colorPrimaryCard, int colorBackgroundCard, int colorPrimaryCardText, int colorBackgroundCardText, int colorPrimaryCardTint, int colorBackgroundCardTint, int colorDialog, int colorDialogText, int colorDialogTint) {

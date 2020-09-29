@@ -1,6 +1,5 @@
 package tw.osthm.manager;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
@@ -18,8 +17,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import tw.osthm.osthmEngine;
 
 public class ThemeGridPreview extends BaseAdapter {
     ArrayList<HashMap<String, Object>> list;
@@ -66,10 +63,10 @@ public class ThemeGridPreview extends BaseAdapter {
         textview_title = view.findViewById(R.id.textview_title);
         indicator = view.findViewById(R.id.theme_selected_indicator);
 
-
         textview_name.setText(list.get(i).get("themesname").toString());
         HashMap<String, Integer> list2 = new Gson().fromJson(list.get(i).get("themesjson").toString(), new TypeToken<HashMap<String, Integer>>() {
         }.getType());
+
         textview_name.setTextColor(list2.get("colorBackgroundText"));
         textview_title.setTextColor(list2.get("colorPrimaryText"));
         linear_base.setBackgroundTintList(ColorStateList.valueOf(list2.get("colorBackground")));
@@ -83,10 +80,15 @@ public class ThemeGridPreview extends BaseAdapter {
 
         if (ThemeManagerActivity.currentThemeUUID.equals(list.get(i).get("uuid").toString())) {
             indicator.setVisibility(View.VISIBLE);
+
             if (ColorUtils.calculateLuminance(list2.get("colorBackground")) < 0.5)
                 indicator.setColorFilter(0xFFFFFFFF);
-            else indicator.setColorFilter(0xFF000000);
-        } else indicator.setVisibility(View.INVISIBLE);
+
+            else
+                indicator.setColorFilter(0xFF000000);
+
+        } else
+            indicator.setVisibility(View.INVISIBLE);
 
         return view;
     }

@@ -26,7 +26,15 @@ import tw.osthm.manager.R;
 import tw.osthm.manager.ThmMgrUtils;
 import tw.osthm.osthmEngine;
 
-import static tw.osthm.manager.ThemeEditorActivity.*;
+import static tw.osthm.manager.ThemeEditorActivity.ACCENT_COLOR;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_ACCENT_TEXT_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_BACKGROUND_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_BACKGROUND_TEXT_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_CONTROL_HIGHLIGHT_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_HINT_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.COLOR_PRIMARY_TEXT_DIALOG_ID;
+import static tw.osthm.manager.ThemeEditorActivity.TEXT_COLOR;
+import static tw.osthm.manager.ThemeEditorActivity.refreshFragments;
 
 public class FragmentThmEdit2 extends Fragment {
 
