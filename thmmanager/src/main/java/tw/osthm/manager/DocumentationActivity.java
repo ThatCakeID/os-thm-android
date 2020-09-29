@@ -1,11 +1,13 @@
 package tw.osthm.manager;
 
 import android.content.res.ColorStateList;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,7 +43,7 @@ public class DocumentationActivity extends AppCompatActivity {
             "\n" +
             " Add os-thm implementation to your build.gradle\n" +
             " ```gradle\n" +
-            " implementation 'com.thatcakeid.osthm:3.0'\n" +
+            " implementation 'tw.osthm:3.0.1'\n" +
             " ```\n" +
             " That's it.\n" +
             "\n" +
@@ -125,5 +127,9 @@ public class DocumentationActivity extends AppCompatActivity {
         image_back.setColorFilter(theme.colorPrimaryTint);
         image_back.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, null));
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            findViewById(R.id.scrollView).setVerticalScrollbarThumbDrawable(new ColorDrawable(theme.colorAccent));
+        }
     }
 }
