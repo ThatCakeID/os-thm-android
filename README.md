@@ -25,7 +25,7 @@
 
  Add os-thm implementation to your build.gradle
  ```gradle
- implementation 'com.thatcakeid.osthm:3.0'
+ implementation 'tw.osthm:3.0.1'
  ```
  That's it.
 
