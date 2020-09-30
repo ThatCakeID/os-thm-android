@@ -19,7 +19,7 @@ import tw.osthm.osthmEngine;
 public class DocumentationActivity extends AppCompatActivity {
 
     public String documentation = " # os-thm\n" +
-            " Stable version: 3.0.1\n" +
+            " Stable version: 3.0.2\n" +
             " Development version: (Not planned yet)\n" +
             "\n" +
             " Written by members of ThatCakeID: [リェンーゆく](https://github.com/ryenyuku), and [Iyxan23](https://github.com/Iyxan23).\n" +
