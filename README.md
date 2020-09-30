@@ -1,7 +1,7 @@
 <img src="https://thatcakeid.com/assets/images/osthmlogo.png" alt="os-thm Logo" width="200"/>
 
  # os-thm
- Stable version: 3.0.1
+ Stable version: 3.0.2
  Development version: (Not planned yet)
 
  Written by members of ThatCakeID: [リェンーゆく](https://github.com/ryenyuku), and [Iyxan23](https://github.com/Iyxan23).
