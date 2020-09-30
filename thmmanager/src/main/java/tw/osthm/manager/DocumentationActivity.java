@@ -19,10 +19,11 @@ import tw.osthm.osthmEngine;
 public class DocumentationActivity extends AppCompatActivity {
 
     public String documentation = " # os-thm\n" +
-            " Stable version: 2.0\n" +
-            " Development version: 3.0.1\n" +
+            " Stable version: 3.0.1\n" +
+            " Development version: (Not planned yet)\n" +
             "\n" +
-            " Written by members of ThatCakeID: [ryenyuku](https://github.com/ryenyuku), and [Iyxan23](https://github.com/Iyxan23).\n" +
+            " Written by members of ThatCakeID: [リェンーゆく](https://github.com/ryenyuku), and [Iyxan23](https://github.com/Iyxan23).\n" +
+            " Some app's UI design & theme made by: [thatcakepiece](https://github.com/thatcakepiece).\n" +
             "\n" +
             " os-thm _(stands for: **o**pen**s**ource-**th**e**m**e)_ is a piece of software that can manage, edit, import, export or remove theme. One of the os-thm's key feature is that the theme can be applied globally, means the theme can used by apps that have implemented os-thm.\n" +
             " os-thm is intended to be open-source, rich, and easy to use.\n" +
@@ -32,7 +33,7 @@ public class DocumentationActivity extends AppCompatActivity {
             " ## For Consumers\n" +
             " os-thm is an easier way to change your theme globally for every single app that has implemented os-thm with a single click of a button.\n" +
             "\n" +
-            " Make sure to have the os-thm Manager app installed, as it's supposed to be the manager for all os-thm themes. You can [download it here](https://link/to/github/releases).\n" +
+            " Make sure to have the os-thm Manager app installed, as it's supposed to be the manager for all os-thm themes. You can [download it here](https://github.com/ThatCakeID/os-thm-android/releases), or [here](https://os-thm.thatcakeid.com).\n" +
             "\n" +
             " ## For Developers\n" +
             " os-thm is an easier way to make theme accessible to the user without worrying about managing themes, all of that _(adding, importing, removing, editing themes)_ are managed by os-thm, and the best part is, it's [open source](https://github.com/ThatCakeID/os-thm-android)!\n" +
@@ -76,13 +77,16 @@ public class DocumentationActivity extends AppCompatActivity {
             " |colorControlHighlight  |The ripple color                                                                |\n" +
             " |colorHint              |The color for the EditText hint                                                 |\n" +
             " |colorPrimaryTint       |The color for the ActionBar icons or items                                      |\n" +
-            " |colorBackgroundTint    |The tint color for images in a container                                        |\n" +
+            " |colorBackgroundTint    |The tint color for images in a root container                                        |\n" +
             " |colorBackgroundCard    |The background color for the card in a root container                           |\n" +
             " |colorBackgroundCardTint|The color tint for an ImageView in a card in a root container                   |\n" +
             " |colorBackgroundCardText|The TextView color in a card inside a container that's in the root container    |\n" +
             " |colorPrimaryCard       |The background color for a card inside an appBar                                |\n" +
             " |colorPrimaryCardTint   |The color tint for an ImageView in a card inside an appBar                      |\n" +
             " |colorPrimaryCardText   |The TextView color in a card that is inside of an appBar                        |\n" +
+            " |colorDialog            |The background color for the root dialog container                              |\n" +
+            " |colorDialogText        |The text color for TextView(s) that's inside the dialog root container          |\n" +
+            " |colorDialogTint        |The tint color for images in a dialog root container                            |\n" +
             "\n" +
             "\n" +
             " If you didn't understand the table above, you can use the Theme Editor on os-thm Theme Manager to determine which colors points to which.\n" +
@@ -91,7 +95,7 @@ public class DocumentationActivity extends AppCompatActivity {
             " - master: Current latest and stable version of os-thm-android.\n" +
             " - dev: Current canary branch with newest features, bug patches, and still in development state.\n" +
             "\n" +
-            " Documentation written by [Iyxan23](https://github.com/Iyxan23) and slightly edited by [ryenyuku](https://github.com/ryenyuku)\n" +
+            " Documentation written by [Iyxan23](https://github.com/Iyxan23) and slightly edited by [リェンーゆく](https://github.com/ryenyuku)\n" +
             "\n" +
             " (c) Copyright 2020 [ThatCakeID](https://github.com/ThatCakeID)\n" +
             "\n";

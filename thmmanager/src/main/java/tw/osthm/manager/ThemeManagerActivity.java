@@ -34,6 +34,7 @@ import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -212,35 +213,34 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
                 ImageView save = bottom_sheet_save_theme.findViewById(R.id.image_save);
 
-                // Apply the theme to bottom_sheet_save_theme
+                /* Apply the theme to bottom_sheet_save_theme (disabled coz TIL is cancerous to customize)
 
-                // Get the current applied theme
-                OsThmTheme theme = osthmEngine.getCurrentTheme();
-
-                // Apply
+                // Apply colors
                 bottom_sheet_save_theme.findViewById(R.id.bottomsheet_bar).setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
                 bottom_sheet_save_theme.findViewById(R.id.bottomsheet_root).setBackgroundColor(theme.colorDialog);
 
                 ((TextView)bottom_sheet_save_theme.findViewById(R.id.text_title)).setTextColor(theme.colorDialogText);
 
                 save.setColorFilter(theme.colorDialogTint);
-                save.setColorFilter(theme.colorControlHighlight);
+                save.setBackground(new RippleDrawable(ColorStateList.valueOf(theme.colorControlHighlight), null, null));
 
-                // name.setBackgroundColor(theme.colorAccent);
-                name.setHintTextColor(theme.colorHint);
+                name.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
+                name.setHighlightColor(theme.colorAccent);
+                ((TextInputLayout)bottom_sheet_save_theme.findViewById(R.id.cancerousTil1)).setDefaultHintTextColor(ColorStateList.valueOf(theme.colorHint));
                 name.setTextColor(theme.colorDialogText);
 
-                // name.setBackgroundColor(theme.colorAccent);
+                author.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
                 author.setHintTextColor(theme.colorHint);
                 author.setTextColor(theme.colorDialogText);
 
-                // description.setBackgroundColor(theme.colorAccent);
+                description.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
                 description.setHintTextColor(theme.colorHint);
                 description.setTextColor(theme.colorDialogText);
 
-                // version.setBackgroundColor(theme.colorAccent);
+                version.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
                 version.setHintTextColor(theme.colorHint);
                 version.setTextColor(theme.colorDialogText);
+                 */
 
                 final BottomSheetDialog bsd = new BottomSheetDialog(ThemeManagerActivity.this);
                 bsd.setContentView(bottom_sheet_save_theme);

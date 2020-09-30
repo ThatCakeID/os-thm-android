@@ -134,7 +134,7 @@ public class FragmentThmEdit3 extends Fragment {
                     public void onClick(View view) {
                         ColorPickerDialog.newBuilder()
                                 .setDialogId(COLOR_BACKGROUND_TINT_DIALOG_ID)
-                                .setColor(sp.getInt("colorBackgroundTint", -14575885))
+                                .setColor(sp.getInt("colorBackgroundTint", -16777216))
                                 .setShowAlphaSlider(true)
                                 .show(getActivity());
                     }
@@ -284,7 +284,7 @@ public class FragmentThmEdit3 extends Fragment {
             refreshCard(sp.getInt("colorPrimaryTint", -1), title_colorPrimaryTint,
                     subtitle_colorPrimaryTint, image_colorPrimaryTint, constraint_colorPrimaryTint);
 
-            refreshCard(sp.getInt("colorBackgroundTint", -14575885), title_colorBackgroundTint,
+            refreshCard(sp.getInt("colorBackgroundTint", -16777216), title_colorBackgroundTint,
                     subtitle_colorBackgroundTint, image_colorBackgroundTint, constraint_colorBackgroundTint);
 
             refreshCard(sp.getInt("colorPrimaryCard", -1), title_colorPrimaryCard,
@@ -318,10 +318,10 @@ public class FragmentThmEdit3 extends Fragment {
 
             bcard.setCardBackgroundColor(sp.getInt("colorBackgroundCard", -1));
 
-            background_item1.setColorFilter(sp.getInt("colorBackgroundTint", -14575885));
-            background_item2.setColorFilter(sp.getInt("colorBackgroundTint", -14575885));
-            background_item3.setColorFilter(sp.getInt("colorBackgroundTint", -14575885));
-            background_item4.setColorFilter(sp.getInt("colorBackgroundTint", -14575885));
+            background_item1.setColorFilter(sp.getInt("colorBackgroundTint", -16777216));
+            background_item2.setColorFilter(sp.getInt("colorBackgroundTint", -16777216));
+            background_item3.setColorFilter(sp.getInt("colorBackgroundTint", -16777216));
+            background_item4.setColorFilter(sp.getInt("colorBackgroundTint", -16777216));
 
             bcard_img.setColorFilter(sp.getInt("colorBackgroundCardTint", -16777216));
             pcard_img.setColorFilter(sp.getInt("colorPrimaryCardTint", -16777216));
