@@ -54,6 +54,7 @@
         android:paddingBottom="6dp">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cancerousTil1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp">
@@ -62,11 +63,9 @@
                 android:id="@+id/til1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#000000"
                 android:fontFamily="@font/googlesans"
                 android:hint="Theme Name"
                 android:singleLine="true"
-                android:text="hmm"
                 android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
