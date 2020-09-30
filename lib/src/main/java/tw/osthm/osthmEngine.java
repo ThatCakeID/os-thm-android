@@ -776,7 +776,7 @@ public class osthmEngine {
                     } else {
                         theme.putAll(migrateOlderThemePrivate(theme));
                     }
-                    if (osthmManager.containsTheme(theme.get("uuid").toString()) || isExistInDefaultTheme(theme.get("uuid").toString())) {
+                    if (isExistInDefaultTheme(theme.get("uuid").toString())) {
                         throw new osthmException("Theme(s) can't be imported because the theme(s) are already exist!");
                     } else {
                         osthmManager.setTheme(theme);

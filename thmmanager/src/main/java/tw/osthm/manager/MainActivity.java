@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 continueActivity();
 
             } else {
+                // Hmm
                 Intent intent = new Intent();
                 intent.setData(Uri.parse("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
                 intent.setAction(Intent.ACTION_VIEW);

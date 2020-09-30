@@ -34,6 +34,7 @@ import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -212,14 +213,33 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
                 ImageView save = bottom_sheet_save_theme.findViewById(R.id.image_save);
 
-                //TODO: Implement custom dialog color for bottomsheet_newtheme. int ThemeEditorActivity.java too
-                /*
+                /* Apply the theme to bottom_sheet_save_theme (disabled coz TIL is cancerous to customize)
+
+                // Apply colors
                 bottom_sheet_save_theme.findViewById(R.id.bottomsheet_bar).setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
                 bottom_sheet_save_theme.findViewById(R.id.bottomsheet_root).setBackgroundColor(theme.colorDialog);
+
                 ((TextView)bottom_sheet_save_theme.findViewById(R.id.text_title)).setTextColor(theme.colorDialogText);
+
                 save.setColorFilter(theme.colorDialogTint);
-                save.setColorFilter(theme.colorControlHighlight);
-                name.setBac
+                save.setBackground(new RippleDrawable(ColorStateList.valueOf(theme.colorControlHighlight), null, null));
+
+                name.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
+                name.setHighlightColor(theme.colorAccent);
+                ((TextInputLayout)bottom_sheet_save_theme.findViewById(R.id.cancerousTil1)).setDefaultHintTextColor(ColorStateList.valueOf(theme.colorHint));
+                name.setTextColor(theme.colorDialogText);
+
+                author.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
+                author.setHintTextColor(theme.colorHint);
+                author.setTextColor(theme.colorDialogText);
+
+                description.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
+                description.setHintTextColor(theme.colorHint);
+                description.setTextColor(theme.colorDialogText);
+
+                version.setBackgroundTintList(ColorStateList.valueOf(theme.colorAccent));
+                version.setHintTextColor(theme.colorHint);
+                version.setTextColor(theme.colorDialogText);
                  */
 
                 final BottomSheetDialog bsd = new BottomSheetDialog(ThemeManagerActivity.this);
@@ -261,7 +281,6 @@ public class ThemeManagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.dismiss();
-
                 try {
                     makeSnackbar("Saved in " + osthmManager.exportThemeFile(osthmEngine
                                     .exportThemes(new String[]{arrayList.get(selectedNum)
@@ -291,11 +310,13 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 bottomsheetView1.findViewById(R.id.bottomsheet_bar).setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
                 bottomsheetView1.findViewById(R.id.bottomsheet_root).setBackgroundColor(theme.colorDialog);
                 ((TextView)bottomsheetView1.findViewById(R.id.text_title)).setTextColor(theme.colorDialogText);
+
                 text_name.setTextColor(theme.colorDialogText);
                 text_description.setTextColor(theme.colorDialogText);
                 text_author.setTextColor(theme.colorDialogText);
                 text_version.setTextColor(theme.colorDialogText);
                 text_osthm.setTextColor(theme.colorDialogText);
+
                 ((ImageView)bottomsheetView1.findViewById(R.id.image_name)).setColorFilter(theme.colorDialogTint);
                 ((ImageView)bottomsheetView1.findViewById(R.id.image_description)).setColorFilter(theme.colorDialogTint);
                 ((ImageView)bottomsheetView1.findViewById(R.id.image_author)).setColorFilter(theme.colorDialogTint);
@@ -481,11 +502,14 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
         bottomsheetView.findViewById(R.id.bottomsheet_bar).setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
         bottomsheetView.findViewById(R.id.bottomsheet_root).setBackgroundColor(theme.colorDialog);
+
         image_delete.setColorFilter(theme.colorDialogTint);
         image_edit.setColorFilter(theme.colorDialogTint);
+
         ((ImageView) bottomsheetView.findViewById(R.id.image_clone)).setColorFilter(theme.colorDialogTint);
         ((ImageView) bottomsheetView.findViewById(R.id.image_export)).setColorFilter(theme.colorDialogTint);
         ((ImageView) bottomsheetView.findViewById(R.id.image_info)).setColorFilter(theme.colorDialogTint);
+
         image_delete.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, null));
         image_edit.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
@@ -496,6 +520,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 .colorControlHighlight), null, new ShapeDrawable()));
         linear_info.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, new ShapeDrawable()));
+
         ((TextView) bottomsheetView.findViewById(R.id.text_title)).setTextColor(theme.colorDialogText);
         ((TextView) bottomsheetView.findViewById(R.id.text_subtitle)).setTextColor(theme.colorDialogText);
         ((TextView) bottomsheetView.findViewById(R.id.text_clone)).setTextColor(theme.colorDialogText);
