@@ -226,19 +226,19 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 save.setColorFilter(theme.colorDialogTint);
                 save.setColorFilter(theme.colorControlHighlight);
 
-                name.setBackgroundColor(theme.colorAccent);
+                // name.setBackgroundColor(theme.colorAccent);
                 name.setHintTextColor(theme.colorHint);
                 name.setTextColor(theme.colorDialogText);
 
-                author.setBackgroundColor(theme.colorAccent);
+                // name.setBackgroundColor(theme.colorAccent);
                 author.setHintTextColor(theme.colorHint);
                 author.setTextColor(theme.colorDialogText);
 
-                description.setBackgroundColor(theme.colorAccent);
+                // description.setBackgroundColor(theme.colorAccent);
                 description.setHintTextColor(theme.colorHint);
                 description.setTextColor(theme.colorDialogText);
 
-                version.setBackgroundColor(theme.colorAccent);
+                // version.setBackgroundColor(theme.colorAccent);
                 version.setHintTextColor(theme.colorHint);
                 version.setTextColor(theme.colorDialogText);
 

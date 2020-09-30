@@ -212,19 +212,19 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         image_saveb.setColorFilter(theme.colorDialogTint);
         image_saveb.setColorFilter(theme.colorControlHighlight);
 
-        til1.setBackgroundColor(theme.colorAccent);
+        // til1.setBackgroundColor(theme.colorAccent);
         til1.setHintTextColor(theme.colorHint);
         til1.setTextColor(theme.colorDialogText);
 
-        til2.setBackgroundColor(theme.colorAccent);
+        // til2.setBackgroundColor(theme.colorAccent);
         til2.setHintTextColor(theme.colorHint);
         til2.setTextColor(theme.colorDialogText);
 
-        til3.setBackgroundColor(theme.colorAccent);
+        // til3.setBackgroundColor(theme.colorAccent);
         til3.setHintTextColor(theme.colorHint);
         til3.setTextColor(theme.colorDialogText);
 
-        til4.setBackgroundColor(theme.colorAccent);
+        // til4.setBackgroundColor(theme.colorAccent);
         til4.setHintTextColor(theme.colorHint);
         til4.setTextColor(theme.colorDialogText);
     }
@@ -443,7 +443,8 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         TEXT_COLOR = theme.colorBackgroundText;
         ACCENT_COLOR = theme.colorAccent;
 
-        refreshFragments();
+        fragment1.refreshViews();
+        fragment2.refreshViews();
     }
 
     @Override
