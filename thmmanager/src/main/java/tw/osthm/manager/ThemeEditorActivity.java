@@ -188,6 +188,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         bottomsheetview = inflater.inflate(R.layout.bottomsheet_newtheme, null);
 
+
         image_saveb = bottomsheetview.findViewById(R.id.image_save);
         bottomSheetDialog.setContentView(bottomsheetview);
 
@@ -196,6 +197,36 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         til2 = bottomsheetview.findViewById(R.id.til2);
         til3 = bottomsheetview.findViewById(R.id.til3);
         til4 = bottomsheetview.findViewById(R.id.til4);
+
+        // Apply the theme to bottom_sheet_save_theme
+
+        // Get the current applied theme
+        OsThmTheme theme = osthmEngine.getCurrentTheme();
+
+        // Apply
+        bottomsheetview.findViewById(R.id.bottomsheet_bar).setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
+        bottomsheetview.findViewById(R.id.bottomsheet_root).setBackgroundColor(theme.colorDialog);
+
+        ((TextView)bottomsheetview.findViewById(R.id.text_title)).setTextColor(theme.colorDialogText);
+
+        image_saveb.setColorFilter(theme.colorDialogTint);
+        image_saveb.setColorFilter(theme.colorControlHighlight);
+
+        til1.setBackgroundColor(theme.colorAccent);
+        til1.setHintTextColor(theme.colorHint);
+        til1.setTextColor(theme.colorDialogText);
+
+        til2.setBackgroundColor(theme.colorAccent);
+        til2.setHintTextColor(theme.colorHint);
+        til2.setTextColor(theme.colorDialogText);
+
+        til3.setBackgroundColor(theme.colorAccent);
+        til3.setHintTextColor(theme.colorHint);
+        til3.setTextColor(theme.colorDialogText);
+
+        til4.setBackgroundColor(theme.colorAccent);
+        til4.setHintTextColor(theme.colorHint);
+        til4.setTextColor(theme.colorDialogText);
     }
 
     private void loadColors() {
