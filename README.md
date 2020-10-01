@@ -26,8 +26,11 @@
 
  Add os-thm implementation to your build.gradle
  ```gradle
- implementation 'tw.osthm:3.0.1'
+ implementation 'tw.osthm:3.0.2'
  ```
+ 
+ Grant Read and Write External Storage Permission
+ 
  That's it.
 
  ### How to use the library?
@@ -46,29 +49,30 @@
 
  Here is a table showing the meanings of the colors:
 
- |Color Name             |Color Meaning                                                                   |
- |-----------------------|--------------------------------------------------------------------------------|
- |colorPrimary           |The primary color for your app (ex: actionBar)                                  |
- |colorPrimaryDark       |The darker primary color for your app (ex: statusbar)                           |
- |colorAccent            |The accent color for your app (ex: Button & FAB)                                |
- |colorStatusbarTint     |The tint color of the statusbar icon (can only be black[0] and white[1])        |
- |colorBackground        |The background color for the root container                                     |
- |colorBackgroundText    |The text color for TextView(s) that's inside the root container                 |
- |colorAccentText        |The text or tint color for the button/FAB's image source                        |
- |shadow                 |The boolean value to determine if shadow is enabled or not (can only be 1 and 0)|
- |colorControlHighlight  |The ripple color                                                                |
- |colorHint              |The color for the EditText hint                                                 |
- |colorPrimaryTint       |The color for the ActionBar icons or items                                      |
- |colorBackgroundTint    |The tint color for images in a root container                                        |
- |colorBackgroundCard    |The background color for the card in a root container                           |
- |colorBackgroundCardTint|The color tint for an ImageView in a card in a root container                   |
- |colorBackgroundCardText|The TextView color in a card inside a container that's in the root container    |
- |colorPrimaryCard       |The background color for a card inside an appBar                                |
- |colorPrimaryCardTint   |The color tint for an ImageView in a card inside an appBar                      |
- |colorPrimaryCardText   |The TextView color in a card that is inside of an appBar                        |
- |colorDialog            |The background color for the root dialog container                              |
- |colorDialogText        |The text color for TextView(s) that's inside the dialog root container          |
- |colorDialogTint        |The tint color for images in a dialog root container                            |
+ |Num |Color Name           |Color Meaning                                                                   |
+ |----|---------------------|--------------------------------------------------------------------------------|
+ | 1|colorPrimary           |The primary color for your app (ex: actionBar)                                  |
+ | 2|colorPrimaryDark       |The darker primary color for your app (ex: statusbar)                           |
+ | 3|colorAccent            |The accent color for your app (ex: Button & FAB)                                |
+ | 4|colorStatusbarTint     |The tint color of the statusbar icon (can only be black[0] and white[1])        |
+ | 5|colorBackground        |The background color for the root container                                     |
+ | 6|colorBackgroundText    |The text color for TextView(s) that's inside the root container                 |
+ | 7|colorPrimaryText       |The primary text color                                                          |
+ | 8|colorAccentText        |The text or tint color for the button/FAB's image source                        |
+ | 9|shadow                 |The boolean value to determine if shadow is enabled or not (can only be 1 and 0)|
+ |10|colorControlHighlight  |The ripple color                                                                |
+ |11|colorHint              |The color for the EditText hint                                                 |
+ |12|colorPrimaryTint       |The color for the ActionBar icons or items                                      |
+ |13|colorBackgroundTint    |The tint color for images in a root container                                   |
+ |14|colorBackgroundCard    |The background color for the card in a root container                           |
+ |15|colorBackgroundCardTint|The color tint for an ImageView in a card in a root container                   |
+ |16|colorBackgroundCardText|The TextView color in a card inside a container that's in the root container    |
+ |17|colorPrimaryCard       |The background color for a card inside an appBar                                |
+ |18|colorPrimaryCardTint   |The color tint for an ImageView in a card inside an appBar                      |
+ |19|colorPrimaryCardText   |The TextView color in a card that is inside of an appBar                        |
+ |20|colorDialog            |The background color for the root dialog container                              |
+ |21|colorDialogText        |The text color for TextView(s) that's inside the dialog root container          |
+ |22|colorDialogTint        |The tint color for images in a dialog root container                            |
 
 
  If you didn't understand the table above, you can use the Theme Editor on os-thm Theme Manager to determine which colors points to which.
