@@ -28,6 +28,7 @@
  ```gradle
  implementation 'tw.osthm:3.0.2'
  ```
+ ..or if you have trouble while implementing the library, try downloading the .aar file in the package tab and import it as library on android studio.
  
  Grant Read and Write External Storage Permission
  
