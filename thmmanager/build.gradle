@@ -34,6 +34,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation "io.noties.markwon:core:4.5.1"
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.0'
     implementation project(path: ':lib')
     testImplementation 'junit:junit:4.13'
