@@ -44,7 +44,7 @@ public class DocumentationActivity extends AppCompatActivity {
             "\n" +
             " Add os-thm implementation to your build.gradle\n" +
             " ```gradle\n" +
-            " implementation 'tw.osthm:3.0.1'\n" +
+            " implementation 'tw.osthm:3.0.2'\n" +
             " ```\n" +
             " That's it.\n" +
             "\n" +
