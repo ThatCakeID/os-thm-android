@@ -105,11 +105,12 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="88dp"
             android:layout_marginBottom="186dp"
-            android:background="#212121"
+            android:background="@drawable/round_preview"
+            android:elevation="2.5dp"
             android:fontFamily="@font/googlesans"
             android:padding="8dp"
             android:text="@string/create_theme"
-            android:textColor="#ffffff"
+            android:textColor="#000000"
             android:visibility="invisible" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -121,9 +122,9 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="176dp"
             android:clickable="true"
+            android:src="@drawable/ic_palette_white"
             android:visibility="invisible"
-            app:pressedTranslationZ="12dp"
-            android:src="@drawable/ic_palette_white" />
+            app:pressedTranslationZ="12dp" />
 
         <TextView
             android:id="@+id/textview_import"
@@ -133,11 +134,12 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="88dp"
             android:layout_marginBottom="116dp"
-            android:background="#212121"
+            android:background="@drawable/round_preview"
+            android:elevation="2.5dp"
             android:fontFamily="@font/googlesans"
             android:padding="8dp"
             android:text="@string/import_theme"
-            android:textColor="#ffffff"
+            android:textColor="#000000"
             android:visibility="invisible" />
 
 
@@ -150,8 +152,8 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="106dp"
             android:clickable="true"
-            android:visibility="invisible"
             android:src="@drawable/ic_import_export_white"
+            android:visibility="invisible"
             app:pressedTranslationZ="12dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

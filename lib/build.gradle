@@ -12,13 +12,17 @@ def getArtifactId = { ->
     return "osthm"
 }
 
+def getProjectDirectory = { ->
+    return "lib";
+}
+
 publishing {
     publications {
         bar(MavenPublication) {
             groupId 'tw'
             artifactId getArtifactId()
             version getVersionName()
-            artifact("$buildDir/outputs/aar/${getArtifactId()}-release.aar")
+            artifact("$buildDir/outputs/aar/${getProjectDirectory()}-release.aar")
         }
     }
 
@@ -60,7 +64,6 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.jaredrummler:colorpicker:1.1.0'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

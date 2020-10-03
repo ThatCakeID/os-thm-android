@@ -116,6 +116,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toggleFabs();
                 showSelectDialog();
             }
         });
@@ -123,6 +124,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toggleFabs();
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), ThemeEditorActivity.class);
                 intent.putExtra("isEditing", false);
@@ -526,6 +528,13 @@ public class ThemeManagerActivity extends AppCompatActivity {
         ((TextView) bottomsheetView.findViewById(R.id.text_clone)).setTextColor(theme.colorDialogText);
         ((TextView) bottomsheetView.findViewById(R.id.text_export)).setTextColor(theme.colorDialogText);
         ((TextView) bottomsheetView.findViewById(R.id.text_info)).setTextColor(theme.colorDialogText);
+
+        textview_create.setTextColor(theme.colorDialogText);
+        textview_create.setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
+        textview_create.setElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 2.5f) : 0f);
+        textview_import.setTextColor(theme.colorDialogText);
+        textview_import.setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
+        textview_import.setElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 2.5f) : 0f);
     }
 
     private void refreshTheme() {
