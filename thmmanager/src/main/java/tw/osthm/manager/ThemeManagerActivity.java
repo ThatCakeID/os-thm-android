@@ -27,6 +27,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.getkeepsafe.taptargetview.TapTarget;
@@ -71,9 +72,9 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
     private View bottomsheetView;
 
-    private LinearLayout linear_export;
-    private LinearLayout linear_info;
-    private LinearLayout linear_clone;
+    private ConstraintLayout constraint_export;
+    private ConstraintLayout constraint_info;
+    private ConstraintLayout constraint_clone;
 
     private ImageView image_edit;
     private ImageView image_delete;
@@ -194,7 +195,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
             }
         });
 
-        linear_clone.setOnClickListener(new View.OnClickListener() {
+        constraint_clone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.dismiss();
@@ -279,7 +280,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
             }
         });
 
-        linear_export.setOnClickListener(new View.OnClickListener() {
+        constraint_export.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.dismiss();
@@ -295,7 +296,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
             }
         });
 
-        linear_info.setOnClickListener(new View.OnClickListener() {
+        constraint_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.dismiss();
@@ -503,7 +504,6 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 .colorControlHighlight), null, new ShapeDrawable()));
 
         bottomsheetView.findViewById(R.id.bottomsheet_bar).setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
-        bottomsheetView.findViewById(R.id.bottomsheet_root).setBackgroundColor(theme.colorDialog);
 
         image_delete.setColorFilter(theme.colorDialogTint);
         image_edit.setColorFilter(theme.colorDialogTint);
@@ -516,11 +516,11 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 .colorControlHighlight), null, null));
         image_edit.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, null));
-        linear_clone.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+        constraint_clone.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, new ShapeDrawable()));
-        linear_export.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+        constraint_export.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, new ShapeDrawable()));
-        linear_info.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+        constraint_info.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, new ShapeDrawable()));
 
         ((TextView) bottomsheetView.findViewById(R.id.text_title)).setTextColor(theme.colorDialogText);
@@ -566,9 +566,9 @@ public class ThemeManagerActivity extends AppCompatActivity {
         bottomsheetView = getLayoutInflater().inflate(R.layout.bottomsheet_multichoices, null);
 
         image_delete = bottomsheetView.findViewById(R.id.image_delete);
-        linear_export = bottomsheetView.findViewById(R.id.linear_export);
-        linear_info = bottomsheetView.findViewById(R.id.linear_info);
-        linear_clone = bottomsheetView.findViewById(R.id.linear_clone);
+        constraint_export = bottomsheetView.findViewById(R.id.constraint_export);
+        constraint_info = bottomsheetView.findViewById(R.id.constraint_info);
+        constraint_clone = bottomsheetView.findViewById(R.id.constraint_clone);
         image_edit = bottomsheetView.findViewById(R.id.image_edit);
         text_title = bottomsheetView.findViewById(R.id.text_title);
         text_subtitle = bottomsheetView.findViewById(R.id.text_subtitle);
