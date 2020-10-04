@@ -1,10 +1,12 @@
 package tw.osthm.manager;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,9 +59,13 @@ public class ThemeStoreActivity extends AppCompatActivity {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
 
             finish();
+            return;
         }
 
-
+        ThemeStoreItemAdapter adapter = new ThemeStoreItemAdapter(themes, this);
+        RecyclerView rv = findViewById(R.id.recycler_view_theme_store);
+        adapter.notifyDataSetChanged();
+        rv.setAdapter(adapter);
     }
 
     String get(String url) throws IOException {
