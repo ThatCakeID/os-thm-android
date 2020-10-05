@@ -22,8 +22,8 @@
 
  ### How to implement os-thm to your app?
 
- _(Note: for sketchware developers, you might want to use [os-thm-sketchware](https://github.com/ThatCakeID/os-thm-sketchware) [Currently not developed yet])_
-
+ (Note: for sketchware developers, you might want to use [os-thm-sketchware](https://github.com/ThatCakeID/os-thm-sketchware))
+ 
   - Add os-thm implementation to your build.gradle
     ```gradle
     implementation 'tw.osthm:3.0.2'
