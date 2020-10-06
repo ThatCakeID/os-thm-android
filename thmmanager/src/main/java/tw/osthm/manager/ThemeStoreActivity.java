@@ -27,6 +27,8 @@ public class ThemeStoreActivity extends AppCompatActivity {
     private OkHttpClient client;
     private Request request;
     private JSONArray themes;
+    private ThemeStoreItemAdapter adapter;
+    private RecyclerView rv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class ThemeStoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_theme_store);
 
         client = new OkHttpClient();
+        rv = findViewById(R.id.recycler_view_theme_store);
 
         // Check if the server is open or not
         request = new Request.Builder()
@@ -55,6 +58,31 @@ public class ThemeStoreActivity extends AppCompatActivity {
                         // Server is closed
                         Toast.makeText(getApplicationContext(), status.getString("info"), Toast.LENGTH_LONG).show();
                         finish();
+                    } else {
+                        // Server is open!
+                        // Get themes
+                        request = new Request.Builder()
+                                .url("https://thatcakeid.com/api/osthm/v1/get_themes.php")
+                                .build();
+                        client.newCall(request).enqueue(new Callback() {
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                try {
+                                    themes = new JSONArray(response.body().string());
+                                    adapter = new ThemeStoreItemAdapter(themes, getApplicationContext());
+                                    rv.setAdapter(adapter);
+                                } catch (JSONException e) {
+                                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                    finish();
+                                }
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -62,33 +90,5 @@ public class ThemeStoreActivity extends AppCompatActivity {
                 }
             }
         });
-
-        // Server is open!
-        // Get themes
-        request = new Request.Builder()
-                .url("https://thatcakeid.com/api/osthm/v1/get_themes.php")
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                finish();
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try {
-                    themes = new JSONArray(response.body().string());
-                } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    finish();
-                }
-            }
-        });
-
-        ThemeStoreItemAdapter adapter = new ThemeStoreItemAdapter(themes, this);
-        RecyclerView rv = findViewById(R.id.recycler_view_theme_store);
-        adapter.notifyDataSetChanged();
-        rv.setAdapter(adapter);
     }
 }
