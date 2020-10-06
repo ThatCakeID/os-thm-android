@@ -79,6 +79,8 @@ public class ThemeManagerActivity extends AppCompatActivity {
     private ImageView image_edit;
     private ImageView image_delete;
 
+    private ImageView image_online;
+
     private TextView text_title;
     private TextView text_subtitle;
 
@@ -102,7 +104,14 @@ public class ThemeManagerActivity extends AppCompatActivity {
         image_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ThemeManagerActivity.this, DocumentationActivity.class));
+                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://github.com/ThatCakeID/os-thm-android/blob/master/README.md")));
+            }
+        });
+
+        image_online.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ThemeManagerActivity.this, ThemeStoreActivity.class));
             }
         });
 
@@ -559,6 +568,8 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
         textview_create = findViewById(R.id.textview_create);
         textview_import = findViewById(R.id.textview_import);
+
+        image_online = findViewById(R.id.image_help2);
 
         gridview1 = findViewById(R.id.gridview1);
         sp = getSharedPreferences("mgrdata", Context.MODE_PRIVATE);
