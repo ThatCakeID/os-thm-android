@@ -122,9 +122,12 @@ public class DocumentationActivity extends AppCompatActivity {
         findViewById(R.id.linear_title).setElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 5f) : 0f);
 
         getWindow().setStatusBarColor(theme.colorPrimaryDark);
-        if (theme.colorStatusbarTint == 0
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (theme.colorStatusbarTint == 0)
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            else
+                getWindow().getDecorView().setSystemUiVisibility(0);
+        }
         ((TextView) findViewById(R.id.text_back)).setTextColor(theme.colorPrimaryText);
         documentation_textview.setTextColor(theme.colorBackgroundText);
 

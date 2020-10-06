@@ -3,7 +3,7 @@
     android:fillAfter="true">
 
 
-    <rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    <rotate
         android:fromDegrees="0"
         android:toDegrees="45"
         android:interpolator="@android:anim/linear_interpolator"

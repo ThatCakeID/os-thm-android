@@ -68,7 +68,7 @@ public class ThemeStoreActivity extends AppCompatActivity {
         rv.setAdapter(adapter);
     }
 
-    String get(String url) throws IOException {
+    private String get(String url) throws IOException {
         Request request = new Request.Builder()
                 .url(url)
                 .build();

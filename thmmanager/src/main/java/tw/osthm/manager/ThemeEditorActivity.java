@@ -424,9 +424,12 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
         findViewById(R.id.linear_title).setBackgroundColor(theme.colorPrimary);
 
         getWindow().setStatusBarColor(theme.colorPrimaryDark);
-        if (theme.colorStatusbarTint == 0
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (theme.colorStatusbarTint == 0)
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            else
+                getWindow().getDecorView().setSystemUiVisibility(0);
+        }
         ((TextView) findViewById(R.id.text_back)).setTextColor(theme.colorPrimaryText);
 
         image_back.setColorFilter(theme.colorPrimaryTint);

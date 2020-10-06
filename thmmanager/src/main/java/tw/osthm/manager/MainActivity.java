@@ -68,9 +68,12 @@ public class MainActivity extends AppCompatActivity {
 
         getWindow().setStatusBarColor(theme.colorBackground);
 
-        if (!(ColorUtils.calculateLuminance(theme.colorBackground) < 0.5)
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ColorUtils.calculateLuminance(theme.colorBackground) < 0.5)
+                getWindow().getDecorView().setSystemUiVisibility(0);
+            else
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
     }
 
     @Override
