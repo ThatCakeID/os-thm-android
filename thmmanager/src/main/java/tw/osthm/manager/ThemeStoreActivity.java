@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,66 +16,79 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Objects;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class ThemeStoreActivity extends AppCompatActivity {
 
-    OkHttpClient client = new OkHttpClient();
+    private OkHttpClient client;
+    private Request request;
+    private JSONArray themes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theme_store);
 
-        boolean isOpen = false;
-        String close_reason;
+        client = new OkHttpClient();
 
         // Check if the server is open or not
-        try {
-            JSONObject status = new JSONObject(get("https://thatcakeid.com/api/osthm/v1/status.php"));
-            isOpen = status.getBoolean("open");
-
-            if (!isOpen) {
-                // Server is closed
-                close_reason = status.getString("info");
-                Toast.makeText(this, close_reason, Toast.LENGTH_LONG).show();
-
+        request = new Request.Builder()
+                .url("https://thatcakeid.com/api/osthm/v1/status.php")
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 finish();
             }
 
-        } catch (JSONException | IOException e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try {
+                    JSONObject status = new JSONObject(response.body().string());
 
-            finish();
-        }
+                    if (!status.getBoolean("open")) {
+                        // Server is closed
+                        Toast.makeText(getApplicationContext(), status.getString("info"), Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+        });
 
         // Server is open!
         // Get themes
-        JSONArray themes = null;
-        try {
-            themes = new JSONArray(get("https://thatcakeid.com/api/osthm/v1/get_themes.php"));
-        } catch (JSONException | IOException e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        request = new Request.Builder()
+                .url("https://thatcakeid.com/api/osthm/v1/get_themes.php")
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                finish();
+            }
 
-            finish();
-            return;
-        }
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try {
+                    themes = new JSONArray(response.body().string());
+                } catch (JSONException e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+        });
 
         ThemeStoreItemAdapter adapter = new ThemeStoreItemAdapter(themes, this);
         RecyclerView rv = findViewById(R.id.recycler_view_theme_store);
         adapter.notifyDataSetChanged();
         rv.setAdapter(adapter);
-    }
-
-    private String get(String url) throws IOException {
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            return Objects.requireNonNull(response.body()).string();
-        }
     }
 }
