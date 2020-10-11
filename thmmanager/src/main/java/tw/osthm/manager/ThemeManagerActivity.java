@@ -27,6 +27,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.getkeepsafe.taptargetview.TapTarget;
@@ -71,12 +72,14 @@ public class ThemeManagerActivity extends AppCompatActivity {
 
     private View bottomsheetView;
 
-    private LinearLayout linear_export;
-    private LinearLayout linear_info;
-    private LinearLayout linear_clone;
+    private ConstraintLayout constraint_export;
+    private ConstraintLayout constraint_info;
+    private ConstraintLayout constraint_clone;
 
     private ImageView image_edit;
     private ImageView image_delete;
+
+    private ImageView image_online;
 
     private TextView text_title;
     private TextView text_subtitle;
@@ -101,7 +104,14 @@ public class ThemeManagerActivity extends AppCompatActivity {
         image_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ThemeManagerActivity.this, DocumentationActivity.class));
+                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://github.com/ThatCakeID/os-thm-android/blob/master/README.md")));
+            }
+        });
+
+        image_online.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ThemeManagerActivity.this, ThemeStoreActivity.class));
             }
         });
 
@@ -116,6 +126,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toggleFabs();
                 showSelectDialog();
             }
         });
@@ -123,6 +134,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toggleFabs();
                 Intent intent = new Intent();
                 intent.setClass(getApplicationContext(), ThemeEditorActivity.class);
                 intent.putExtra("isEditing", false);
@@ -192,7 +204,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
             }
         });
 
-        linear_clone.setOnClickListener(new View.OnClickListener() {
+        constraint_clone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.dismiss();
@@ -277,7 +289,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
             }
         });
 
-        linear_export.setOnClickListener(new View.OnClickListener() {
+        constraint_export.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.dismiss();
@@ -293,7 +305,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
             }
         });
 
-        linear_info.setOnClickListener(new View.OnClickListener() {
+        constraint_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.dismiss();
@@ -354,7 +366,9 @@ public class ThemeManagerActivity extends AppCompatActivity {
         image_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ThemeManagerActivity.this, DocumentationActivity.class);
+                Intent i = new Intent();
+                i.setData(Uri.parse("https://github.com/ThatCakeID/os-thm-android/blob/master/README.md"));
+                i.setAction(Intent.ACTION_VIEW);
                 startActivity(i);
             }
         });
@@ -471,9 +485,12 @@ public class ThemeManagerActivity extends AppCompatActivity {
         findViewById(R.id.linear_title).setBackgroundColor(theme.colorPrimary);
 
         getWindow().setStatusBarColor(theme.colorPrimaryDark);
-        if (theme.colorStatusbarTint == 0
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (theme.colorStatusbarTint == 0)
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            else
+                getWindow().getDecorView().setSystemUiVisibility(0);
+        }
         ((TextView) findViewById(R.id.text_back)).setTextColor(theme.colorPrimaryText);
 
         image_help.setColorFilter(theme.colorPrimaryTint);
@@ -501,7 +518,6 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 .colorControlHighlight), null, new ShapeDrawable()));
 
         bottomsheetView.findViewById(R.id.bottomsheet_bar).setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
-        bottomsheetView.findViewById(R.id.bottomsheet_root).setBackgroundColor(theme.colorDialog);
 
         image_delete.setColorFilter(theme.colorDialogTint);
         image_edit.setColorFilter(theme.colorDialogTint);
@@ -514,11 +530,11 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 .colorControlHighlight), null, null));
         image_edit.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, null));
-        linear_clone.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+        constraint_clone.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, new ShapeDrawable()));
-        linear_export.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+        constraint_export.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, new ShapeDrawable()));
-        linear_info.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
+        constraint_info.setBackground(new RippleDrawable(ColorStateList.valueOf(theme
                 .colorControlHighlight), null, new ShapeDrawable()));
 
         ((TextView) bottomsheetView.findViewById(R.id.text_title)).setTextColor(theme.colorDialogText);
@@ -526,6 +542,13 @@ public class ThemeManagerActivity extends AppCompatActivity {
         ((TextView) bottomsheetView.findViewById(R.id.text_clone)).setTextColor(theme.colorDialogText);
         ((TextView) bottomsheetView.findViewById(R.id.text_export)).setTextColor(theme.colorDialogText);
         ((TextView) bottomsheetView.findViewById(R.id.text_info)).setTextColor(theme.colorDialogText);
+
+        textview_create.setTextColor(theme.colorDialogText);
+        textview_create.setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
+        textview_create.setElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 2.5f) : 0f);
+        textview_import.setTextColor(theme.colorDialogText);
+        textview_import.setBackgroundTintList(ColorStateList.valueOf(theme.colorDialog));
+        textview_import.setElevation(theme.shadow == 1 ? ThmMgrUtils.toDip(getApplicationContext(), 2.5f) : 0f);
     }
 
     private void refreshTheme() {
@@ -551,15 +574,17 @@ public class ThemeManagerActivity extends AppCompatActivity {
         textview_create = findViewById(R.id.textview_create);
         textview_import = findViewById(R.id.textview_import);
 
+        image_online = findViewById(R.id.image_help2);
+
         gridview1 = findViewById(R.id.gridview1);
         sp = getSharedPreferences("mgrdata", Context.MODE_PRIVATE);
 
         bottomsheetView = getLayoutInflater().inflate(R.layout.bottomsheet_multichoices, null);
 
         image_delete = bottomsheetView.findViewById(R.id.image_delete);
-        linear_export = bottomsheetView.findViewById(R.id.linear_export);
-        linear_info = bottomsheetView.findViewById(R.id.linear_info);
-        linear_clone = bottomsheetView.findViewById(R.id.linear_clone);
+        constraint_export = bottomsheetView.findViewById(R.id.constraint_export);
+        constraint_info = bottomsheetView.findViewById(R.id.constraint_info);
+        constraint_clone = bottomsheetView.findViewById(R.id.constraint_clone);
         image_edit = bottomsheetView.findViewById(R.id.image_edit);
         text_title = bottomsheetView.findViewById(R.id.text_title);
         text_subtitle = bottomsheetView.findViewById(R.id.text_subtitle);
