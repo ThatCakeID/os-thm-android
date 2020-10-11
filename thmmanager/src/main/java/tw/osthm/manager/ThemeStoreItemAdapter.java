@@ -1,9 +1,7 @@
 package tw.osthm.manager;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,73 +12,52 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ThemeStoreItemAdapter extends RecyclerView.Adapter<ThemeStoreItemAdapter.ViewHolder> {
-    private static final String TAG = "ThemeStoreItemAdapter";
 
-    JSONArray datas;
+    ArrayList<HashMap<String, Object>> datas;
     Context mContext;
 
-    public ThemeStoreItemAdapter(JSONArray datas, Context mContext) {
+    public ThemeStoreItemAdapter(ArrayList<HashMap<String, Object>> datas, Context mContext) {
         this.datas = datas;
         this.mContext = mContext;
     }
 
-    public void updateView(JSONArray datas) {
-        this.datas = datas;
-    }
-
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ThemeStoreItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.online_theme_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        Log.d(TAG, "onBindViewHolder: called.");
+    public void onBindViewHolder(@NonNull ThemeStoreItemAdapter.ViewHolder holder, int position) {
+        holder.theme_name.setText(datas.get(position).get("themesname").toString());
+        holder.theme_author.setText(datas.get(position).get("themesauthor").toString());
 
-        JSONObject theme;
-        JSONObject themedata;
+        HashMap<String, Integer> list2 = new Gson().fromJson(datas.get(position).get("themesjson").toString(), new TypeToken<HashMap<String, Integer>>() {
+        }.getType());
 
-        holder.indicator.setVisibility(View.INVISIBLE);
+        holder.textview_name.setTextColor(list2.get("colorBackgroundText"));
+        holder.textview_title.setTextColor(list2.get("colorPrimaryText"));
+        holder.linear_base.setBackgroundTintList(ColorStateList.valueOf(list2.get("colorBackground")));
+        holder.linear_title.setBackgroundTintList(ColorStateList.valueOf(list2.get("colorPrimary")));
+        holder.imageview_fab.setBackgroundTintList(ColorStateList.valueOf(list2.get("colorAccent")));
+        holder.imageview_fab.setColorFilter(list2.get("colorAccentText"));
+        holder.imageview_back.setColorFilter(list2.get("colorPrimaryTint"));
 
-        try {
-            theme = new JSONObject(datas.getString(position));
-            themedata = new JSONObject(theme.getString("themesjson"));
-        } catch (JSONException e) {
-            return;
-        }
-
-        try {
-            holder.theme_name.setText(themedata.getString("themesname"));
-            holder.theme_author.setText(themedata.getString("themesauthor"));
-    
-            holder.textview_name.setTextColor(themedata.getInt("colorBackgroundText"));
-            holder.textview_title.setTextColor(themedata.getInt("colorPrimaryText"));
-            holder.linear_base.setBackgroundTintList(ColorStateList.valueOf(themedata.getInt("colorBackground")));
-            holder.linear_title.setBackgroundTintList(ColorStateList.valueOf(themedata.getInt("colorPrimary")));
-            holder.imageview_fab.setBackgroundTintList(ColorStateList.valueOf(themedata.getInt("colorAccent")));
-            holder.imageview_fab.setColorFilter(themedata.getInt("colorAccentText"));
-            
-            holder.imageview_back.setColorFilter(themedata.getInt("colorPrimaryTint"));
-    
-            holder.linear_title.setElevation(themedata.getInt("shadow") == 1 ? ThmMgrUtils.toDip(mContext, 5f) : 0f);
-            holder.imageview_fab.setElevation(themedata.getInt("shadow") == 1 ? ThmMgrUtils.toDip(mContext, 6f) : 0f);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        holder.linear_title.setElevation(list2.get("shadow") == 1 ? ThmMgrUtils.toDip(mContext, 5f) : 0f);
+        holder.imageview_fab.setElevation(list2.get("shadow") == 1 ? ThmMgrUtils.toDip(mContext, 6f) : 0f);
     }
 
     @Override
     public int getItemCount() {
-        return datas.length();
+        return datas.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

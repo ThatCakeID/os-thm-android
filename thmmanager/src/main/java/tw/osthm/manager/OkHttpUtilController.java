@@ -1,4 +1,4 @@
-package tw.music.streamer;
+package tw.osthm.manager;
 
 import com.google.gson.Gson;
 
@@ -24,7 +24,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class RequestNetworkController {
+public class OkHttpUtilController {
     public static final String GET = "GET";
     public static final String POST = "POST";
     public static final String PUT = "PUT";
@@ -35,12 +35,12 @@ public class RequestNetworkController {
 
     private static final int SOCKET_TIMEOUT = 15000;
     private static final int READ_TIMEOUT = 25000;
-    private static RequestNetworkController mInstance;
+    private static OkHttpUtilController mInstance;
     protected OkHttpClient client;
 
-    public static synchronized RequestNetworkController getInstance() {
+    public static synchronized OkHttpUtilController getInstance() {
         if (mInstance == null) {
-            mInstance = new RequestNetworkController();
+            mInstance = new OkHttpUtilController();
         }
         return mInstance;
     }
@@ -91,7 +91,7 @@ public class RequestNetworkController {
         return client;
     }
 
-    public void execute(final RequestNetwork requestNetwork, String method, String url, final String tag, final RequestNetwork.RequestListener requestListener) {
+    public void execute(final OkHttpUtil requestNetwork, String method, String url, final String tag, final OkHttpUtil.RequestListener requestListener) {
         Request.Builder reqBuilder = new Request.Builder();
         Headers.Builder headerBuilder = new Headers.Builder();
 

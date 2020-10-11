@@ -1,10 +1,10 @@
-package tw.music.streamer;
+package tw.osthm.manager;
 
 import android.app.Activity;
 
 import java.util.HashMap;
 
-public class RequestNetwork {
+public class OkHttpUtil {
     private HashMap<String, Object> params = new HashMap<>();
     private HashMap<String, Object> headers = new HashMap<>();
 
@@ -12,7 +12,7 @@ public class RequestNetwork {
 
     private int requestType = 0;
 
-    public RequestNetwork(Activity activity) {
+    public OkHttpUtil(Activity activity) {
         this.activity = activity;
     }
 
@@ -42,7 +42,7 @@ public class RequestNetwork {
     }
 
     public void startRequestNetwork(String method, String url, String tag, RequestListener requestListener) {
-        RequestNetworkController.getInstance().execute(this, method, url, tag, requestListener);
+        OkHttpUtilController.getInstance().execute(this, method, url, tag, requestListener);
     }
 
     public interface RequestListener {
