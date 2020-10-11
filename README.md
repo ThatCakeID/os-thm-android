@@ -25,14 +25,14 @@
  (Note: for sketchware developers, you might want to use [os-thm-sketchware](https://github.com/ThatCakeID/os-thm-sketchware))
 
   - Add Jitpack repositories to your root build.gradle
-  ```allprojects {
-     	repositories {
-     		...
-     		maven { url 'https://jitpack.io' }
-     		...
+   ```allprojects {
+      	repositories {
+      		...
+      		maven { url 'https://jitpack.io' }
+      		...
      	}
-     }
-  ```
+    }
+   ```
  
   - Add os-thm implementation to your build.gradle
     ```dependencies {
