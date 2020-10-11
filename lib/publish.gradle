@@ -1,5 +1,11 @@
 apply plugin: 'maven-publish'
 
+def githubProperties = new Properties()
+try {
+    githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
+} catch (Exception ignored) {
+}
+
 def getVersionName = { ->
     return "3.0.2"
 }
@@ -13,9 +19,6 @@ def getProjectDirectory = { ->
 }
 
 publishing {
-    def githubProperties = new Properties()
-    githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
-
     publications {
         bar(MavenPublication) {
             artifact("$buildDir/outputs/aar/${getProjectDirectory()}-release.aar")
