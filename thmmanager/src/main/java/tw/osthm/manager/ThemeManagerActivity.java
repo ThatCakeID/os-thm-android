@@ -366,7 +366,9 @@ public class ThemeManagerActivity extends AppCompatActivity {
         image_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ThemeManagerActivity.this, DocumentationActivity.class);
+                Intent i = new Intent();
+                i.setData(Uri.parse("https://github.com/ThatCakeID/os-thm-android/blob/master/README.md"));
+                i.setAction(Intent.ACTION_VIEW);
                 startActivity(i);
             }
         });

@@ -1,7 +1,7 @@
 <img src="https://thatcakeid.com/assets/images/osthmlogo.png" alt="os-thm Logo" width="200"/>
 
  # os-thm
- Stable version: 3.0.2
+ Stable version: 3.0.3
  Development version: (Not planned yet)
 
  Written by members of ThatCakeID: [リェンーゆく](https://github.com/ryenyuku), and [Iyxan23](https://github.com/Iyxan23).
@@ -15,7 +15,7 @@
  ## For Consumers
  os-thm is an easier way to change your theme globally for every single app that has implemented os-thm with a single click of a button.
 
- Make sure to have the os-thm Manager app installed, as it's supposed to be the manager for all os-thm themes. You can [download it here](https://github.com/ThatCakeID/os-thm-android/releases), or [here](https://os-thm.thatcakeid.com).
+ Make sure to have the os-thm Manager app installed, as it's supposed to be the manager for all os-thm themes. You can [download it here](https://os-thm.thatcakeid.com).
 
  ## For Developers
  os-thm is an easier way to make theme accessible to the user without worrying about managing themes, all of that _(adding, importing, removing, editing themes)_ are managed by os-thm, and the best part is, it's [open source](https://github.com/ThatCakeID/os-thm-android)!
@@ -23,10 +23,24 @@
  ### How to implement os-thm to your app?
 
  (Note: for sketchware developers, you might want to use [os-thm-sketchware](https://github.com/ThatCakeID/os-thm-sketchware))
+
+  - Add Jitpack repositories to your root build.gradle
+  ```allprojects {
+     	repositories {
+     		...
+     		maven { url 'https://jitpack.io' }
+     		...
+     	}
+     }
+  ```
  
   - Add os-thm implementation to your build.gradle
-    ```gradle
-    implementation 'tw.osthm:3.0.2'
+    ```dependencies {
+            ...
+       	    implementation 'com.github.ThatCakeID:os-thm-android:3.0.3'
+       	    ...
+    }
+
     ```
     _..or if you have trouble while implementing the library, try downloading the .aar file in the package tab and import it as library on android studio._
  
