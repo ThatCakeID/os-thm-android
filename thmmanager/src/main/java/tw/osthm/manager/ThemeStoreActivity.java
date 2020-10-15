@@ -11,13 +11,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import tw.osthm.ArrayMapDeserializerFix;
+import tw.osthm.HashMapDeserializerFix;
 
 public class ThemeStoreActivity extends AppCompatActivity {
 
@@ -39,44 +36,25 @@ public class ThemeStoreActivity extends AppCompatActivity {
 
         final OkHttpUtil okHttpUtil = new OkHttpUtil(this);
         okHttpUtil.startRequestNetwork(OkHttpUtilController.GET,
-                "https://thatcakeid.com/api/os-thm/v1/status.php", "", new OkHttpUtil.RequestListener() {
+                "https://thatcakeid.com/api/os-thm/v1/get_themes.php", "", new OkHttpUtil.RequestListener() {
             @Override
             public void onResponse(String tag, String response) {
-                try {
-                    JSONObject status = new JSONObject(response);
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.registerTypeAdapter(new TypeToken<HashMap<String, Object>>() {
+                        }.getType(),
+                        new HashMapDeserializerFix());
+                Gson myGson = gsonBuilder.create();
+                HashMap<String, Object> status = myGson.fromJson(response,
+                        new TypeToken<HashMap<String, Object>>(){}.getType());
 
-                    if (!status.getBoolean("open")) {
-                        // Server is closed
-                        Toast.makeText(getApplicationContext(), status.getString("info"), Toast.LENGTH_LONG).show();
-                        finish();
-                    } else {
-                        // Server is open!
-                        // Get themes
-                        okHttpUtil.startRequestNetwork(OkHttpUtilController.GET,
-                                "https://thatcakeid.com/api/os-thm/v1/get_themes.php", "", new OkHttpUtil.RequestListener() {
-                                    @Override
-                                    public void onResponse(String tag, String response) {
-                                        GsonBuilder gsonBuilder = new GsonBuilder();
-                                        gsonBuilder.registerTypeAdapter(new TypeToken<ArrayList<HashMap<String, Object>>>() {
-                                                }.getType(),
-                                                new ArrayMapDeserializerFix());
-                                        Gson myGson = gsonBuilder.create();
-                                        themes.addAll((ArrayList<HashMap<String, Object>>)
-                                                myGson.fromJson(response,
-                                                        new TypeToken<ArrayList<HashMap<String, Object>>>(){}.getType()));
-                                        adapter.notifyDataSetChanged();
-                                    }
-
-                                    @Override
-                                    public void onErrorResponse(String tag, String message) {
-                                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                                        finish();
-                                    }
-                                });
-                    }
-                } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                if (!(boolean)status.get("success")) {
+                    // Something is wrong
+                    Toast.makeText(getApplicationContext(), status.get("message").toString(), Toast.LENGTH_LONG).show();
                     finish();
+                } else {
+                    // Get themes
+                    themes.addAll((ArrayList<HashMap<String, Object>>) status.get("data"));
+                    adapter.notifyDataSetChanged();
                 }
             }
 
