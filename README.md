@@ -56,7 +56,7 @@
  rootView.setBackgroundColor(currentTheme.colorBackground);
  etc...
  ```
- We are currently finding solutions for applying theme to be less tedious, and easier.
+ This system may change in the future.
 
  That's it!
 
