@@ -550,6 +550,9 @@ public class osthmEngine {
         // Fixes #43 (Untested)
         if (!indexUUID.contains(currentThemeUUID) || !osthmManager.containsTheme(currentThemeUUID)) {
             osthmManager.setConf("currentTheme", "default");
+            
+            // Update the uuid
+            currentThemeUUID = "default";
         }
 
         return new OsThmTheme((HashMap<String, Integer>)
