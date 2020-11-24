@@ -537,16 +537,23 @@ public class osthmEngine {
 
     public static OsThmTheme getCurrentTheme() {
         initializeData();
+        
+        String currentThemeUUID = osthmManager.getConf("currentTheme", "default");
 
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
 
         for (int i = 0; i < metadataarray.size(); i++)
             indexUUID.add(metadataarray.get(indexUUID.size()).get("uuid").toString());
+        
+        // Check if the current theme doesn't exists, and if it is, change it to default
+        // Fixes #43 (Untested)
+        if (!indexUUID.contains(currentThemeUUID) || !osthmManager.containsTheme(currentThemeUUID)) {
+            osthmManager.setConf("currentTheme", "default");
+        }
 
         return new OsThmTheme((HashMap<String, Integer>)
-                new Gson().fromJson(metadataarray.get(indexUUID.indexOf(osthmManager
-                                .getConf("currentTheme", "default")))
+                new Gson().fromJson(metadataarray.get(indexUUID.indexOf(currentThemeUUID))
                                 .get("themesjson").toString(),
                         new TypeToken<HashMap<String, Integer>>() {
                         }.getType()));
