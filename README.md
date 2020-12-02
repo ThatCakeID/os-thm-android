@@ -4,7 +4,7 @@
  Stable version: 3.0.3
  Development version: (Not planned yet)
  
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/) [![Version](https://badge.fury.io/gh/ThatCakeID%2Fos-thm-android.svg)](https://badge.fury.io/gh/ThatCakeID%2Fos-thm-android) [![GitHub Release](https://img.shields.io/github/release/ThatCakeID/os-thm-android.svg?style=flat)]() [![Issues](https://img.shields.io/github/issues-raw/ThatCakeID/os-thm-android.svg?maxAge=25000)](https://github.com/ThatCakeID/os-thm-android/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/ThatCakeID/os-thm-android.svg?style=flat)]() [![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com) [![GitHub contributors](https://img.shields.io/github/contributors/ThatCakeID/os-thm-android.svg?style=flat)]() [![GitHub last commit](https://img.shields.io/github/last-commit/ThatCakeID/os-thm-android.svg?style=flat)]() [![GitHub commit activity the past week, 4 weeks](https://img.shields.io/github/commit-activity/y/ThatCakeID/os-thm-android.svg?style=flat)]() [![Discord Chat](https://img.shields.io/discord/737298358221406238.svg)](https://discord.gg/9xCpW8E) [![GitHub stars](https://img.shields.io/github/stars/ThatCakeID/os-thm-android.svg?style=social&label=Stars&style=plastic)]() [![GitHub watchers](https://img.shields.io/github/watchers/ThatCakeID/os-thm-android.svg?style=social&label=Watch&style=plastic)]() [![GitHub forks](https://img.shields.io/github/forks/ThatCakeID/os-thm-android.svg?style=social&label=Fork)](https://github.com/ThatCakeID/os-thm-android)
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/) [![Version](https://badge.fury.io/gh/ThatCakeID%2Fos-thm-android.svg)](https://badge.fury.io/gh/ThatCakeID%2Fos-thm-android) [![GitHub Release](https://img.shields.io/github/release/ThatCakeID/os-thm-android.svg?style=flat)]() [![Issues](https://img.shields.io/github/issues-raw/ThatCakeID/os-thm-android.svg?maxAge=25000)](https://github.com/ThatCakeID/os-thm-android/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/ThatCakeID/os-thm-android.svg?style=flat)]() [![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com) [![GitHub contributors](https://img.shields.io/github/contributors/ThatCakeID/os-thm-android.svg?style=flat)]() [![GitHub last commit](https://img.shields.io/github/last-commit/ThatCakeID/os-thm-android.svg?style=flat)]() [![Discord Chat](https://img.shields.io/discord/737298358221406238.svg)](https://discord.gg/9xCpW8E) [![GitHub stars](https://img.shields.io/github/stars/ThatCakeID/os-thm-android.svg?style=social&label=Stars&style=plastic)]() [![GitHub watchers](https://img.shields.io/github/watchers/ThatCakeID/os-thm-android.svg?style=social&label=Watch&style=plastic)]() [![GitHub forks](https://img.shields.io/github/forks/ThatCakeID/os-thm-android.svg?style=social&label=Fork)](https://github.com/ThatCakeID/os-thm-android)
  
 
  Written by members of ThatCakeID: [リェンーゆく](https://github.com/ryenyuku), and [Iyxan23](https://github.com/Iyxan23).
@@ -28,22 +28,21 @@
  (Note: for sketchware developers, you might want to use [os-thm-sketchware](https://github.com/ThatCakeID/os-thm-sketchware))
 
   - Add Jitpack repositories to your root build.gradle
-   ```allprojects {
-      	repositories {
-      		...
-      		maven { url 'https://jitpack.io' }
-      		...
-     	}
-    }
+   ```
+   allprojects {
+       repositories {
+           maven { url 'https://jitpack.io' }
+       }
+   }
    ```
  
   - Add os-thm implementation to your build.gradle
-    ```dependencies {
+    ```
+    dependencies {
             ...
-       	    implementation 'com.github.ThatCakeID:os-thm-android:3.0.3'
-       	    ...
+       	implementation 'com.github.ThatCakeID:os-thm-android:3.0.3'
+       	...
     }
-
     ```
     _..or if you have trouble while implementing the library, try downloading the .aar file in the package tab and import it as library on android studio._
  
