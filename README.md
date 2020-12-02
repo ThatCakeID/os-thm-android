@@ -13,9 +13,11 @@
  os-thm _(stands for: **o**pen**s**ource-**th**e**m**e)_ is a piece of software that can manage, edit, import, export or remove theme. One of the os-thm's key feature is that the theme can be applied globally, means the theme can used by apps that have implemented os-thm.
  os-thm is intended to be open-source, rich, and easy to use.
 
+![](https://github.com/ThatCakeID/os-thm-android/blob/dev/osthm_demo.gif)
+
  #### So, let's get started!
 
- ## For Consumers
+ ## For Users
  os-thm is an easier way to change your theme globally for every single app that has implemented os-thm with a single click of a button.
 
  Make sure to have the os-thm Manager app installed, as it's supposed to be the manager for all os-thm themes. You can [download it here](https://os-thm.thatcakeid.com).
