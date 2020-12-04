@@ -32,7 +32,7 @@ public class ThemeGridPreview extends BaseAdapter {
 
     public ThemeGridPreview(Context mContext, ArrayList<HashMap<String, Object>> list) {
         this.mContext = mContext;
-        inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = LayoutInflater.from(mContext);
         this.list = list;
     }
 

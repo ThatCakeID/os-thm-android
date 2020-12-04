@@ -1,32 +1,24 @@
 package tw.osthm.manager;
 
-import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
-import java.io.IOException;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import tw.osthm.HashMapDeserializerFix;
 
 public class ThemeStoreActivity extends AppCompatActivity {
 
-    private OkHttpClient client;
-    private Request request;
-    private JSONArray themes;
+    private ArrayList<HashMap<String, Object>> themes;
     private ThemeStoreItemAdapter adapter;
     private RecyclerView rv;
 
@@ -35,59 +27,41 @@ public class ThemeStoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theme_store);
 
-        client = new OkHttpClient();
         rv = findViewById(R.id.recycler_view_theme_store);
 
-        // Check if the server is open or not
-        request = new Request.Builder()
-                .url("https://thatcakeid.com/api/osthm/v1/status.php")
-                .build();
-        client.newCall(request).enqueue(new Callback() {
+        themes = new ArrayList<>();
+        adapter = new ThemeStoreItemAdapter(themes, getApplicationContext());
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setAdapter(adapter);
+
+        final OkHttpUtil okHttpUtil = new OkHttpUtil(this);
+        okHttpUtil.startRequestNetwork(OkHttpUtilController.GET,
+                "https://thatcakeid.com/api/os-thm/v1/get_themes.php", "", new OkHttpUtil.RequestListener() {
             @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                finish();
+            public void onResponse(String tag, String response) {
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                gsonBuilder.registerTypeAdapter(new TypeToken<HashMap<String, Object>>() {
+                        }.getType(),
+                        new HashMapDeserializerFix());
+                Gson myGson = gsonBuilder.create();
+                HashMap<String, Object> status = myGson.fromJson(response,
+                        new TypeToken<HashMap<String, Object>>(){}.getType());
+
+                if (!(boolean)status.get("success")) {
+                    // Something is wrong
+                    Toast.makeText(getApplicationContext(), status.get("message").toString(), Toast.LENGTH_LONG).show();
+                    finish();
+                } else {
+                    // Get themes
+                    themes.addAll((ArrayList<HashMap<String, Object>>) status.get("data"));
+                    adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                try {
-                    JSONObject status = new JSONObject(response.body().string());
-
-                    if (!status.getBoolean("open")) {
-                        // Server is closed
-                        Toast.makeText(getApplicationContext(), status.getString("info"), Toast.LENGTH_LONG).show();
-                        finish();
-                    } else {
-                        // Server is open!
-                        // Get themes
-                        request = new Request.Builder()
-                                .url("https://thatcakeid.com/api/osthm/v1/get_themes.php")
-                                .build();
-                        client.newCall(request).enqueue(new Callback() {
-                            @Override
-                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                finish();
-                            }
-
-                            @Override
-                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                                try {
-                                    themes = new JSONArray(response.body().string());
-                                    adapter = new ThemeStoreItemAdapter(themes, getApplicationContext());
-                                    rv.setAdapter(adapter);
-                                } catch (JSONException e) {
-                                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                    finish();
-                                }
-                            }
-                        });
-                    }
-                } catch (JSONException e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    finish();
-                }
+            public void onErrorResponse(String tag, String message) {
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                finish();
             }
         });
     }

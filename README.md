@@ -1,8 +1,11 @@
-<img src="https://thatcakeid.com/assets/images/osthmlogo.png" alt="os-thm Logo" width="200"/>
+<img src="https://camo.githubusercontent.com/84e92946ff1424e159ca2d72f2227ff1a5545838879df9afdad1ce6e6776d077/68747470733a2f2f6d656469612e646973636f72646170702e6e65742f6174746163686d656e74732f3733373239383335383232313430363234312f3737383038333730343237383438323938352f32303230303832315f3133323133312e706e673f77696474683d373032266865696768743d373032" alt="os-thm Logo" width="200"/>
 
  # os-thm
  Stable version: 3.0.3
  Development version: (Not planned yet)
+ 
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/) [![Version](https://badge.fury.io/gh/ThatCakeID%2Fos-thm-android.svg)](https://badge.fury.io/gh/ThatCakeID%2Fos-thm-android) [![GitHub Release](https://img.shields.io/github/release/ThatCakeID/os-thm-android.svg?style=flat)]() [![Issues](https://img.shields.io/github/issues-raw/ThatCakeID/os-thm-android.svg?maxAge=25000)](https://github.com/ThatCakeID/os-thm-android/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/ThatCakeID/os-thm-android.svg?style=flat)]() [![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com) [![GitHub contributors](https://img.shields.io/github/contributors/ThatCakeID/os-thm-android.svg?style=flat)]() [![GitHub last commit](https://img.shields.io/github/last-commit/ThatCakeID/os-thm-android.svg?style=flat)]() [![Discord Chat](https://img.shields.io/discord/737298358221406238.svg)](https://discord.gg/9xCpW8E) [![GitHub stars](https://img.shields.io/github/stars/ThatCakeID/os-thm-android.svg?style=social&label=Stars&style=plastic)]() [![GitHub watchers](https://img.shields.io/github/watchers/ThatCakeID/os-thm-android.svg?style=social&label=Watch&style=plastic)]() [![GitHub forks](https://img.shields.io/github/forks/ThatCakeID/os-thm-android.svg?style=social&label=Fork)](https://github.com/ThatCakeID/os-thm-android) [![forthebadge](https://forthebadge.com/images/badges/made-with-java.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-for-android.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/gluten-free.svg)](https://forthebadge.com)
+ 
 
  Written by members of ThatCakeID: [リェンーゆく](https://github.com/ryenyuku), and [Iyxan23](https://github.com/Iyxan23).
  Some app's UI design & theme made by: [thatcakepiece](https://github.com/thatcakepiece).
@@ -10,9 +13,11 @@
  os-thm _(stands for: **o**pen**s**ource-**th**e**m**e)_ is a piece of software that can manage, edit, import, export or remove theme. One of the os-thm's key feature is that the theme can be applied globally, means the theme can used by apps that have implemented os-thm.
  os-thm is intended to be open-source, rich, and easy to use.
 
+![](https://github.com/ThatCakeID/os-thm-android/blob/dev/osthm_demo.gif)
+
  #### So, let's get started!
 
- ## For Consumers
+ ## For Users
  os-thm is an easier way to change your theme globally for every single app that has implemented os-thm with a single click of a button.
 
  Make sure to have the os-thm Manager app installed, as it's supposed to be the manager for all os-thm themes. You can [download it here](https://os-thm.thatcakeid.com).
@@ -22,25 +27,24 @@
 
  ### How to implement os-thm to your app?
 
- (Note: for sketchware developers, you might want to use [os-thm-sketchware](https://github.com/ThatCakeID/os-thm-sketchware))
+ (Note: for sketchware users, you might want to use [os-thm-sketchware](https://github.com/ThatCakeID/os-thm-sketchware))
 
   - Add Jitpack repositories to your root build.gradle
-  ```allprojects {
-     	repositories {
-     		...
-     		maven { url 'https://jitpack.io' }
-     		...
-     	}
-     }
-  ```
+    ```
+    allprojects {
+        repositories {
+            maven { url 'https://jitpack.io' }
+        }
+    }
+    ```
  
   - Add os-thm implementation to your build.gradle
-    ```dependencies {
+    ```
+    dependencies {
             ...
-       	    implementation 'com.github.ThatCakeID:os-thm-android:3.0.3'
-       	    ...
+       	implementation 'com.github.ThatCakeID:os-thm-android:3.0.3'
+       	...
     }
-
     ```
     _..or if you have trouble while implementing the library, try downloading the .aar file in the package tab and import it as library on android studio._
  
