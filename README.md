@@ -27,7 +27,7 @@
 
  ### How to implement os-thm to your app?
 
- (Note: for sketchware developers, you might want to use [os-thm-sketchware](https://github.com/ThatCakeID/os-thm-sketchware))
+ (Note: for sketchware users, you might want to use [os-thm-sketchware](https://github.com/ThatCakeID/os-thm-sketchware))
 
   - Add Jitpack repositories to your root build.gradle
     ```
