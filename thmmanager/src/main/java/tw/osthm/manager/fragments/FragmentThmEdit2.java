@@ -4,6 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +71,7 @@ public class FragmentThmEdit2 extends Fragment {
     private ConstraintLayout fake_edit_text_accent;
     private ConstraintLayout background;
     private TextView fake_edit_text_hint;
+    private TextView clickable_text;
     private ImageView statusbar_icon1, statusbar_icon2, statusbar_icon3;
     private TextView statusbar_text;
     private FloatingActionButton fab;
@@ -79,6 +85,7 @@ public class FragmentThmEdit2 extends Fragment {
     private final int default_color_accent_text = -1;
     private final int default_color_hint = -5723992;
     private final int default_color_control_highlight = 1073741824;
+    private final int default_color_accent = -720809;
 
     private View root;
 
@@ -245,6 +252,7 @@ public class FragmentThmEdit2 extends Fragment {
         fab = root.findViewById(R.id.fab);
         fake_edit_text_accent = root.findViewById(R.id.view_colorAccentET);
         fake_edit_text_hint = root.findViewById(R.id.view_colorHint);
+        clickable_text = root.findViewById(R.id.view_clickableText);
         app_bar_title = root.findViewById(R.id.view_colorPrimaryText);
         background = root.findViewById(R.id.view_colorBackground);
         background_text = root.findViewById(R.id.view_colorBackgroundText);
@@ -316,6 +324,27 @@ public class FragmentThmEdit2 extends Fragment {
                 color_primary_app_bar.setElevation(0f);
                 fab.setCompatElevation(0f);
             }
+
+            // #49 Added the clickable text
+            // Update the clickable text
+            // Code copied from https://codinginflow.com/tutorials/android/clickablespan
+            SpannableString ss = new SpannableString("Clickable Text");
+
+            ss.setSpan(new ClickableSpan() {
+                @Override
+                public void onClick(View widget) { }
+
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                    // Set the color to be colorAccent
+                    ds.setColor(sp.getInt("colorAccent", default_color_accent));
+                    ds.setUnderlineText(false);
+                }
+            }, 0, 13, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            clickable_text.setText(ss);
+            clickable_text.setMovementMethod(LinkMovementMethod.getInstance());
 
             // Other changes ===========================================================================
             color_primary_app_bar.setBackgroundColor(sp.getInt("colorPrimary", -14575885));
