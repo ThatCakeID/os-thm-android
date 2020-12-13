@@ -52,7 +52,7 @@ public class osthmEngine {
         else {
             // Issue #43 patch
             // Check if the current theme doesn't exists, and if it is, change it to default
-            if (!isExistInDefaultTheme(osthmManager.getConf("currentTheme", "default")) || !osthmManager.containsTheme(osthmManager.getConf("currentTheme", "default"))) {
+            if (!isExistInDefaultTheme(osthmManager.getConf("currentTheme", "default")) && !osthmManager.containsTheme(osthmManager.getConf("currentTheme", "default"))) {
                 osthmManager.setConf("currentTheme", "default");
             }
         }
