@@ -136,14 +136,7 @@ public class osthmManager {
     }
 
     public static boolean containsTheme(String uuid) {
-        List<File> files = StorageUtil.getFiles(themes_folder);
-        for (File file : files) {
-            if (file.getName().equals(uuid + ".os-thm")) {
-                return true;
-            }
-        }
-
-        return false;
+        return StorageUtil.isFileExist(themes_folder + uuid + ".os-thm");
     }
 
     public static String exportThemeFile(String json) {
