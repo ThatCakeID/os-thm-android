@@ -1,6 +1,11 @@
 package tw.osthm;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Environment;
+
+import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,8 +28,13 @@ public class osthmManager {
     public static final String exported_themes_folder = externalDir + "/os-thm/";
 
     // Initialize
-    public static void init() {
+    public static void init(Context context) {
         // Initialize
+
+        // Check if storage permission is granted
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.MANAGE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            throw new RuntimeException(new osthmException("MANAGE_EXTERNAL_STORAGE permission is not granted"));
+        }
 
         // Check if os-thm folder exist
         if (!StorageUtil.isDirectoryExists(exported_themes_folder))

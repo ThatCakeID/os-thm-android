@@ -10,6 +10,7 @@
  */
 package tw.osthm;
 
+import android.content.Context;
 import android.graphics.Color;
 
 import com.google.gson.Gson;
@@ -43,10 +44,12 @@ public class osthmEngine {
 
     /**
      * This method is used to initialize components used by the library
+     *
+     * @param context Context
      */
 
-    private static void initializeData() {
-        osthmManager.init();
+    private static void initializeData(Context context) {
+        osthmManager.init(context);
         if (!osthmManager.containsConf("currentTheme"))
             osthmManager.setConf("currentTheme", "default");
         else {
@@ -152,22 +155,22 @@ public class osthmEngine {
      * @return List Of Themes
      */
 
-    public static ArrayList<HashMap<String, Object>> getThemeList() {
-        initializeData();
+    public static ArrayList<HashMap<String, Object>> getThemeList(Context mContext) {
+        initializeData(mContext);
 
         return getThemeListPrivate();
     }
 
     // Unfinished
-    public static void migrateOldTheme(String UUIDvar) {
+    public static void migrateOldTheme(Context mContext, String UUIDvar) {
         // Migrate specified old theme to newer version
-        initializeData();
+        initializeData(mContext);
     }
 
     // Unfinished
-    public static void migrateAllOldThemes() {
+    public static void migrateAllOldThemes(Context mContext) {
         // Migrate all old themes to newer version
-        initializeData();
+        initializeData(mContext);
     }
 
 
@@ -175,6 +178,7 @@ public class osthmEngine {
      * This method is used to add theme into the theme list using the OsThmTheme Object
      * with randomly generated UUID
      *
+     * @param mContext     Context
      * @param themeData    OsThmTheme object
      * @param themeName    Theme name
      * @param themeInfo    Theme info/ description
@@ -183,11 +187,13 @@ public class osthmEngine {
      * @throws osthmException Os-Thm Exception
      */
 
-    public static void addTheme(OsThmTheme themeData, String themeName, String themeInfo,
+    public static void addTheme(Context mContext,
+                                OsThmTheme themeData, String themeName, String themeInfo,
                                 String themeAuthor, int themeVersion) throws osthmException {
         // Add new theme using given OsThmTheme Object and generate a random UUID
 
-        addTheme(themeData.colorPrimary, themeData.colorPrimaryText, themeData.colorPrimaryDark, themeData.colorStatusbarTint, themeData.colorBackground,
+        addTheme(mContext,
+                themeData.colorPrimary, themeData.colorPrimaryText, themeData.colorPrimaryDark, themeData.colorStatusbarTint, themeData.colorBackground,
                 themeData.colorBackgroundText, themeData.colorAccent, themeData.colorAccentText, themeData.shadow, themeData.colorControlHighlight, themeData.colorHint,
                 themeData.colorPrimaryTint, themeData.colorBackgroundTint, themeData.colorPrimaryCard, themeData.colorBackgroundCard,
                 themeData.colorPrimaryCardText, themeData.colorBackgroundCardText, themeData.colorPrimaryCardTint, themeData.colorBackgroundCardTint, themeData.colorDialog,
@@ -199,6 +205,7 @@ public class osthmEngine {
      * This method is used to add theme into the theme list using the OsThmTheme Object
      * with defined UUID
      *
+     * @param mContext     Context
      * @param themeData    OsThmTheme object
      * @param themesname   Theme name
      * @param themesinfo   Theme info/ description
@@ -208,12 +215,14 @@ public class osthmEngine {
      * @throws osthmException Os-Thm Exception
      */
 
-    public static void addTheme(OsThmTheme themeData, String themesname, String themesinfo,
+    public static void addTheme(Context mContext,
+                                OsThmTheme themeData, String themesname, String themesinfo,
                                 String themesauthor, int themeversion, String UUID)
             throws osthmException {
         // Add new theme using given OsThmTheme Object
 
-        addTheme(themeData.colorPrimary, themeData.colorPrimaryText, themeData.colorPrimaryDark, themeData.colorStatusbarTint, themeData.colorBackground,
+        addTheme(mContext,
+                themeData.colorPrimary, themeData.colorPrimaryText, themeData.colorPrimaryDark, themeData.colorStatusbarTint, themeData.colorBackground,
                 themeData.colorBackgroundText, themeData.colorAccent, themeData.colorAccentText, themeData.shadow, themeData.colorControlHighlight, themeData.colorHint,
                 themeData.colorPrimaryTint, themeData.colorBackgroundTint, themeData.colorPrimaryCard, themeData.colorBackgroundCard,
                 themeData.colorPrimaryCardText, themeData.colorBackgroundCardText, themeData.colorPrimaryCardTint, themeData.colorBackgroundCardTint, themeData.colorDialog,
@@ -224,6 +233,7 @@ public class osthmEngine {
      * This method is used to add theme into the theme list using hex colors
      * and OsThmMetadata object
      *
+     * @param mContext                Context
      * @param colorPrimary            Primary Color
      * @param colorPrimaryText        Primary Text Color
      * @param colorPrimaryDark        Primary Dark Color
@@ -250,7 +260,9 @@ public class osthmEngine {
      * @throws osthmException Os-Thm Exception
      */
 
-    public static void addTheme(int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
+    public static void addTheme(Context mContext,
+
+                                int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
                                 int colorStatusbarTint, int colorBackground, int colorBackgroundText,
                                 int colorAccent, int colorAccentText, int shadow,
                                 int colorControlHighlight, int colorHint, int colorPrimaryTint,
@@ -260,7 +272,7 @@ public class osthmEngine {
                                 int colorDialogTint, OsThmMetadata themeMetadata) throws osthmException {
         // Add new theme using given hex colors and OsThmMetadata object
 
-        addTheme(colorPrimary, colorPrimaryText, colorPrimaryDark, colorStatusbarTint, colorBackground,
+        addTheme(mContext, colorPrimary, colorPrimaryText, colorPrimaryDark, colorStatusbarTint, colorBackground,
                 colorBackgroundText, colorAccent, colorAccentText, shadow, colorControlHighlight, colorHint,
                 colorPrimaryTint, colorBackgroundTint, colorPrimaryCard, colorBackgroundCard,
                 colorPrimaryCardText, colorBackgroundCardText, colorPrimaryCardTint, colorBackgroundCardTint,
@@ -271,6 +283,7 @@ public class osthmEngine {
     /**
      * This method is used to add theme into the theme list, and generate a random uuid
      *
+     * @param mContext                Context
      * @param colorPrimary            Primary Color
      * @param colorPrimaryText        Primary Text Color
      * @param colorPrimaryDark        Primary Dark Color
@@ -300,7 +313,9 @@ public class osthmEngine {
      * @throws osthmException Os-Thm Exception
      */
 
-    public static void addTheme(int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
+    public static void addTheme(Context mContext,
+
+                                int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
                                 int colorStatusbarTint, int colorBackground, int colorBackgroundText,
                                 int colorAccent, int colorAccentText, int shadow,
                                 int colorControlHighlight, int colorHint, int colorPrimaryTint,
@@ -313,7 +328,8 @@ public class osthmEngine {
                                 String themesauthor, int themeversion) throws osthmException {
         // Add new theme using given hex colors and generate new UUID
 
-        addTheme(colorPrimary, colorPrimaryText, colorPrimaryDark, colorStatusbarTint, colorBackground,
+        addTheme(mContext,
+                colorPrimary, colorPrimaryText, colorPrimaryDark, colorStatusbarTint, colorBackground,
                 colorBackgroundText, colorAccent, colorAccentText, shadow, colorControlHighlight, colorHint,
                 colorPrimaryTint, colorBackgroundTint, colorPrimaryCard, colorBackgroundCard,
                 colorPrimaryCardText, colorBackgroundCardText, colorPrimaryCardTint, colorBackgroundCardTint,
@@ -324,6 +340,7 @@ public class osthmEngine {
     /**
      * This method is used to add theme into the theme list
      *
+     * @param mContext                Context
      * @param colorPrimary            Primary Color
      * @param colorPrimaryText        Primary Text Color
      * @param colorPrimaryDark        Primary Dark Color
@@ -354,7 +371,9 @@ public class osthmEngine {
      * @throws osthmException Os-Thm Exception
      */
 
-    public static void addTheme(int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
+    public static void addTheme(Context mContext,
+
+                                int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
                                 int colorStatusbarTint, int colorBackground, int colorBackgroundText,
                                 int colorAccent, int colorAccentText, int shadow,
                                 int colorControlHighlight, int colorHint, int colorPrimaryTint,
@@ -366,7 +385,7 @@ public class osthmEngine {
                                 String themesname, String themesinfo, String themesauthor,
                                 int themeversion, String UUIDvar) throws osthmException {
 
-        initializeData();
+        initializeData(mContext);
 
         if (osthmManager.containsTheme(UUIDvar) || isExistInDefaultTheme(UUIDvar))
             throw new osthmException("Theme with same UUID is exist!");
@@ -423,10 +442,11 @@ public class osthmEngine {
      * @throws osthmException Os-Thm Exception
      */
 
-    public static void editTheme(OsThmTheme themeData, String themesname, String themesinfo,
+    public static void editTheme(Context mContext,
+                                 OsThmTheme themeData, String themesname, String themesinfo,
                                  String themesauthor, int themeversion, String UUIDvar)
             throws osthmException {
-        editTheme(themeData.toHashMap(), themesname, themesinfo, themesauthor, themeversion, UUIDvar);
+        editTheme(mContext, themeData.toHashMap(), themesname, themesinfo, themesauthor, themeversion, UUIDvar);
     }
 
     /**
@@ -462,7 +482,8 @@ public class osthmEngine {
      * @throws osthmException Os-Thm Exception
      */
 
-    public static void editTheme(int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
+    public static void editTheme(Context mContext,
+                                 int colorPrimary, int colorPrimaryText, int colorPrimaryDark,
                                  int colorStatusbarTint, int colorBackground, int colorBackgroundText,
                                  int colorAccent, int colorAccentText, int shadow,
                                  int colorControlHighlight, int colorHint, int colorPrimaryTint,
@@ -498,12 +519,13 @@ public class osthmEngine {
         themearray.put("colorDialogText", colorDialogText);
         themearray.put("colorDialogTint", colorDialogTint);
 
-        editTheme(themearray, themesname, themesinfo, themesauthor, themeversion, UUIDvar);
+        editTheme(mContext, themearray, themesname, themesinfo, themesauthor, themeversion, UUIDvar);
     }
 
     /**
      * This method is used to edit theme using HashMap
      *
+     * @param mContext     Context
      * @param themeData    Theme Data stored in HashMap
      * @param themesname   Theme name
      * @param themesinfo   Theme info/ description
@@ -513,10 +535,11 @@ public class osthmEngine {
      * @throws osthmException Os-Thm Exception
      */
 
-    public static void editTheme(HashMap<String, Integer> themeData,
+    public static void editTheme(Context mContext,
+                                 HashMap<String, Integer> themeData,
                                  String themesname, String themesinfo, String themesauthor,
                                  int themeversion, String UUIDvar) throws osthmException {
-        initializeData();
+        initializeData(mContext);
 
         if (osthmManager.containsTheme(UUIDvar)) {
             HashMap<String, Object> metadataarray = new HashMap<>();
@@ -539,11 +562,12 @@ public class osthmEngine {
     /**
      * This method is used to get the current theme
      *
+     * @param mContext Context
      * @return CurrentTheme
      */
 
-    public static OsThmTheme getCurrentTheme() {
-        initializeData();
+    public static OsThmTheme getCurrentTheme(Context mContext) {
+        initializeData(mContext);
         
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
@@ -567,8 +591,8 @@ public class osthmEngine {
      * @throws osthmException osThmException
      */
 
-    public static void setCurrentTheme(String UUIDvar) throws osthmException {
-        initializeData();
+    public static void setCurrentTheme(Context mContext, String UUIDvar) throws osthmException {
+        initializeData(mContext);
 
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
@@ -592,8 +616,8 @@ public class osthmEngine {
      * @return CurrentTheme
      */
 
-    public static HashMap<String, Integer> getCurrentThemeAsHashMap() {
-        initializeData();
+    public static HashMap<String, Integer> getCurrentThemeAsHashMap(Context mContext) {
+        initializeData(mContext);
 
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
@@ -614,8 +638,8 @@ public class osthmEngine {
      * @return CurrentThemeMetadata
      */
 
-    public static OsThmMetadata getCurrentThemeMetadata() {
-        initializeData();
+    public static OsThmMetadata getCurrentThemeMetadata(Context mContext) {
+        initializeData(mContext);
 
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
@@ -633,8 +657,8 @@ public class osthmEngine {
      * @return CurrentThemeContents
      */
 
-    public static HashMap<String, Object> getCurrentThemeContents() {
-        initializeData();
+    public static HashMap<String, Object> getCurrentThemeContents(Context mContext) {
+        initializeData(mContext);
 
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
@@ -653,8 +677,8 @@ public class osthmEngine {
      * @return Theme
      */
 
-    public static OsThmTheme getTheme(String UUIDvar) {
-        initializeData();
+    public static OsThmTheme getTheme(Context mContext, String UUIDvar) {
+        initializeData(mContext);
 
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
@@ -676,8 +700,8 @@ public class osthmEngine {
      * @return Theme
      */
 
-    public static HashMap<String, Integer> getThemeAsHashMap(String UUIDvar) {
-        initializeData();
+    public static HashMap<String, Integer> getThemeAsHashMap(Context mContext, String UUIDvar) {
+        initializeData(mContext);
 
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
@@ -698,8 +722,8 @@ public class osthmEngine {
      * @return ThemeMetadata
      */
 
-    public static OsThmMetadata getThemeMetadata(String UUIDvar) {
-        initializeData();
+    public static OsThmMetadata getThemeMetadata(Context mContext, String UUIDvar) {
+        initializeData(mContext);
 
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
@@ -717,8 +741,8 @@ public class osthmEngine {
      * @return ThemeContents
      */
 
-    public static HashMap<String, Object> getThemeContents(String UUIDvar) {
-        initializeData();
+    public static HashMap<String, Object> getThemeContents(Context mContext, String UUIDvar) {
+        initializeData(mContext);
 
         ArrayList<String> indexUUID = new ArrayList<>();
         ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
@@ -735,8 +759,8 @@ public class osthmEngine {
      * @return String of the current theme UUID
      */
 
-    public static String getCurrentThemeUUID() {
-        initializeData();
+    public static String getCurrentThemeUUID(Context mContext) {
+        initializeData(mContext);
 
         return osthmManager.getConf("currentTheme", "default");
     }
@@ -749,8 +773,8 @@ public class osthmEngine {
      * @throws osthmException osThmException
      */
 
-    public static void importThemes(String json) throws osthmException {
-        initializeData();
+    public static void importThemes(Context mContext, String json) throws osthmException {
+        initializeData(mContext);
 
         GsonBuilder gsonBuilder = new GsonBuilder();
 
@@ -836,9 +860,9 @@ public class osthmEngine {
      * @throws osthmException osthmException
      */
 
-    public static String exportThemes(String[] UUIDvars) throws osthmException {
+    public static String exportThemes(Context mContext, String[] UUIDvars) throws osthmException {
         if (UUIDvars.length > 0) {
-            initializeData();
+            initializeData(mContext);
 
             ArrayList<String> indexUUID = new ArrayList<>();
             ArrayList<HashMap<String, Object>> metadataarray = getThemeListPrivate();
@@ -872,8 +896,8 @@ public class osthmEngine {
      * @throws osthmException osthmException
      */
 
-    public static void removeTheme(String UUIDvar) throws osthmException {
-        initializeData();
+    public static void removeTheme(Context mContext, String UUIDvar) throws osthmException {
+        initializeData(mContext);
 
         if (osthmManager.containsTheme(UUIDvar)) {
             if (osthmManager.getConf("currentTheme", "default").equals(UUIDvar)) {
@@ -895,8 +919,8 @@ public class osthmEngine {
      * @throws osthmException osthmException
      */
 
-    public static void removeAllThemes() throws Exception {
-        initializeData();
+    public static void removeAllThemes(Context mContext) throws Exception {
+        initializeData(mContext);
 
         if (isExistInDefaultTheme(osthmManager.getConf("currentTheme", "default")))
             osthmManager.clearThemes();
