@@ -873,9 +873,9 @@ public class osthmEngine {
             if (UUIDvars.length > 1) {
                 ArrayList<HashMap<String, Object>> thmarray = new ArrayList<>();
 
-                for (int i = 0; i < UUIDvars.length; i++) {
-                    if (indexUUID.contains(UUIDvars[i])) {
-                        thmarray.add(metadataarray.get(indexUUID.indexOf(UUIDvars[i])));
+                for (String UUIDvar : UUIDvars) {
+                    if (indexUUID.contains(UUIDvar)) {
+                        thmarray.add(metadataarray.get(indexUUID.indexOf(UUIDvar)));
                     } else
                         throw new osthmException("Theme(s) aren't exists!");
                 }
