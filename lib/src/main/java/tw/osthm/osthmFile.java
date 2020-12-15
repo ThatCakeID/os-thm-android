@@ -15,6 +15,7 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.zip.Deflater;
 
 /**
  * <h1>osthmFile</h1>
@@ -226,7 +227,7 @@ public class osthmFile {
             OsThmMetadata metadata = this.toOsThmMetadata();
             OsThmTheme theme = this.toOsThmTheme();
 
-            stream.write(" os-thm".getBytes());
+            stream.write(" os-thm ".getBytes());
 
             // Length of each strings
             stream.write(new byte[] {(byte) metadata.themesname.length(), (byte) metadata.themesinfo.length()});
@@ -267,6 +268,21 @@ public class osthmFile {
 
             stream.flush();
             stream.close();
+
+            // Read the file again and compress it using the ZLIB compression algorithm
+            byte[] file_data = StorageUtil.readFileBytes(file.getAbsolutePath());
+            byte[] compressed_data = new byte[file_data.length];
+
+            // Compress the bytes
+            Deflater compresser = new Deflater();
+            compresser.setStrategy(Deflater.BEST_COMPRESSION);
+            compresser.setInput(file_data);
+            compresser.finish();
+            int compressedDataLength = compresser.deflate(compressed_data);
+            compresser.end();
+
+            // Write back the data
+            StorageUtil.createFile(file.getAbsolutePath(), compressed_data);
         } catch (Exception e) {
             return false;
         }
