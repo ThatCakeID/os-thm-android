@@ -33,9 +33,7 @@ import java.util.zip.Inflater;
  * @author Iyxan23
  */
 
-
 // INFO: This class only returns and only receives full JSON Theme data
-
 
 public class osthmFile {
 
@@ -52,6 +50,7 @@ public class osthmFile {
         this.file = file;
     }
 
+    // Sets the file target
     // ===================================================================
     public osthmFile setFile(File file) {
         this.file = file;
@@ -65,6 +64,8 @@ public class osthmFile {
     // ===================================================================
 
 
+    // Sets the Data that later will be written to the file using
+    // the write() method
     // ===================================================================
     public osthmFile setData(String data) throws JSONException {
         this.data = new JSONObject(data);
@@ -85,7 +86,7 @@ public class osthmFile {
         try {
             data.put("themesjson", theme.toHashMap());
         } catch (JSONException e) {
-            Log.e("osthmFile", "Failed to set data as OsThmTheme (tw/osthm/osthmFile.java:77), Error message: " + e.toString());
+            Log.e("osthmFile", "Failed to set data as OsThmTheme, Error message: " + e.toString());
         }
         return this;
     }
@@ -115,38 +116,58 @@ public class osthmFile {
     // ===================================================================
 
 
+    // Reading the file and converting it into specific types
     // ===================================================================
     public HashMap<String, Object> toHashMap() {
+        // Check if data is not null
         if (data != null)
+            // Convert from JSONObject into JSON String into HashMap<String, Object> using GSon
             return new Gson().fromJson(
                     data.toString(), new TypeToken<HashMap<String, Object>>() {}.getType()
             );
 
+        // Read the file
         data = readFile();
 
+        // If somehow the reading failed
         if (data == null)
+            // Return null
             return null;
         else
+            // Call the same function, because i'm lazy copying the gson code
+            // NOTE: No, it will not be looping, because this function is invoked when the data is
+            //       filled / not null
             return toHashMap();
     }
 
     public String toJsonString() {
+        // Check if data is not null
         if (data != null)
+            // Then return the json string
             return data.toString();
 
+        // If it is null, read the file
         data = readFile();
 
+        // If somehow the reading failed
         if (data == null)
+            // return null
             return null;
         else
+            // return the JSON String
             return data.toString();
     }
 
     public JSONObject toJSONObject() {
+        // Check if data is not null
         if (data != null)
+            // Return the data
             return data;
 
+        // If it is null, read the file
         data = readFile();
+
+        // And return the data
         return data;
     }
 
@@ -161,11 +182,15 @@ public class osthmFile {
             }
         }
 
+        // If it is null, read the file
         data = readFile();
 
+        // If somehow the reading failed
         if (data == null)
+            // Return null
             return null;
         else
+            // Call the same function
             return toOsThmTheme();
     }
 
@@ -174,11 +199,15 @@ public class osthmFile {
         if (data != null)
             return new OsThmMetadata(this.toHashMap());
 
+        // If it is null, read the file
         data = readFile();
 
+        // If somehow the reading failed
         if (data == null)
+            // Return null
             return null;
         else
+            // Call the same function
             return toOsThmMetadata();
     }
     // ===================================================================
@@ -189,9 +218,11 @@ public class osthmFile {
             new OsThmTheme((HashMap<String, Integer>) new Gson().fromJson(
                     json.getString("themesjson").toString(), new TypeToken<HashMap<String, Object>>() {}.getType()
             ));
+
             new OsThmMetadata((HashMap<String, Object>) new Gson().fromJson(
                     json.toString(), new TypeToken<HashMap<String, Object>>() {}.getType()
             ));
+
             return true;
         } catch (Exception e) {
             return false;
@@ -215,13 +246,19 @@ public class osthmFile {
         // Check the type
         if (type == osthmFile.OSTHM) {
             return write_osthm();
+
         } else if (type == osthmFile.RAW_JSON) {
+            // Casually writes JSONObject to the file as a String
             return StorageUtil.createFile(file.getAbsolutePath(), data.toString());
+
         } else {
-            throw new RuntimeException(new osthmException("Type argument is not valid, it should be osthmFile.OSTHM or osthmFile.RAW_JSON"));
+            // Looks like the dev has put an invalid argument
+            throw new IllegalArgumentException("Type argument is not valid, it should be osthmFile.OSTHM or osthmFile.RAW_JSON");
         }
     }
 
+    // Utilities
+    // ===================================================================
     private UUID asUuid(byte[] bytes) {
         ByteBuffer bb = ByteBuffer.wrap(bytes);
         long firstLong = bb.getLong();
@@ -240,7 +277,11 @@ public class osthmFile {
         os.write((byte) (s >> 8));
         os.write((byte) s);
     }
+    // ===================================================================
 
+
+    // Crucial part for the reading and writing
+    // ===================================================================
     private JSONObject readFile() {
         byte[] data = StorageUtil.readFileBytes(file.getAbsolutePath());
         try {
@@ -345,4 +386,5 @@ public class osthmFile {
         }
         return true;
     }
+    // ===================================================================
 }
