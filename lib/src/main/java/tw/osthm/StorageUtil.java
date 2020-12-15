@@ -3,6 +3,7 @@ package tw.osthm;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
+import android.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -10,6 +11,7 @@ import java.io.Closeable;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /*
@@ -117,6 +120,79 @@ public class StorageUtil {
         }
         in.close();
         return output.toString();
+    }
+
+    // Copied from https://github.com/sromku/android-storage/blob/master/storage/src/main/java/com/snatik/storage/Storage.java
+    public static byte[] readFileBytes(String path) {
+        final FileInputStream stream;
+        try {
+            stream = new FileInputStream(new File(path));
+            return readFile(stream);
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "Failed to read file to input stream", e);
+            return null;
+        }
+    }
+
+    // A modified copy of https://github.com/sromku/android-storage/blob/master/storage/src/main/java/com/snatik/storage/Storage.java
+    public static byte[] readFile(final FileInputStream stream) {
+        class Reader extends Thread {
+            byte[] array = null;
+        }
+
+        Reader reader = new Reader() {
+            public void run() {
+                LinkedList<Pair<byte[], Integer>> chunks = new LinkedList<Pair<byte[], Integer>>();
+
+                // read the file and build chunks
+                int size = 0;
+                int globalSize = 0;
+                do {
+                    try {
+                        int chunkSize = 8192;
+                        // read chunk
+                        byte[] buffer = new byte[chunkSize];
+                        size = stream.read(buffer, 0, chunkSize);
+                        if (size > 0) {
+                            globalSize += size;
+
+                            // add chunk to list
+                            chunks.add(new Pair<byte[], Integer>(buffer, size));
+                        }
+                    } catch (Exception e) {
+                        // very bad
+                    }
+                } while (size > 0);
+
+                try {
+                    stream.close();
+                } catch (Exception e) {
+                    // very bad
+                }
+
+                array = new byte[globalSize];
+
+                // append all chunks to one array
+                int offset = 0;
+                for (Pair<byte[], Integer> chunk : chunks) {
+                    // flush chunk to array
+                    System.arraycopy(chunk.first, 0, array, offset, chunk.second);
+                    offset += chunk.second;
+                }
+            }
+
+            ;
+        };
+
+        reader.start();
+        try {
+            reader.join();
+        } catch (InterruptedException e) {
+            Log.e(TAG, "Failed on reading file from storage while the locking Thread", e);
+            return null;
+        }
+
+        return reader.array;
     }
 
     public static void appendFile(String path, String content) {
