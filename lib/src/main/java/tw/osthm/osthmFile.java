@@ -123,10 +123,7 @@ public class osthmFile {
     }
 
     public JSONObject toJSONObject() {
-        if (data != null)
-            return data;
-
-        return null;
+        return data;
     }
 
     public OsThmTheme toOsThmTheme() {
