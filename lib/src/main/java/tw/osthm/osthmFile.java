@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.zip.Deflater;
@@ -271,15 +272,18 @@ public class osthmFile {
 
             // Read the file again and compress it using the ZLIB compression algorithm
             byte[] file_data = StorageUtil.readFileBytes(file.getAbsolutePath());
-            byte[] compressed_data = new byte[file_data.length];
+            byte[] tmp = new byte[file_data.length];
 
             // Compress the bytes
             Deflater compresser = new Deflater();
             compresser.setStrategy(Deflater.BEST_COMPRESSION);
             compresser.setInput(file_data);
             compresser.finish();
-            int compressedDataLength = compresser.deflate(compressed_data);
+            int compressedDataLength = compresser.deflate(tmp);
             compresser.end();
+
+            byte[] compressed_data;
+            compressed_data = Arrays.copyOfRange(tmp, 0, compressedDataLength);
 
             // Write back the data
             StorageUtil.createFile(file.getAbsolutePath(), compressed_data);
