@@ -12,11 +12,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
+import java.util.zip.Inflater;
 
 /**
  * <h1>osthmFile</h1>
@@ -118,38 +122,51 @@ public class osthmFile {
                     data.toString(), new TypeToken<HashMap<String, Object>>() {}.getType()
             );
 
-        // TODO: Implement reading the file
-        return null;
+        data = readFile();
+
+        if (data == null)
+            return null;
+        else
+            return toHashMap();
     }
 
     public String toJsonString() {
         if (data != null)
             return data.toString();
 
-        // TODO: Implement reading the file
-        return null;
+        data = readFile();
+
+        if (data == null)
+            return null;
+        else
+            return data.toString();
     }
 
     public JSONObject toJSONObject() {
         if (data != null)
             return data;
 
-        // TODO: Implement reading the file
-        return null;
+        data = readFile();
+        return data;
     }
 
     public OsThmTheme toOsThmTheme() {
         // Check if the data has been set by the user
-        if (data != null)
+        if (data != null) {
             try {
                 return new OsThmTheme(data.getString("themesjson"));
             } catch (JSONException e) {
                 // ..what? the user probably inserted an invalid data, return null instead
                 return null;
             }
+        }
 
-        // TODO: Implement reading the file
-        return null;
+        data = readFile();
+
+        if (data == null)
+            return null;
+        else
+            return toOsThmTheme();
     }
 
     public OsThmMetadata toOsThmMetadata() {
@@ -157,8 +174,12 @@ public class osthmFile {
         if (data != null)
             return new OsThmMetadata(this.toHashMap());
 
-        // TODO: Implement reading the file
-        return null;
+        data = readFile();
+
+        if (data == null)
+            return null;
+        else
+            return toOsThmMetadata();
     }
     // ===================================================================
 
@@ -218,6 +239,38 @@ public class osthmFile {
     private void writeShort(OutputStream os, short s) throws IOException {
         os.write((byte) (s >> 8));
         os.write((byte) s);
+    }
+
+    private JSONObject readFile() {
+        byte[] data = StorageUtil.readFileBytes(file.getAbsolutePath());
+        try {
+            return new JSONObject(new String(data, StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            // Not json, decode using the os-thm format
+            // (Continued in the below block for prettier code)
+        }
+
+        // Inflate the file (Decompress) using ZLIB
+        // Decompress the bytes
+        try {
+            Inflater decompresser = new Inflater();
+            decompresser.setInput(data, 0, data.length);
+            byte[] result = new byte[data.length * 2];  // Estimation, if there's any people that
+                                                        // has some experience in compression,
+                                                        // please fix this
+            int resultLength = decompresser.inflate(result);
+            decompresser.end();
+
+            // Decode the bytes into a String
+            String outputString = new String(result, 0, resultLength, StandardCharsets.UTF_8);
+            Log.d("osthmFile", "Output String: " + outputString);
+
+            return new JSONObject(outputString);
+        } catch (DataFormatException | JSONException e) {
+            Log.e("osthmFile", "Failed to decompress file, error: " + e.toString());
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private boolean write_osthm() {
