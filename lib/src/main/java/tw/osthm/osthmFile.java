@@ -6,6 +6,17 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.HashMap;
 
+/**
+ * <h1>osthmFile</h1>
+ * <p>osthmFile class is used to read and write osthm files in osthm format, or JSON format</p>
+ * <p>Example use cases: </p>
+ * <code>new osthmFile(new File("my/path/to/file.os-thm")).toHashMap();  // Reading files
+ * new osthmFile(new File("my/path/to/file.os-thm")).setData(myTheme).write(osthmFile.OSTHM); // Write theme data as osthm format
+ * </code>
+ *
+ * @author Iyxan23
+ */
+
 public class osthmFile {
 
     private JSONObject data;  // Raw JSON Data
