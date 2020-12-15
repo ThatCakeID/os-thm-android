@@ -3,14 +3,18 @@ package tw.osthm;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * <h1>osthmFile</h1>
@@ -112,6 +116,7 @@ public class osthmFile {
                     data.toString(), new TypeToken<HashMap<String, Object>>() {}.getType()
             );
 
+        // TODO: Implement reading the file
         return null;
     }
 
@@ -119,11 +124,16 @@ public class osthmFile {
         if (data != null)
             return data.toString();
 
+        // TODO: Implement reading the file
         return null;
     }
 
     public JSONObject toJSONObject() {
-        return data;
+        if (data != null)
+            return data;
+
+        // TODO: Implement reading the file
+        return null;
     }
 
     public OsThmTheme toOsThmTheme() {
@@ -136,7 +146,7 @@ public class osthmFile {
                 return null;
             }
 
-        // Return null
+        // TODO: Implement reading the file
         return null;
     }
 
@@ -145,7 +155,7 @@ public class osthmFile {
         if (data != null)
             return new OsThmMetadata(this.toHashMap());
 
-        // Return null
+        // TODO: Implement reading the file
         return null;
     }
     // ===================================================================
@@ -189,8 +199,77 @@ public class osthmFile {
         }
     }
 
-    private boolean write_osthm() {
+    private UUID asUuid(byte[] bytes) {
+        ByteBuffer bb = ByteBuffer.wrap(bytes);
+        long firstLong = bb.getLong();
+        long secondLong = bb.getLong();
+        return new UUID(firstLong, secondLong);
+    }
 
+    private byte[] asBytes(UUID uuid) {
+        ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
+        bb.putLong(uuid.getMostSignificantBits());
+        bb.putLong(uuid.getLeastSignificantBits());
+        return bb.array();
+    }
+
+    private void writeShort(OutputStream os, short s) throws IOException {
+        os.write((byte) (s >> 8));
+        os.write((byte) s);
+    }
+
+    private boolean write_osthm() {
+        // NOTE: This function is under development, this commit is unstable
+        try {
+            OutputStream stream = new FileOutputStream(file);
+
+            OsThmMetadata metadata = this.toOsThmMetadata();
+            OsThmTheme theme = this.toOsThmTheme();
+
+            stream.write(" os-thm".getBytes());
+
+            // Length of each strings
+            stream.write(new byte[] {(byte) metadata.themesname.length(), (byte) metadata.themesinfo.length()});
+            stream.write(0x00);  // Spacing
+            stream.write(metadata.themesname.getBytes());
+            stream.write(0x00);
+            stream.write(asBytes(UUID.fromString(metadata.uuid)));
+            stream.write(0x00);
+            stream.write(metadata.themesinfo.getBytes());
+            stream.write(0x00);
+            stream.write(metadata.themeversion);
+            stream.write(metadata.os_thm_version);
+            stream.write(0x00);
+
+            // Write every os-thm colors
+            stream.write((char) theme.colorPrimary);
+            stream.write((char) theme.colorPrimaryText);
+            stream.write((char) theme.colorPrimaryDark);
+            stream.write((char) theme.colorStatusbarTint);
+            stream.write((char) theme.colorBackground);
+            stream.write((char) theme.colorBackgroundText);
+            stream.write((char) theme.colorAccent);
+            stream.write((char) theme.colorAccentText);
+            stream.write(0x01 & theme.shadow);
+            stream.write((char) theme.colorControlHighlight);
+            stream.write((char) theme.colorHint);
+            stream.write((char) theme.colorPrimaryTint);
+            stream.write((char) theme.colorBackgroundTint);
+            stream.write((char) theme.colorPrimaryCard);
+            stream.write((char) theme.colorBackgroundCard);
+            stream.write((char) theme.colorPrimaryCardText);
+            stream.write((char) theme.colorBackgroundCardText);
+            stream.write((char) theme.colorPrimaryCardTint);
+            stream.write((char) theme.colorBackgroundCardTint);
+            stream.write((char) theme.colorDialog);
+            stream.write((char) theme.colorDialogText);
+            stream.write((char) theme.colorDialogTint);
+
+            stream.flush();
+            stream.close();
+        } catch (Exception e) {
+            return false;
+        }
         return true;
     }
 }
