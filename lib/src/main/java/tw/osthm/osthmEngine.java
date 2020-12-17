@@ -861,6 +861,7 @@ public class osthmEngine {
      * @throws osthmException osthmException
      */
 
+    @Deprecated
     public static String exportThemes(Context mContext, String[] UUIDvars) throws osthmException {
         if (UUIDvars.length > 0) {
             initializeData(mContext);
