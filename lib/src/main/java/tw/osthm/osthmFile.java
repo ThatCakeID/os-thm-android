@@ -296,18 +296,65 @@ public class osthmFile {
         try {
             Inflater decompresser = new Inflater();
             decompresser.setInput(data, 0, data.length);
-            byte[] result = new byte[data.length * 2];  // Estimation, if there's any people that
+            byte[] tmp = new byte[data.length * 2];  // Estimation, if there's any people that
                                                         // has some experience in compression,
                                                         // please fix this
-            int resultLength = decompresser.inflate(result);
+            int resultLength = decompresser.inflate(tmp);
             decompresser.end();
 
-            // Decode the bytes into a String
-            String outputString = new String(result, 0, resultLength, StandardCharsets.UTF_8);
-            Log.d("osthmFile", "Output String: " + outputString);
+            byte[] result = Arrays.copyOf(tmp, resultLength);
+            // Decode the bytes
+            int themesname_length = result[0];
+            int themesinfo_length = result[1];
 
-            return new JSONObject(outputString);
-        } catch (DataFormatException | JSONException e) {
+            OsThmMetadata metadata = new OsThmMetadata();
+
+            String themesname = new String(Arrays.copyOfRange(result, 4, themesname_length), StandardCharsets.UTF_8);
+            UUID uuid = asUuid(Arrays.copyOfRange(result, themesname_length + 2, themesname_length + 18));
+            String themesinfo = new String(Arrays.copyOfRange(result, themesname_length + 18, themesname_length + 18 + themesinfo_length), StandardCharsets.UTF_8);
+
+            int themeversion = result[themesname_length + themesinfo_length + 18 + 2];  // +1
+            int osthmversion = result[themesname_length + themesinfo_length + 18 + 3];  // +1
+
+            metadata.themesname = themesname;
+            metadata.uuid = uuid.toString();
+            metadata.themesinfo = themesinfo;
+            metadata.themeversion = themeversion;
+            metadata.os_thm_version = osthmversion;
+            
+            OsThmTheme theme = new OsThmTheme();
+
+            byte[] themevalues = Arrays.copyOfRange(result, themesname_length + themesinfo_length + 18 + 3 + 2, themesname_length + themesinfo_length + 18 + 3 + 2 + 22);
+
+            theme.colorPrimary = themevalues[0];
+            theme.colorPrimaryText = themevalues[1];
+            theme.colorPrimaryDark = themevalues[2];
+            theme.colorStatusbarTint = themevalues[3];
+            theme.colorBackground = themevalues[4];
+            theme.colorBackgroundText = themevalues[5];
+            theme.colorAccent = themevalues[6];
+            theme.colorAccentText = themevalues[7];
+            theme.shadow = themevalues[8] == 0x00 ? 0 : 1;
+            theme.colorControlHighlight = themevalues[9];
+            theme.colorHint = themevalues[10];
+            theme.colorPrimaryTint = themevalues[11];
+            theme.colorBackgroundTint = themevalues[12];
+            theme.colorPrimaryCard = themevalues[13];
+            theme.colorBackgroundCard = themevalues[14];
+            theme.colorPrimaryCardText = themevalues[15];
+            theme.colorBackgroundCardText = themevalues[16];
+            theme.colorPrimaryCardTint = themevalues[17];
+            theme.colorBackgroundCardTint = themevalues[18];
+            theme.colorDialog = themevalues[19];
+            theme.colorDialogText = themevalues[20];
+            theme.colorDialogTint = themevalues[21];
+
+            HashMap<String, Object> output = metadata.toHashMap();
+            output.put("themesjson", theme.toJsonString());
+
+            return new JSONObject(output);
+
+        } catch (DataFormatException e) {
             Log.e("osthmFile", "Failed to decompress file, error: " + e.toString());
             e.printStackTrace();
             return null;
@@ -346,7 +393,7 @@ public class osthmFile {
             stream.write((char) theme.colorBackgroundText);
             stream.write((char) theme.colorAccent);
             stream.write((char) theme.colorAccentText);
-            stream.write(0x01 & theme.shadow);
+            stream.write(theme.shadow == 0 ? 0x00 : 0xFF);
             stream.write((char) theme.colorControlHighlight);
             stream.write((char) theme.colorHint);
             stream.write((char) theme.colorPrimaryTint);
