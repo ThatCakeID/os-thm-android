@@ -150,14 +150,14 @@ public class ThemeManagerActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 try {
-                    osthmEngine.setCurrentTheme(arrayList.get(i).get("uuid").toString());
+                    osthmEngine.setCurrentTheme(ThemeManagerActivity.this, arrayList.get(i).get("uuid").toString());
 
                     makeSnackbar("Theme set!", 0xFF43A047, 0xFFFFFFFF,
                             R.drawable.ic_done_white);
 
                     loadTheme();
 
-                    currentThemeUUID = osthmEngine.getCurrentThemeUUID();
+                    currentThemeUUID = osthmEngine.getCurrentThemeUUID(ThemeManagerActivity.this);
 
                     ((BaseAdapter) gridview1.getAdapter()).notifyDataSetChanged();
 
@@ -173,7 +173,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedNum = i;
 
-                OsThmMetadata themeMetadata = osthmEngine.getThemeMetadata(arrayList
+                OsThmMetadata themeMetadata = osthmEngine.getThemeMetadata(ThemeManagerActivity.this, arrayList
                         .get(i).get("uuid").toString());
                 text_title.setText(themeMetadata.themesname);
                 text_subtitle.setText(themeMetadata.themesauthor);
@@ -191,7 +191,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 bottomSheetDialog.dismiss();
 
                 try {
-                    osthmEngine.removeTheme(arrayList.get(selectedNum).get("uuid").toString());
+                    osthmEngine.removeTheme(ThemeManagerActivity.this, arrayList.get(selectedNum).get("uuid").toString());
                     makeSnackbar("Theme deleted!", 0xFF43A047, 0xFFFFFFFF,
                             R.drawable.ic_done_white);
                     refreshTheme();
@@ -271,7 +271,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
                         String version_data = version.getText().toString();
 
                         try {
-                            osthmEngine.addTheme(theme, name_data, description_data, author_data, Integer.parseInt(version_data));
+                            osthmEngine.addTheme(ThemeManagerActivity.this, theme, name_data, description_data, author_data, Integer.parseInt(version_data));
                             makeSnackbar("Successfully cloned theme!", 0xFF43A047, 0xFFFFFFFF,
                                     R.drawable.ic_done_white);
                             refreshTheme();
@@ -295,7 +295,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 bottomSheetDialog.dismiss();
                 try {
                     makeSnackbar("Saved in " + osthmManager.exportThemeFile(osthmEngine
-                                    .exportThemes(new String[]{arrayList.get(selectedNum)
+                                    .exportThemes(ThemeManagerActivity.this, new String[]{arrayList.get(selectedNum)
                                             .get("uuid").toString()})), 0xFF43A047,
                             0xFFFFFFFF, R.drawable.ic_done_white);
                 } catch (osthmException err) {
@@ -334,7 +334,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
                 ((ImageView)bottomsheetView1.findViewById(R.id.image_author)).setColorFilter(theme.colorDialogTint);
                 ((ImageView)bottomsheetView1.findViewById(R.id.image_version)).setColorFilter(theme.colorDialogTint);
 
-                OsThmMetadata themeMetadata = osthmEngine.getThemeMetadata(arrayList
+                OsThmMetadata themeMetadata = osthmEngine.getThemeMetadata(ThemeManagerActivity.this, arrayList
                         .get(selectedNum).get("uuid").toString());
 
                 text_name.setText("Name : " + themeMetadata.themesname);
@@ -480,7 +480,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
     }
 
     private void loadTheme() {
-        theme = osthmEngine.getCurrentTheme();
+        theme = osthmEngine.getCurrentTheme(this);
         findViewById(R.id.rootView).setBackgroundColor(theme.colorBackground);
         findViewById(R.id.linear_title).setBackgroundColor(theme.colorPrimary);
 
@@ -552,9 +552,9 @@ public class ThemeManagerActivity extends AppCompatActivity {
     }
 
     private void refreshTheme() {
-        currentThemeUUID = osthmEngine.getCurrentThemeUUID();
+        currentThemeUUID = osthmEngine.getCurrentThemeUUID(this);
         arrayList.clear();
-        arrayList.addAll(osthmEngine.getThemeList());
+        arrayList.addAll(osthmEngine.getThemeList(this));
         ((BaseAdapter) gridview1.getAdapter()).notifyDataSetChanged();
     }
 
@@ -659,7 +659,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 try {
                     dialogInterface.dismiss();
-                    osthmEngine.importThemes(editText.getText().toString());
+                    osthmEngine.importThemes(ThemeManagerActivity.this, editText.getText().toString());
                     makeSnackbar("Theme(s) imported!", 0xFF43A047, 0xFFFFFFFF, R.drawable.ic_done_white);
                 } catch (osthmException e) {
                     makeSnackbar(e.getMessage(), 0xFFD32F2F, 0xFFFFFFFF, R.drawable.ic_close_white);
@@ -698,7 +698,7 @@ public class ThemeManagerActivity extends AppCompatActivity {
                     Uri uri = data.getData();
                     try {
                         String content = readFile(uri);
-                        osthmEngine.importThemes(content);
+                        osthmEngine.importThemes(this, content);
                         makeSnackbar("Theme(s) imported!", 0xFF43A047, 0xFFFFFFFF, R.drawable.ic_done_white);
 
                     } catch (IOException e) {

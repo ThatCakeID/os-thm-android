@@ -109,7 +109,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
             public void onClick(View view) {
                 if (bottomsheetview != null) {
                     if (getIntent().getBooleanExtra("isEditing", false)) {
-                        OsThmMetadata thmMetadata = osthmEngine.getThemeMetadata(getIntent()
+                        OsThmMetadata thmMetadata = osthmEngine.getThemeMetadata(ThemeEditorActivity.this, getIntent()
                                 .getStringExtra("theme"));
                         til1.setText(thmMetadata.themesname);
                         til2.setText(thmMetadata.themesauthor);
@@ -129,7 +129,8 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                         .getText().toString().equals("") && !til4.getText().toString().equals("")) {
                     try {
                         if (getIntent().getBooleanExtra("isEditing", false)) {
-                            osthmEngine.editTheme(sp.getInt("colorPrimary", -14575885),
+                            osthmEngine.editTheme(ThemeEditorActivity.this,
+                                    sp.getInt("colorPrimary", -14575885),
                                     sp.getInt("colorPrimaryText", -1), sp.getInt("colorPrimaryDark", -15242838),
                                     sp.getInt("colorStatusbarTint", 1), sp.getInt("colorBackground", -1),
                                     sp.getInt("colorBackgroundText", -16777216), sp.getInt("colorAccent", -720809),
@@ -142,9 +143,10 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
                                     sp.getInt("colorDialog", -1), sp.getInt("colorDialogText", -16777216), sp.getInt("colorDialogTint", -16777216),
                                     til1.getText().toString(), til3.getText().toString(), til2.getText().toString(),
                                     Integer.parseInt(til4.getText().toString()),
-                                    osthmEngine.getThemeMetadata(getIntent().getStringExtra("theme")).uuid);
+                                    osthmEngine.getThemeMetadata(ThemeEditorActivity.this, getIntent().getStringExtra("theme")).uuid);
                         } else {
-                            osthmEngine.addTheme(sp.getInt("colorPrimary", -14575885),
+                            osthmEngine.addTheme(ThemeEditorActivity.this,
+                                    sp.getInt("colorPrimary", -14575885),
                                     sp.getInt("colorPrimaryText", -1), sp.getInt("colorPrimaryDark", -15242838),
                                     sp.getInt("colorStatusbarTint", 1), sp.getInt("colorBackground", -1),
                                     sp.getInt("colorBackgroundText", -16777216), sp.getInt("colorAccent", -720809),
@@ -228,7 +230,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     }
 
     private void loadColors() {
-        OsThmTheme parsedTheme = osthmEngine.getTheme(getIntent().getStringExtra("theme"));
+        OsThmTheme parsedTheme = osthmEngine.getTheme(this, getIntent().getStringExtra("theme"));
 
         sp.edit()
                 .putInt("colorPrimary", parsedTheme.colorPrimary)
@@ -419,7 +421,7 @@ public class ThemeEditorActivity extends AppCompatActivity implements ColorPicke
     }
 
     private void loadTheme() {
-        theme = osthmEngine.getCurrentTheme();
+        theme = osthmEngine.getCurrentTheme(this);
         findViewById(R.id.rootView).setBackgroundColor(theme.colorBackground);
         findViewById(R.id.linear_title).setBackgroundColor(theme.colorPrimary);
 

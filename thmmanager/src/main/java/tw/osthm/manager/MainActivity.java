@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadTheme() {
-        OsThmTheme theme = osthmEngine.getCurrentTheme();
+        OsThmTheme theme = osthmEngine.getCurrentTheme(this);
 
         findViewById(R.id.rootView).setBackgroundColor(theme.colorBackground);
         ((TextView) findViewById(R.id.textView)).setTextColor(theme.colorBackgroundText);
