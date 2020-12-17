@@ -773,6 +773,7 @@ public class osthmEngine {
      * @throws osthmException osThmException
      */
 
+    @Deprecated
     public static void importThemes(Context mContext, String json) throws osthmException {
         initializeData(mContext);
 
