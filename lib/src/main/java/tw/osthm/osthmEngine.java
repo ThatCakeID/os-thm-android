@@ -772,8 +772,7 @@ public class osthmEngine {
      * @param json Theme in string JSON
      * @throws osthmException osThmException
      */
-
-    @Deprecated
+    
     public static void importThemes(Context mContext, String json) throws osthmException {
         initializeData(mContext);
 
@@ -861,7 +860,6 @@ public class osthmEngine {
      * @throws osthmException osthmException
      */
 
-    @Deprecated
     public static String exportThemes(Context mContext, String[] UUIDvars) throws osthmException {
         if (UUIDvars.length > 0) {
             initializeData(mContext);
